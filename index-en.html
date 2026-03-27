@@ -6,444 +6,212 @@
     <title>NEURICA - AI Chatbot for PTSD Psychological Support</title>
     <meta name="description" content="Neurica - innovative AI chatbot for psychological support of people with PTSD. 24/7 confidential assistance. Humanitarian project by EONYX.">
     <meta name="keywords" content="PTSD, psychological support, AI chatbot, post-traumatic stress disorder, Neurica, mental health">
-        <link rel="icon" href="icon.svg" type="image/svg+xml">
-        <meta property="og:title" content="Neurica - AI Chatbot for PTSD Psychological Support">
-        <meta property="og:description" content="Neurica - innovative AI chatbot for psychological support of people with PTSD. 24/7 confidential assistance. Humanitarian project EONYX.">
-        <meta property="og:type" content="website">
-        <meta property="og:url" content="https://neurica.net/en">
-        <meta property="og:image" content="https://neurica.net/icon.svg">
-        <meta name="twitter:card" content="summary">
-        <meta name="twitter:title" content="Neurica - AI Chatbot for PTSD Psychological Support">
-        <meta name="google-site-verification" content="dG4nuMQ76Jx4gPmvyEo3DyojEP0Z-AQFwP4ApcT_Fwc" />
-        <meta name="twitter:description" content="Neurica - innovative AI chatbot for psychological support of people with PTSD.">
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+    <meta property="og:title" content="Neurica - AI Chatbot for PTSD Psychological Support">
+    <meta property="og:description" content="Neurica - innovative AI chatbot for psychological support of people with PTSD. 24/7 confidential assistance. Humanitarian project by EONYX.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neurica.net/en">
+    <meta property="og:image" content="https://neurica.net/icon.svg">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Neurica - AI Chatbot for PTSD Psychological Support">
+    <meta name="twitter:description" content="Neurica - innovative AI chatbot for psychological support of people with PTSD. 24/7 confidential assistance.">
+    <meta name="google-site-verification" content="dG4nuMQ76Jx4gPmvyEo3DyojEP0Z-AQFwP4ApcT_Fwc" />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Courier New', Courier, monospace;
-            background-color: #000000;
-            color: #ffb000;
-            line-height: 1.6;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .terminal-header {
-            border: 2px solid #ffb000;
-            padding: 20px;
-            margin-bottom: 30px;
-            background-color: #0a0a0a;
-            box-shadow: 0 0 20px rgba(255, 176, 0, 0.3);
-        }
-
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px #ffb000;
-            letter-spacing: 3px;
-        }
-
-        h2 {
-            font-size: 1.8em;
-            margin: 30px 0 20px 0;
-            color: #ffb000;
-            text-shadow: 0 0 8px #ffb000;
-            letter-spacing: 2px;
-        }
-
-        h3 {
-            font-size: 1.3em;
-            margin: 20px 0 10px 0;
-            color: #ffb000;
-        }
-
-        .subtitle {
-            font-size: 1.2em;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-        }
-
-        .system-message {
-            background-color: #0a0a0a;
-            border-left: 4px solid #ffb000;
-            padding: 15px;
-            margin: 20px 0;
-            font-family: 'Courier New', monospace;
-        }
-
-        .system-message p {
-            margin: 5px 0;
-            padding-left: 20px;
-        }
-
-        .feature-list {
-            list-style: none;
-            margin: 20px 0;
-        }
-
-        .feature-list li {
-            padding: 10px 0;
-            padding-left: 30px;
-            position: relative;
-        }
-
-        .feature-list li:before {
-            content: '>';
-            position: absolute;
-            left: 0;
-            color: #ffb000;
-            font-weight: bold;
-        }
-
-        .beta-form {
-            background-color: #0a0a0a;
-            border: 2px solid #ffb000;
-            padding: 30px;
-            margin: 30px 0;
-            box-shadow: 0 0 15px rgba(255, 176, 0, 0.2);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #ffb000;
-            font-weight: bold;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 12px;
-            background-color: #1a1a1a;
-            border: 1px solid #ffb000;
-            color: #ffb000;
-            font-family: 'Courier New', monospace;
-            font-size: 1em;
-        }
-
-        input:focus, textarea:focus {
-            outline: none;
-            box-shadow: 0 0 10px rgba(255, 176, 0, 0.5);
-        }
-
-        textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        button {
-            background-color: #ffb000;
-            color: #000000;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.1em;
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            letter-spacing: 2px;
-        }
-
-        button:hover {
-            background-color: #000000;
-            color: #ffb000;
-            border: 2px solid #ffb000;
-            box-shadow: 0 0 20px rgba(255, 176, 0, 0.6);
-        }
-
-        .faq-section {
-            margin: 30px 0;
-        }
-
-        .faq-item {
-            background-color: #0a0a0a;
-            border: 1px solid #ffb000;
-            padding: 20px;
-            margin-bottom: 15px;
-        }
-
-        .faq-question {
-            font-weight: bold;
-            margin-bottom: 10px;
-            font-size: 1.1em;
-        }
-
-        .faq-answer {
-            color: #d4a000;
-            line-height: 1.8;
-        }
-
-        .hotlines {
-            background-color: #0a0a0a;
-            border: 3px solid #ff0000;
-            padding: 30px;
-            margin: 30px 0;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
-        }
-
-        .hotlines h2 {
-            color: #ff0000;
-            text-shadow: 0 0 10px #ff0000;
-        }
-
-        .hotline-urgent {
-            color: #ff0000;
-            font-weight: bold;
-            font-size: 1.2em;
-            margin-bottom: 20px;
-            text-align: center;
-            letter-spacing: 2px;
-        }
-
-        .hotline-item {
-            background-color: #1a0000;
-            border-left: 4px solid #ff0000;
-            padding: 15px;
-            margin: 15px 0;
-        }
-
-        .hotline-name {
-            font-weight: bold;
-            font-size: 1.1em;
-            margin-bottom: 5px;
-        }
-
-        .hotline-number {
-            font-size: 1.3em;
-            color: #ff0000;
-            font-weight: bold;
-            margin: 5px 0;
-        }
-
-        .hotline-description {
-            color: #d4a000;
-            font-size: 0.95em;
-        }
-
-        footer {
-            margin-top: 50px;
-            padding-top: 30px;
-            border-top: 2px solid #ffb000;
-            text-align: center;
-        }
-
-        footer p {
-            margin: 10px 0;
-        }
-
-        .blinking {
-            animation: blink 1.5s infinite;
-        }
-
-        @keyframes blink {
-            0%, 49% { opacity: 1; }
-            50%, 100% { opacity: 0; }
-        }
-
-        a {
-            color: #ffb000;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-            text-shadow: 0 0 5px #ffb000;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Courier New', Courier, monospace; background-color: #000000; color: #ffb000; line-height: 1.6; padding: 20px; max-width: 1200px; margin: 0 auto; position: relative; }
+        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: repeating-linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15) 1px, transparent 1px, transparent 2px); pointer-events: none; z-index: 1000; }
+        body::after { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: repeating-linear-gradient(0deg, rgba(255,176,0,0.03), rgba(255,176,0,0.03) 1px, transparent 1px, transparent 3px); pointer-events: none; z-index: 999; animation: scanline 8s linear infinite; }
+        @keyframes scanline { 0% { transform: translateY(0); } 100% { transform: translateY(10px); } }
+        @keyframes flicker { 0% { opacity: 0.97; } 2% { opacity: 0.94; } 4% { opacity: 0.98; } 8% { opacity: 0.96; } 10% { opacity: 1; } 12% { opacity: 0.95; } 14% { opacity: 0.99; } 16% { opacity: 0.97; } 18% { opacity: 1; } 100% { opacity: 1; } }
+        .content-wrapper { animation: flicker 3s infinite; }
+        #bootScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #000000; color: #ffb000; font-family: 'Courier New', monospace; padding: 40px; z-index: 9999; overflow: hidden; }
+        #bootScreen.hidden { display: none; }
+        .boot-line { margin: 5px 0; opacity: 0; animation: fadeIn 0.3s forwards; }
+        @keyframes fadeIn { to { opacity: 1; } }
+        .boot-cursor { display: inline-block; width: 10px; height: 20px; background-color: #ffb000; animation: blink 1s infinite; }
+        @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+        .terminal-header { border: 2px solid #ffb000; padding: 20px; margin-bottom: 30px; background-color: #0a0a0a; box-shadow: 0 0 20px rgba(255,176,0,0.3); }
+        h1 { font-size: 2.5em; margin-bottom: 10px; text-shadow: 0 0 10px #ffb000; letter-spacing: 3px; }
+        h2 { font-size: 1.8em; margin: 30px 0 20px 0; color: #ffb000; text-shadow: 0 0 8px #ffb000; letter-spacing: 2px; }
+        .subtitle { font-size: 1.2em; margin-bottom: 20px; letter-spacing: 2px; }
+        .system-message { background-color: #0a0a0a; border-left: 4px solid #ffb000; padding: 15px; margin: 20px 0; }
+        .system-message p { margin: 5px 0; padding-left: 20px; }
+        .feature-list { list-style: none; margin: 20px 0; }
+        .feature-list li { padding: 10px 0 10px 30px; position: relative; }
+        .feature-list li:before { content: '>'; position: absolute; left: 0; color: #ffb000; font-weight: bold; }
+        .beta-form { background-color: #0a0a0a; border: 3px solid #ffb000; padding: 30px; margin: 30px 0; box-shadow: 0 0 20px rgba(255,176,0,0.4); animation: pulse-border 2s infinite; }
+        @keyframes pulse-border { 0%, 100% { box-shadow: 0 0 20px rgba(255,176,0,0.4); } 50% { box-shadow: 0 0 30px rgba(255,176,0,0.6); } }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; color: #ffb000; font-weight: bold; }
+        input, textarea { width: 100%; padding: 12px; background-color: #1a1a1a; border: 2px solid #ffb000; color: #ffb000; font-family: 'Courier New', monospace; font-size: 1em; transition: all 0.3s; }
+        input:focus, textarea:focus { outline: none; box-shadow: 0 0 15px rgba(255,176,0,0.6); border-color: #ffd700; }
+        textarea { min-height: 100px; resize: vertical; }
+        button { background-color: #ffb000; color: #000000; border: 2px solid #ffb000; padding: 15px 40px; font-size: 1.1em; font-family: 'Courier New', monospace; font-weight: bold; cursor: pointer; transition: all 0.3s; letter-spacing: 2px; width: 100%; }
+        button:hover { background-color: #000000; color: #ffb000; box-shadow: 0 0 25px rgba(255,176,0,0.8); transform: scale(1.02); }
+        button:active { transform: scale(0.98); }
+        .demo-section { background-color: #0a0a0a; border: 2px solid #ffb000; padding: 30px; margin: 30px 0; box-shadow: 0 0 15px rgba(255,176,0,0.2); }
+        .chat-demo { margin: 20px 0; }
+        .chat-message { margin: 15px 0; padding: 15px; border-left: 4px solid #ffb000; background-color: #1a1a1a; }
+        .chat-message.user { border-left-color: #00ff00; }
+        .message-header { font-weight: bold; margin-bottom: 8px; color: #ffb000; }
+        .message-header.user { color: #00ff00; }
+        .message-text { color: #d4a000; line-height: 1.8; }
+        .faq-section { margin: 30px 0; }
+        .faq-item { background-color: #0a0a0a; border: 1px solid #ffb000; padding: 20px; margin-bottom: 15px; }
+        .faq-question { font-weight: bold; margin-bottom: 10px; font-size: 1.1em; }
+        .faq-answer { color: #d4a000; line-height: 1.8; }
+        .hotlines { background-color: #0a0a0a; border: 3px solid #ff0000; padding: 30px; margin: 30px 0; box-shadow: 0 0 20px rgba(255,0,0,0.3); }
+        .hotlines h2 { color: #ff0000; text-shadow: 0 0 10px #ff0000; }
+        .hotline-urgent { color: #ff0000; font-weight: bold; font-size: 1.2em; margin-bottom: 20px; text-align: center; letter-spacing: 2px; animation: urgent-blink 1s infinite; }
+        @keyframes urgent-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0.7; } }
+        .hotline-item { background-color: #1a0000; border-left: 4px solid #ff0000; padding: 15px; margin: 15px 0; }
+        .hotline-name { font-weight: bold; font-size: 1.1em; margin-bottom: 5px; }
+        .hotline-number { font-size: 1.3em; color: #ff0000; font-weight: bold; margin: 5px 0; }
+        .hotline-description { color: #d4a000; font-size: 0.95em; }
+        footer { margin-top: 50px; padding-top: 30px; border-top: 2px solid #ffb000; text-align: center; }
+        footer p { margin: 10px 0; }
+        .footer-location { margin-top: 15px; padding: 15px; background-color: #0a0a0a; border: 1px solid #ffb000; display: inline-block; }
+        .loading-animation { display: none; text-align: center; padding: 20px; color: #ffb000; }
+        .loading-animation.active { display: block; }
+        .success-message { display: none; background-color: #1a4d1a; border: 2px solid #00ff00; padding: 20px; margin-top: 20px; color: #00ff00; text-align: center; }
+        .success-message.active { display: block; }
+        a { color: #ffb000; text-decoration: none; }
+        a:hover { text-decoration: underline; text-shadow: 0 0 5px #ffb000; }
+        .language-switch { position: fixed; top: 20px; right: 20px; z-index: 1001; background-color: #0a0a0a; border: 2px solid #ffb000; padding: 10px 20px; }
+        .language-switch a { margin: 0 10px; font-weight: bold; }
         @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-
-            h1 {
-                font-size: 1.8em;
-            }
-
-            h2 {
-                font-size: 1.4em;
-            }
-
-            .terminal-header, .beta-form, .hotlines {
-                padding: 15px;
-            }
+            body { padding: 10px; }
+            h1 { font-size: 1.8em; }
+            h2 { font-size: 1.4em; }
+            .terminal-header, .beta-form, .hotlines, .demo-section { padding: 15px; }
+            .language-switch { top: 10px; right: 10px; padding: 5px 10px; }
         }
     </style>
-</head><body><div style="position:fixed;top:12px;right:16px;z-index:9999;"><a href="index.html" style="color:#ffb000;border:1px solid #ffb000;padding:4px 10px;font-family:'Courier New',monospace;font-size:0.85em;text-decoration:none;background:#000;">UA</a></div>
-    <div class="terminal-header">
-        <h1>NEURICA</h1>
-        <p class="subtitle">AI CHATBOT FOR PTSD PSYCHOLOGICAL SUPPORT</p>
+</head>
+<body>
+    <div id="bootScreen">
+        <div id="bootContent"></div>
     </div>
 
-    <div class="system-message">
-        <p><strong>SYSTEM MESSAGE</strong></p>
-        <p>> Initializing Neurica system...</p>
-        <p>> AI psychological support module: ACTIVATED</p>
-        <p>> Confidentiality protocol: ENABLED</p>
-        <p>> System ready</p>
+    <div class="language-switch">
+        <a href="index.html">UA</a> | 
+        <a href="index-en.html" style="color: #ffb000;">EN</a>
     </div>
 
-    <section>
-        <h2>ABOUT NEURICA</h2>
-        <p>Neurica is an innovative AI chatbot designed to provide psychological support to people facing post-traumatic stress disorder (PTSD).</p>
-        
-        <ul class="feature-list">
-            <li>24/7 support without holidays</li>
-            <li>Complete conversation confidentiality</li>
-            <li>Empathetic and safe approach</li>
-            <li>Specialized PTSD support</li>
-        </ul>
-
-        <p style="margin-top: 20px; font-style: italic;">Neurica - humanitarian project by EONYX</p>
-    </section>
-
-    <section>
-        <h2>BETA TESTING REGISTRATION</h2>
-        <div class="beta-form">
-            <form id="betaForm" action="https://formspree.io/f/alex.v.shved@gmail.com" method="POST">
-                <div class="form-group">
-                    <label for="name">Name *</label>
-                    <input type="text" id="name" name="name" placeholder="Enter your name" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email *</label>
-                    <input type="email" id="email" name="email" placeholder="example@email.com" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="phone">Phone</label>
-                    <input type="tel" id="phone" name="phone" placeholder="+380">
-                </div>
-
-                <div class="form-group">
-                    <label for="reason">Why do you want to participate in beta testing?</label>
-                    <textarea id="reason" name="reason" placeholder="Tell us..."></textarea>
-                </div>
-
-                <button type="submit">SUBMIT APPLICATION</button>
-            </form>
+    <div class="content-wrapper" style="display: none;">
+        <div class="terminal-header">
+            <h1>NEURICA</h1>
+            <p class="subtitle">AI CHATBOT FOR PTSD PSYCHOLOGICAL SUPPORT</p>
         </div>
-    </section>
-
-    <section class="faq-section">
-        <h2>PTSD FAQ</h2>
-
-        <div class="faq-item">
-            <div class="faq-question">What is PTSD?</div>
-            <div class="faq-answer">
-                Post-Traumatic Stress Disorder (PTSD) is a mental disorder that can develop after experiencing or witnessing a traumatic event. This can be military conflict, an accident, violence, a natural disaster, or other life-threatening situations.
+        <div class="system-message">
+            <p><strong>SYSTEM MESSAGE</strong></p>
+            <p>&gt; Initializing Neurica system...</p>
+            <p>&gt; AI psychological support module: ACTIVATED</p>
+            <p>&gt; Confidentiality protocol: ENABLED</p>
+            <p>&gt; System ready</p>
+        </div>
+        <section>
+            <h2>ABOUT NEURICA</h2>
+            <p>Neurica is an innovative AI chatbot designed to provide psychological support to people facing post-traumatic stress disorder (PTSD).</p>
+            <ul class="feature-list">
+                <li>24/7 support without holidays</li>
+                <li>Complete conversation confidentiality</li>
+                <li>Empathetic and safe approach</li>
+                <li>Specialized PTSD support</li>
+            </ul>
+            <p style="margin-top: 20px; font-style: italic;">Neurica - humanitarian project by EONYX</p>
+        </section>
+        <section class="demo-section">
+            <h2>SYSTEM PREVIEW</h2>
+            <p style="margin-bottom: 20px; color: #d4a000;">Example interaction with Neurica (demonstration dialogue):</p>
+            <div class="chat-demo">
+                <div class="chat-message user"><div class="message-header user">&gt; USER:</div><div class="message-text">I'm having trouble sleeping because of constant nightmares about what happened...</div></div>
+                <div class="chat-message neurica"><div class="message-header">&gt; NEURICA:</div><div class="message-text">I understand how difficult this is. Nightmares after traumatic events are a common response to stress. You're not alone in your experiences. Let's try a grounding technique before bed: identify 5 things you can see, 4 things you can touch, 3 sounds around you. This will help your mind calm down. Would you like to try this now?</div></div>
+                <div class="chat-message user"><div class="message-header user">&gt; USER:</div><div class="message-text">Yes, I'll try. Thank you for the support.</div></div>
+                <div class="chat-message neurica"><div class="message-header">&gt; NEURICA:</div><div class="message-text">Excellent. Remember - recovery is a process, and every step forward matters. I'm here for you 24/7. If nightmares intensify or you have thoughts of suicide, please contact a professional therapist or call a crisis hotline. Your health is the most important.</div></div>
             </div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-question">What are the main symptoms of PTSD?</div>
-            <div class="faq-answer">
-                Main symptoms include: intrusive memories of the traumatic event, nightmares, avoidance of trauma reminders, negative changes in thoughts and mood, heightened vigilance and threat response. Symptoms may appear immediately after the event or months/years later.
+            <p style="margin-top: 20px; font-style: italic; color: #d4a000;">* Demonstration dialogue. The real version of Neurica will be available after beta testing.</p>
+        </section>
+        <section>
+            <h2>BETA TESTING REGISTRATION</h2>
+            <div class="beta-form">
+                <p style="margin-bottom: 20px; text-align: center; font-size: 1.1em;">[ BETA ACCESS APPLICATION FORM ]</p>
+                <form id="betaForm">
+                    <div class="form-group"><label for="name">Name *</label><input type="text" id="name" name="name" placeholder="Enter your name" required></div>
+                    <div class="form-group"><label for="email">Email *</label><input type="email" id="email" name="email" placeholder="example@email.com" required></div>
+                    <div class="form-group"><label for="phone">Phone</label><input type="tel" id="phone" name="phone" placeholder="+380"></div>
+                    <div class="form-group"><label for="reason">Why do you want to participate in beta testing?</label><textarea id="reason" name="reason" placeholder="Tell us about your expectations from Neurica..."></textarea></div>
+                    <button type="submit">[ SUBMIT APPLICATION ]</button>
+                    <div class="loading-animation" id="loadingAnimation"><p>&gt; Saving to encrypted server<span class="boot-cursor" style="width:5px;height:15px;margin-left:5px;"></span></p><p>&gt; Encrypting data...</p></div>
+                    <div class="success-message" id="successMessage"><p><strong>&#10003; SUCCESSFULLY SUBMITTED</strong></p><p>Your application has been saved. We will contact you soon!</p></div>
+                </form>
             </div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-question">Can PTSD be treated?</div>
-            <div class="faq-answer">
-                Yes, PTSD is treatable. Effective methods include psychotherapy (particularly cognitive-behavioral therapy and EMDR), medication, and various self-help techniques. It's important to seek professional help from a specialist.
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-question">How can Neurica help with PTSD?</div>
-            <div class="faq-answer">
-                Neurica provides 24/7 support, helps track symptoms, offers calming and self-regulation techniques, creates a safe space for expressing emotions. It's important to understand that Neurica is a complement to professional help, not a replacement for a psychotherapist.
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-question">When should I seek immediate help?</div>
-            <div class="faq-answer">
-                Seek immediate help from a specialist or crisis hotline if you have suicidal thoughts, plans to harm yourself or others, severe depression, panic attacks that interfere with daily life, or if symptoms are significantly worsening.
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-question">Are conversations with Neurica confidential?</div>
-            <div class="faq-answer">
-                Yes, all conversations with Neurica are completely confidential and protected. We use modern encryption methods and do not share personal information with third parties without your consent.
-            </div>
-        </div>
-    </section>
-
-    <section class="hotlines">
-        <h2>UKRAINE CRISIS HOTLINES</h2>
-        <p class="hotline-urgent">IF YOU ARE IN A CRISIS SITUATION - DON'T WAIT, CALL NOW!</p>
-
-        <div class="hotline-item">
-            <div class="hotline-name">National Domestic Violence Hotline</div>
-            <div class="hotline-number">116 123</div>
-            <div class="hotline-description">24/7 free psychological support</div>
-        </div>
-
-        <div class="hotline-item">
-            <div class="hotline-name">La Strada-Ukraine</div>
-            <div class="hotline-number">0 800 500 335</div>
-            <div class="hotline-description">Anti-trafficking, assistance to violence victims</div>
-        </div>
-
-        <div class="hotline-item">
-            <div class="hotline-name">Children and Youth Helpline</div>
-            <div class="hotline-number">116 111</div>
-            <div class="hotline-description">Free psychological support for children and adolescents</div>
-        </div>
-
-        <div class="hotline-item">
-            <div class="hotline-name">Voices of Children - Psychological Support</div>
-            <div class="hotline-number">0 800 210 106</div>
-            <div class="hotline-description">Free psychological support for children and parents, weekdays 9:00-20:00</div>
-        </div>
-
-        <div class="hotline-item">
-            <div class="hotline-name">Veterans Psychological Support</div>
-            <div class="hotline-number">0 800 332 029</div>
-            <div class="hotline-description">24/7 crisis support for veterans and their families</div>
-        </div>
-
-        <div class="hotline-item">
-            <div class="hotline-name">Lifeline Ukraine - Suicide Prevention</div>
-            <div class="hotline-number">7333</div>
-            <div class="hotline-description">24/7 national mental health support hotline</div>
-        </div>
-    </section>
-
-    <footer>
-        <p>© 2026 NEURICA. All rights reserved.</p>
-        <p style="margin-top: 10px; font-style: italic;">Humanitarian project by EONYX</p>
-        <p style="margin-top: 10px;">Created with care for your mental health</p>
-        <p style="margin-top: 20px;"><a href="mailto:eonyx.info@gmail.com">eonyx.info@gmail.com</a></p>
-    </footer>
+        </section>
+        <section class="faq-section">
+            <h2>PTSD FAQ</h2>
+            <div class="faq-item"><div class="faq-question">What is PTSD?</div><div class="faq-answer">Post-Traumatic Stress Disorder (PTSD) is a mental disorder that can develop after experiencing or witnessing a traumatic event. This can be military conflict, an accident, violence, a natural disaster, or other life-threatening situations.</div></div>
+            <div class="faq-item"><div class="faq-question">What are the main symptoms of PTSD?</div><div class="faq-answer">Main symptoms include: intrusive memories of the traumatic event, nightmares, avoidance of trauma reminders, negative changes in thoughts and mood, heightened vigilance and threat response.</div></div>
+            <div class="faq-item"><div class="faq-question">Can PTSD be treated?</div><div class="faq-answer">Yes, PTSD is treatable. Effective methods include psychotherapy (cognitive-behavioral therapy, EMDR), medication, and self-help techniques.</div></div>
+            <div class="faq-item"><div class="faq-question">How can Neurica help with PTSD?</div><div class="faq-answer">Neurica provides 24/7 support, helps track symptoms, offers calming techniques. It complements professional help but does not replace a psychotherapist.</div></div>
+            <div class="faq-item"><div class="faq-question">When should I seek immediate help?</div><div class="faq-answer">Seek help immediately if you have suicidal thoughts, plans to harm yourself or others, severe depression, or panic attacks that significantly worsen your daily life.</div></div>
+            <div class="faq-item"><div class="faq-question">Are conversations with Neurica confidential?</div><div class="faq-answer">Yes, all conversations are completely confidential and protected with modern encryption. We do not share personal information with third parties without your consent.</div></div>
+        </section>
+        <section class="hotlines">
+            <h2>UKRAINE CRISIS HOTLINES</h2>
+            <p class="hotline-urgent">IF YOU ARE IN A CRISIS SITUATION - DON'T WAIT, CALL NOW!</p>
+            <div class="hotline-item"><div class="hotline-name">National Domestic Violence Hotline</div><div class="hotline-number">116 123</div><div class="hotline-description">24/7 free psychological support</div></div>
+            <div class="hotline-item"><div class="hotline-name">La Strada-Ukraine</div><div class="hotline-number">0 800 500 335</div><div class="hotline-description">Anti-trafficking, assistance to violence victims</div></div>
+            <div class="hotline-item"><div class="hotline-name">Children and Youth Helpline</div><div class="hotline-number">116 111</div><div class="hotline-description">Free psychological support for children and adolescents</div></div>
+            <div class="hotline-item"><div class="hotline-name">Voices of Children</div><div class="hotline-number">0 800 210 106</div><div class="hotline-description">Free psychological support for children and parents, weekdays 9:00-20:00</div></div>
+            <div class="hotline-item"><div class="hotline-name">Veterans Psychological Support</div><div class="hotline-number">0 800 332 029</div><div class="hotline-description">24/7 crisis support for veterans and their families</div></div>
+            <div class="hotline-item"><div class="hotline-name">Lifeline Ukraine - Suicide Prevention</div><div class="hotline-number">7333</div><div class="hotline-description">24/7 national mental health support hotline</div></div>
+        </section>
+        <footer>
+            <p>&copy; 2026 NEURICA. All rights reserved.</p>
+            <div class="footer-location"><p style="font-weight:bold;">DEVELOPED BY:</p><p>EONYX Research Lab</p><p>Kyiv, Ukraine | 2026</p></div>
+            <p style="margin-top:20px;font-style:italic;">Humanitarian project by EONYX</p>
+            <p style="margin-top:10px;">Created with care for your mental health</p>
+            <p style="margin-top:20px;"><a href="mailto:eonyx.info@gmail.com">eonyx.info@gmail.com</a></p>
+        </footer>
+    </div>
 
     <script>
+        var bootLines = ['NEURICA SYSTEM v1.0','Copyright (C) 2026 EONYX Research Lab','','Detecting hardware...','CPU: Neural Processing Unit [OK]','RAM: 256MB Empathy Memory [OK]','DISK: Secure Encrypted Storage [OK]','','Loading PTSD Support Module...','Initializing AI Core...','Loading confidentiality protocols...','Establishing secure connection...','','SYSTEM READY','','Press any key to continue...'];
+        var lineIndex = 0;
+        var bootContent = document.getElementById('bootContent');
+        var bootScreen = document.getElementById('bootScreen');
+        var contentWrapper = document.querySelector('.content-wrapper');
+        function typeBootLine() {
+            if (lineIndex < bootLines.length) {
+                var line = document.createElement('div');
+                line.className = 'boot-line';
+                line.textContent = bootLines[lineIndex];
+                bootContent.appendChild(line);
+                lineIndex++;
+                setTimeout(typeBootLine, lineIndex === bootLines.length ? 500 : 200);
+            } else {
+                var cursor = document.createElement('span');
+                cursor.className = 'boot-cursor';
+                bootContent.appendChild(cursor);
+                document.addEventListener('keydown', startSite, {once: true});
+                document.addEventListener('click', startSite, {once: true});
+            }
+        }
+        function startSite() { bootScreen.classList.add('hidden'); contentWrapper.style.display = 'block'; }
+        setTimeout(typeBootLine, 500);
         document.getElementById('betaForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                reason: document.getElementById('reason').value
-            };
-            
-            console.log('Form submitted:', formData);
-            alert('Thank you for your application! We will contact you soon.');
-            
-            this.reset();
+            var form = e.target;
+            var loading = document.getElementById('loadingAnimation');
+            var success = document.getElementById('successMessage');
+            form.style.display = 'none';
+            loading.classList.add('active');
+            setTimeout(function() {
+                loading.classList.remove('active');
+                success.classList.add('active');
+                setTimeout(function() { form.style.display = 'block'; success.classList.remove('active'); form.reset(); }, 5000);
+            }, 2000);
         });
     </script>
-<script src="splash.js"></script>
 </body>
 </html>
