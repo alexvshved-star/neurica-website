@@ -346,3 +346,188 @@
         }
     }
 </style>
+
+
+</head>
+<body>
+    <!-- DOS Boot Screen -->
+    <div id="bootScreen">
+        <div id="bootContent"></div>
+    </div>
+
+<!-- Language Switch -->
+<div class="language-switch">
+    <a href="index.html" style="color: #ffb000;">UA</a> | 
+    <a href="index-en.html">EN</a>
+</div>
+
+<!-- Main Content -->
+<div class="content-wrapper" style="display: none;">
+    <header>
+        <h1>&gt; NEURICA v1.0_</h1>
+        <p>:: AI ЧАТ-БОТ ПСИХОЛОГІЧНОЇ ПІДТРИМКИ ПРИ ПТСР ::</p>
+    </header>
+
+    <section class="chat-interface">
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-message neurica">
+                <strong>[NEURICA]:</strong> Система ініціалізована. Я готовий допомогти вам з розумінням і проробкою ваших переживань. Повідомлю: я не замінюю психолога, але допоможу знайти правильний спеціаліст. Що вас турбує?</strong>
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="userInput" placeholder="> введіть повідомлення..." />
+            <button onclick="sendMessage()">[НАДІСЛАТИ]</button>
+        </div>
+    </section>
+
+    <section>
+        <h2>> ПРО ПТСР [ПОСТТРАВМАТИЧНИЙ СТРЕСОВИЙ РОЗЛАД]</h2>
+        <p>ПТСР — це серйозний психічний стан, що розвивається після переживання травмуючої події. Він може зачіпати будь-яку людину — військових, цивільних, першорятувачів надзвичайних ситуацій.</p>
+        <p><strong>Симптоми:</strong> навторні кошмари, уникання спогадів, емоційне отуплення, гіперзбудливість, проблеми зі сном.</p>
+
+        <div class="faq-section">
+            <h2>> FAQ: ЧАСТО ЗАПИТУВАНІ ПИТАННЯ</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">Запитання: Чи безпечно використовувати Neurica?</div>
+                <p>Так. Всі розмови шифруються і не зберігаються. Система працює відповідно до протоколів конфіденційності.</p>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Запитання: Чи є Neurica лікуванням?</div>
+                <p>Ні. Neurica — це інструмент першої допомоги і допоміжний ресурс для орієнтації. Для лікування необхідна консультація ліцензованого спеціаліста.</p>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Запитання: Швидко працює бот?</div>
+                <p>Відразу. Бот доступний 24/7 без аутентифікації.</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>> ЗВ'ЯЗАТИСЯ З НАМИ</h2>
+        <form class="contact-form" id="contactForm">
+            <input type="text" id="nameInput" placeholder="Ім'я" required />
+            <input type="email" id="emailInput" placeholder="Email" required />
+            <textarea id="messageInput" placeholder="Ваше повідомлення" required></textarea>
+            <button type="submit">[ НАДІСЛАТИ ЗАЯВКУ ]</button>
+        </form>
+        <div id="formSuccess" style="display:none; color: #ffb000; margin-top: 10px;">
+            &gt; Повідомлення надіслано. Очікуйте відповідь протягом 24 годин.
+        </div>
+    </section>
+
+    <section class="hotline-section">
+        <h2>> ГАРЯЧІ ЛІНІЇ ПСИХОЛОГІЧНОЇ ДОПОМОГИ</h2>
+        <div class="hotline-item">
+            <span class="hotline-number">0-800-505-010</span>
+            <span class="hotline-description">Безкоштовна психологічна допомога для ветеранів та їх сімей (Мінветеранів)</span>
+        </div>
+        <div class="hotline-item">
+            <span class="hotline-number">116 123</span>
+            <span class="hotline-description">Лінія психологічної підтримки (цілодобово)</span>
+        </div>
+        <div class="hotline-item">
+            <span class="hotline-number">0-800-301-360</span>
+            <span class="hotline-description">Національна гаряча лінія з питань психічного здоров'я</span>
+        </div>
+        <div class="hotline-item">
+            <span class="hotline-number">1547</span>
+            <span class="hotline-description">Урядова гаряча лінія (для всіх громадян)</span>
+        </div>
+    </section>
+
+    <footer>
+        <p>&gt; NEURICA v1.0 :: EONYX Research Lab :: 2026_</p>
+        <p>Гуманітарний проект | Конфіденційно | Безкоштовно</p>
+    </footer>
+</div>
+
+<script>
+    const bootLines = [
+        'NEURICA SYSTEM v1.0',
+        'Copyright (C) 2026 EONYX Research Lab',
+        '',
+        'Detecting hardware...',
+        'CPU: Neural Processing Unit [OK]',
+        'RAM: 256MB Empathy Memory [OK]',
+        'DISK: Secure Encrypted Storage [OK]',
+        '',
+        'Loading PTSD Support Module...',
+        'Initializing AI Core...',
+        'Loading confidentiality protocols...',
+        'Establishing secure connection...',
+        '',
+        'SYSTEM READY',
+        '',
+        'Press any key to continue...'
+    ];
+
+    let lineIndex = 0;
+    const bootContent = document.getElementById('bootContent');
+    const bootScreen = document.getElementById('bootScreen');
+    const contentWrapper = document.querySelector('.content-wrapper');
+
+    function typeBootLine() {
+        if (lineIndex < bootLines.length) {
+            const line = document.createElement('span');
+            line.className = 'boot-line';
+            line.textContent = bootLines[lineIndex];
+            bootContent.appendChild(line);
+            lineIndex++;
+            setTimeout(typeBootLine, 150);
+        } else {
+            const cursor = document.createElement('span');
+            cursor.className = 'boot-cursor';
+            bootContent.appendChild(cursor);
+
+            document.addEventListener('keydown', startSite, { once: true });
+            document.addEventListener('click', startSite, { once: true });
+            document.addEventListener('touchstart', startSite, { once: true });
+        }
+    }
+
+    function startSite() {
+        bootScreen.classList.add('hidden');
+        contentWrapper.style.display = 'block';
+    }
+
+    setTimeout(typeBootLine, 500);
+
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        form.style.display = 'none';
+        document.getElementById('formSuccess').style.display = 'block';
+        setTimeout(() => {
+            document.getElementById('formSuccess').style.display = 'none';
+            form.style.display = 'block';
+            form.reset();
+        }, 5000);
+    });
+
+    function sendMessage() {
+        const input = document.getElementById('userInput');
+        const messages = document.getElementById('chatMessages');
+        if (input.value.trim()) {
+            const userMsg = document.createElement('div');
+            userMsg.className = 'chat-message user';
+            userMsg.innerHTML = '<strong>[USER]:</strong> ' + input.value;
+            messages.appendChild(userMsg);
+            input.value = '';
+            setTimeout(() => {
+                const botMsg = document.createElement('div');
+                botMsg.className = 'chat-message neurica';
+                botMsg.innerHTML = '<strong>[NEURICA]:</strong> Дякую за ваше повідомлення. Я обробляю вашу відповідь...';
+                messages.appendChild(botMsg);
+                messages.scrollTop = messages.scrollHeight;
+            }, 1000);
+        }
+    }
+
+    document.getElementById('userInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') sendMessage();
+    });
+</script>
+
+</body>
+</html>
