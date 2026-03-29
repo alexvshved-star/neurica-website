@@ -1,0 +1,58 @@
+[build]
+  publish = "."
+
+# ---------------------------------------------------------------------------
+# Redirects
+# ---------------------------------------------------------------------------
+
+# Serve English version at clean /en URL (matches sitemap.xml + og:url)
+[[redirects]]
+  from = "/en"
+  to   = "/index-en.html"
+  status = 200
+
+# Fallback — unknown paths return Ukrainian homepage with 404 status
+[[redirects]]
+  from   = "/*"
+  to     = "/index.html"
+  status = 404
+
+# ---------------------------------------------------------------------------
+# Security headers (applied to every response)
+# ---------------------------------------------------------------------------
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options            = "DENY"
+    X-Content-Type-Options     = "nosniff"
+    X-XSS-Protection           = "1; mode=block"
+    Referrer-Policy            = "strict-origin-when-cross-origin"
+    Permissions-Policy         = "camera=(), microphone=(), geolocation=()"
+
+# ---------------------------------------------------------------------------
+# Cache headers
+# ---------------------------------------------------------------------------
+
+# HTML — always revalidate (content changes frequently)
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# JavaScript — long-term cache (filename-based cache busting via git)
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# SVG icons — long-term cache
+[[headers]]
+  for = "/*.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Sitemap — revalidate daily
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate"
