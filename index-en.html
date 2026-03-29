@@ -15,6 +15,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Neurica - AI Chatbot for PTSD Psychological Support">
     <meta name="twitter:description" content="Neurica - innovative AI chatbot for psychological support of people with PTSD. 24/7 confidential assistance.">
+    <meta name="twitter:image" content="https://neurica.net/icon.svg">
     <meta name="google-site-verification" content="dG4nuMQ76Jx4gPmvyEo3DyojEP0Z-AQFwP4ApcT_Fwc" />
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -24,10 +25,6 @@
         @keyframes scanline { 0% { transform: translateY(0); } 100% { transform: translateY(10px); } }
         @keyframes flicker { 0% { opacity: 0.97; } 2% { opacity: 0.94; } 4% { opacity: 0.98; } 8% { opacity: 0.96; } 10% { opacity: 1; } 12% { opacity: 0.95; } 14% { opacity: 0.99; } 16% { opacity: 0.97; } 18% { opacity: 1; } 100% { opacity: 1; } }
         .content-wrapper { animation: flicker 3s infinite; }
-        #bootScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #000000; color: #ffb000; font-family: 'Courier New', monospace; padding: 40px; z-index: 9999; overflow: hidden; }
-        #bootScreen.hidden { display: none; }
-        .boot-line { margin: 5px 0; opacity: 0; animation: fadeIn 0.3s forwards; }
-        @keyframes fadeIn { to { opacity: 1; } }
         .boot-cursor { display: inline-block; width: 10px; height: 20px; background-color: #ffb000; animation: blink 1s infinite; }
         @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
         .terminal-header { border: 2px solid #ffb000; padding: 20px; margin-bottom: 30px; background-color: #0a0a0a; box-shadow: 0 0 20px rgba(255,176,0,0.3); }
@@ -89,9 +86,7 @@
     </style>
 </head>
 <body>
-    <div id="bootScreen">
-        <div id="bootContent"></div>
-    </div>
+    <script src="splash.js"></script>
 
     <div class="language-switch">
         <a href="index.html">UA</a> | 
@@ -159,7 +154,7 @@
         <section class="hotlines">
             <h2>UKRAINE CRISIS HOTLINES</h2>
             <p class="hotline-urgent">IF YOU ARE IN A CRISIS SITUATION - DON'T WAIT, CALL NOW!</p>
-            <div class="hotline-item"><div class="hotline-name">National Domestic Violence Hotline</div><div class="hotline-number">116 123</div><div class="hotline-description">24/7 free psychological support</div></div>
+            <div class="hotline-item"><div class="hotline-name">Psychological Support Line</div><div class="hotline-number">116 123</div><div class="hotline-description">24/7 free psychological support</div></div>
             <div class="hotline-item"><div class="hotline-name">La Strada-Ukraine</div><div class="hotline-number">0 800 500 335</div><div class="hotline-description">Anti-trafficking, assistance to violence victims</div></div>
             <div class="hotline-item"><div class="hotline-name">Children and Youth Helpline</div><div class="hotline-number">116 111</div><div class="hotline-description">Free psychological support for children and adolescents</div></div>
             <div class="hotline-item"><div class="hotline-name">Voices of Children</div><div class="hotline-number">0 800 210 106</div><div class="hotline-description">Free psychological support for children and parents, weekdays 9:00-20:00</div></div>
@@ -176,40 +171,17 @@
     </div>
 
     <script>
-        var bootLines = ['NEURICA SYSTEM v1.0','Copyright (C) 2026 EONYX Research Lab','','Detecting hardware...','CPU: Neural Processing Unit [OK]','RAM: 256MB Empathy Memory [OK]','DISK: Secure Encrypted Storage [OK]','','Loading PTSD Support Module...','Initializing AI Core...','Loading confidentiality protocols...','Establishing secure connection...','','SYSTEM READY','','Press any key to continue...'];
-        var lineIndex = 0;
-        var bootContent = document.getElementById('bootContent');
-        var bootScreen = document.getElementById('bootScreen');
-        var contentWrapper = document.querySelector('.content-wrapper');
-        function typeBootLine() {
-            if (lineIndex < bootLines.length) {
-                var line = document.createElement('div');
-                line.className = 'boot-line';
-                line.textContent = bootLines[lineIndex];
-                bootContent.appendChild(line);
-                lineIndex++;
-                setTimeout(typeBootLine, lineIndex === bootLines.length ? 500 : 200);
-            } else {
-                var cursor = document.createElement('span');
-                cursor.className = 'boot-cursor';
-                bootContent.appendChild(cursor);
-                document.addEventListener('keydown', startSite, {once: true});
-                document.addEventListener('click', startSite, {once: true});
-            }
-        }
-        function startSite() { bootScreen.classList.add('hidden'); contentWrapper.style.display = 'block'; }
-        setTimeout(typeBootLine, 500);
-        document.getElementById('betaForm').addEventListener('submit', function(e) {
+        document.getElementById('betaForm').addEventListener('submit', function (e) {
             e.preventDefault();
             var form = e.target;
             var loading = document.getElementById('loadingAnimation');
             var success = document.getElementById('successMessage');
             form.style.display = 'none';
             loading.classList.add('active');
-            setTimeout(function() {
+            setTimeout(function () {
                 loading.classList.remove('active');
                 success.classList.add('active');
-                setTimeout(function() { form.style.display = 'block'; success.classList.remove('active'); form.reset(); }, 5000);
+                setTimeout(function () { form.style.display = 'block'; success.classList.remove('active'); form.reset(); }, 5000);
             }, 2000);
         });
     </script>

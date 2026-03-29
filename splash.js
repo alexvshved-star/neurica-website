@@ -29,7 +29,7 @@
   ];
 
   var style = document.createElement('style');
-  style.textContent = '#dos-splash{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:99999;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:40px 60px;box-sizing:border-box;transition:opacity 0.8s ease;cursor:pointer;}#dos-splash .dos-line{font-family:"Courier New",Courier,monospace;font-size:clamp(12px,1.8vw,18px);color:#33ff33;line-height:1.7;opacity:0;transition:opacity 0.15s;}#dos-splash .dos-cursor{display:inline-block;width:10px;height:1.1em;background:#33ff33;vertical-align:text-bottom;animation:blink 0.8s step-end infinite;}@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}';
+  style.textContent = '#dos-splash{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:99999;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:40px 60px;box-sizing:border-box;transition:opacity 0.8s ease;cursor:pointer;}#dos-splash .dos-line{font-family:"Courier New",Courier,monospace;font-size:clamp(12px,1.8vw,18px);color:#ffb000;line-height:1.7;opacity:0;transition:opacity 0.15s;}#dos-splash .dos-cursor{display:inline-block;width:10px;height:1.1em;background:#ffb000;vertical-align:text-bottom;animation:blink 0.8s step-end infinite;}@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}';
   document.head.appendChild(style);
 
   var splash = document.createElement('div');
@@ -51,8 +51,13 @@
 
   function dismiss() {
     splash.style.opacity = '0';
-    setTimeout(function () { splash.style.display = 'none'; }, 800);
+    setTimeout(function () {
+      splash.style.display = 'none';
+      var wrapper = document.querySelector('.content-wrapper');
+      if (wrapper) wrapper.style.display = 'block';
+    }, 800);
     document.removeEventListener('keydown', dismiss);
+    document.removeEventListener('touchstart', dismiss);
     splash.removeEventListener('click', dismiss);
   }
 
@@ -67,4 +72,5 @@
 
   splash.addEventListener('click', dismiss);
   document.addEventListener('keydown', dismiss);
+  document.addEventListener('touchstart', dismiss);
 })();

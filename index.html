@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEURICA - AI Чат-бот Психологічної Підтримки при ПТСР</title>
-    <meta name="description" content="Neurica - інноваційний AI чат-бот для психологічної підтримки hлюдей з ПТСР. Цілодобова конфіденційна допомога. Гуманітарний проект EONYX.">
+    <meta name="description" content="Neurica - інноваційний AI чат-бот для психологічної підтримки людей з ПТСР. Цілодобова конфіденційна допомога. Гуманітарний проєкт EONYX.">
+    <meta name="keywords" content="ПТСР, психологічна підтримка, AI чат-бот, посттравматичний стресовий розлад, Neurica, психічне здоров'я">
     <link rel="icon" href="icon.svg" type="image/svg+xml">
     <meta property="og:title" content="Neurica - AI Чат-бот Психологічної Підтримки при ПТСР">
     <meta property="og:description" content="Neurica - інноваційний AI чат-бот для психологічної підтримки людей з ПТСР. Цілодобова конфіденційна допомога. Гуманітарний проєкт EONYX.">
@@ -15,519 +15,262 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Neurica - AI Чат-бот Психологічної Підтримки при ПТСР">
     <meta name="twitter:description" content="Neurica - інноваційний AI чат-бот для психологічної підтримки людей з ПТСР.">
+    <meta name="twitter:image" content="https://neurica.net/icon.svg">
     <meta name="google-site-verification" content="dG4nuMQ76Jx4gPmvyEo3DyojEP0Z-AQFwP4ApcT_Fwc" />
-    <meta name="keywords" content="ПТСР, психологічна підтримка, AI чат-бот, посттравматичний стресовий розлад, Neurica, психічне здоров'я">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Courier New', Courier, monospace; background-color: #000000; color: #ffb000; line-height: 1.6; padding: 20px; max-width: 1200px; margin: 0 auto; position: relative; }
+        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: repeating-linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15) 1px, transparent 1px, transparent 2px); pointer-events: none; z-index: 1000; }
+        body::after { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: repeating-linear-gradient(0deg, rgba(255,176,0,0.03), rgba(255,176,0,0.03) 1px, transparent 1px, transparent 3px); pointer-events: none; z-index: 999; animation: scanline 8s linear infinite; }
+        @keyframes scanline { 0% { transform: translateY(0); } 100% { transform: translateY(10px); } }
+        @keyframes flicker { 0% { opacity: 0.97; } 2% { opacity: 0.94; } 4% { opacity: 0.98; } 8% { opacity: 0.96; } 10% { opacity: 1; } 12% { opacity: 0.95; } 14% { opacity: 0.99; } 16% { opacity: 0.97; } 18% { opacity: 1; } 100% { opacity: 1; } }
+        .content-wrapper { animation: flicker 3s infinite; }
+        .terminal-header { border: 2px solid #ffb000; padding: 20px; margin-bottom: 30px; background-color: #0a0a0a; box-shadow: 0 0 20px rgba(255,176,0,0.3); }
+        h1 { font-size: 2.5em; margin-bottom: 10px; text-shadow: 0 0 10px #ffb000; letter-spacing: 3px; }
+        h2 { font-size: 1.8em; margin: 30px 0 20px 0; color: #ffb000; text-shadow: 0 0 8px #ffb000; letter-spacing: 2px; }
+        .subtitle { font-size: 1.2em; margin-bottom: 20px; letter-spacing: 2px; }
+        .system-message { background-color: #0a0a0a; border-left: 4px solid #ffb000; padding: 15px; margin: 20px 0; }
+        .system-message p { margin: 5px 0; padding-left: 20px; }
+        .feature-list { list-style: none; margin: 20px 0; }
+        .feature-list li { padding: 10px 0 10px 30px; position: relative; }
+        .feature-list li:before { content: '>'; position: absolute; left: 0; color: #ffb000; font-weight: bold; }
+        .beta-form { background-color: #0a0a0a; border: 3px solid #ffb000; padding: 30px; margin: 30px 0; box-shadow: 0 0 20px rgba(255,176,0,0.4); animation: pulse-border 2s infinite; }
+        @keyframes pulse-border { 0%, 100% { box-shadow: 0 0 20px rgba(255,176,0,0.4); } 50% { box-shadow: 0 0 30px rgba(255,176,0,0.6); } }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; color: #ffb000; font-weight: bold; }
+        input, textarea { width: 100%; padding: 12px; background-color: #1a1a1a; border: 2px solid #ffb000; color: #ffb000; font-family: 'Courier New', monospace; font-size: 1em; transition: all 0.3s; }
+        input:focus, textarea:focus { outline: none; box-shadow: 0 0 15px rgba(255,176,0,0.6); border-color: #ffd700; }
+        textarea { min-height: 100px; resize: vertical; }
+        button { background-color: #ffb000; color: #000000; border: 2px solid #ffb000; padding: 15px 40px; font-size: 1.1em; font-family: 'Courier New', monospace; font-weight: bold; cursor: pointer; transition: all 0.3s; letter-spacing: 2px; width: 100%; }
+        button:hover { background-color: #000000; color: #ffb000; box-shadow: 0 0 25px rgba(255,176,0,0.8); transform: scale(1.02); }
+        button:active { transform: scale(0.98); }
+        .demo-section { background-color: #0a0a0a; border: 2px solid #ffb000; padding: 30px; margin: 30px 0; box-shadow: 0 0 15px rgba(255,176,0,0.2); }
+        .chat-demo { margin: 20px 0; }
+        .chat-message { margin: 15px 0; padding: 15px; border-left: 4px solid #ffb000; background-color: #1a1a1a; }
+        .chat-message.user { border-left-color: #00ff00; }
+        .message-header { font-weight: bold; margin-bottom: 8px; color: #ffb000; }
+        .message-header.user { color: #00ff00; }
+        .message-text { color: #d4a000; line-height: 1.8; }
+        .faq-section { margin: 30px 0; }
+        .faq-item { background-color: #0a0a0a; border: 1px solid #ffb000; padding: 20px; margin-bottom: 15px; }
+        .faq-question { font-weight: bold; margin-bottom: 10px; font-size: 1.1em; }
+        .faq-answer { color: #d4a000; line-height: 1.8; }
+        .hotlines { background-color: #0a0a0a; border: 3px solid #ff0000; padding: 30px; margin: 30px 0; box-shadow: 0 0 20px rgba(255,0,0,0.3); }
+        .hotlines h2 { color: #ff0000; text-shadow: 0 0 10px #ff0000; }
+        .hotline-urgent { color: #ff0000; font-weight: bold; font-size: 1.2em; margin-bottom: 20px; text-align: center; letter-spacing: 2px; animation: urgent-blink 1s infinite; }
+        @keyframes urgent-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0.7; } }
+        .hotline-item { background-color: #1a0000; border-left: 4px solid #ff0000; padding: 15px; margin: 15px 0; }
+        .hotline-name { font-weight: bold; font-size: 1.1em; margin-bottom: 5px; }
+        .hotline-number { font-size: 1.3em; color: #ff0000; font-weight: bold; margin: 5px 0; }
+        .hotline-description { color: #d4a000; font-size: 0.95em; }
+        footer { margin-top: 50px; padding-top: 30px; border-top: 2px solid #ffb000; text-align: center; }
+        footer p { margin: 10px 0; }
+        .footer-location { margin-top: 15px; padding: 15px; background-color: #0a0a0a; border: 1px solid #ffb000; display: inline-block; }
+        .loading-animation { display: none; text-align: center; padding: 20px; color: #ffb000; }
+        .loading-animation.active { display: block; }
+        .success-message { display: none; background-color: #1a4d1a; border: 2px solid #00ff00; padding: 20px; margin-top: 20px; color: #00ff00; text-align: center; }
+        .success-message.active { display: block; }
+        .boot-cursor { display: inline-block; width: 10px; height: 20px; background-color: #ffb000; animation: blink-cursor 1s infinite; }
+        @keyframes blink-cursor { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+        a { color: #ffb000; text-decoration: none; }
+        a:hover { text-decoration: underline; text-shadow: 0 0 5px #ffb000; }
+        .language-switch { position: fixed; top: 20px; right: 20px; z-index: 1001; background-color: #0a0a0a; border: 2px solid #ffb000; padding: 10px 20px; }
+        .language-switch a { margin: 0 10px; font-weight: bold; }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            h1 { font-size: 1.8em; }
+            h2 { font-size: 1.4em; }
+            .terminal-header, .beta-form, .hotlines, .demo-section { padding: 15px; }
+            .language-switch { top: 10px; right: 10px; padding: 5px 10px; }
         }
-
-    body {
-        font-family: 'Courier New', Courier, monospace;
-        background-color: #000000;
-        color: #ffb000;
-        line-height: 1.6;
-        padding: 20px;
-        max-width: 1200px;
-        margin: 0 auto;
-        position: relative;
-    }
-
-    body::before {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: repeating-linear-gradient(
-            0deg,
-            rgba(0, 0, 0, 0.15),
-            rgba(0, 0, 0, 0.15) 1px,
-            transparent 1px,
-            transparent 2px
-        );
-        pointer-events: none;
-        z-index: 1000;
-    }
-
-    body::after {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: repeating-linear-gradient(
-            0deg,
-            rgba(255, 176, 0, 0.03),
-            rgba(255, 176, 0, 0.03) 1px,
-            transparent 1px,
-            transparent 3px
-        );
-        pointer-events: none;
-        z-index: 999;
-        animation: scanline 8s linear infinite;
-    }
-
-    @keyframes scanline {
-        0% { background-position: 0 0; }
-        100% { background-position: 0 100%; }
-    }
-
-    @keyframes flicker {
-        0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
-        20%, 24%, 55% { opacity: 0.97; }
-    }
-
-    .content-wrapper {
-        animation: flicker 3s infinite;
-    }
-
-    h1, h2, h3 {
-        color: #ffb000;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-    }
-
-    h1 {
-        font-size: 2em;
-        border-bottom: 2px solid #ffb000;
-        padding-bottom: 10px;
-        margin-bottom: 20px;
-    }
-
-    h2 {
-        font-size: 1.5em;
-        margin-top: 30px;
-        margin-bottom: 15px;
-        border-left: 4px solid #ffb000;
-        padding-left: 10px;
-    }
-
-    h3 {
-        font-size: 1.2em;
-        margin-top: 20px;
-        margin-bottom: 10px;
-    }
-
-    p {
-        margin-bottom: 15px;
-    }
-
-    .chat-interface {
-        border: 2px solid #ffb000;
-        padding: 20px;
-        margin: 20px 0;
-        background: #0a0a0a;
-    }
-
-    .chat-messages {
-        height: 300px;
-        overflow-y: auto;
-        margin-bottom: 15px;
-        padding: 10px;
-        border: 1px solid #555;
-    }
-
-    .chat-message {
-        margin-bottom: 10px;
-        padding: 8px;
-        border-left: 3px solid #555;
-    }
-
-    .chat-message.user {
-        border-left-color: #888;
-    }
-
-    .chat-message.neurica {
-        border-left-color: #ffb000;
-    }
-
-    .chat-input-area {
-        display: flex;
-        gap: 10px;
-    }
-
-    .chat-input-area input {
-        flex: 1;
-        background: #000;
-        border: 1px solid #ffb000;
-        color: #ffb000;
-        padding: 8px;
-        font-family: inherit;
-        font-size: inherit;
-    }
-
-    .chat-input-area button,
-    .contact-form button {
-        background: transparent;
-        border: 2px solid #ffb000;
-        color: #ffb000;
-        padding: 8px 16px;
-        cursor: pointer;
-        font-family: inherit;
-        font-size: inherit;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-
-    .chat-input-area button:hover,
-    .contact-form button:hover {
-        background: #ffb000;
-        color: #000;
-    }
-
-    .faq-section {
-        margin: 20px 0;
-    }
-
-    .faq-item {
-        margin-bottom: 20px;
-        border-left: 2px solid #555;
-        padding-left: 15px;
-    }
-
-    .faq-question {
-        color: #ffb000;
-        font-weight: bold;
-        margin-bottom: 5px;
-        text-transform: uppercase;
-        font-size: 0.9em;
-        letter-spacing: 1px;
-    }
-
-    .contact-form {
-        margin: 20px 0;
-    }
-
-    .contact-form input,
-    .contact-form textarea {
-        width: 100%;
-        background: #000;
-        border: 1px solid #ffb000;
-        color: #ffb000;
-        padding: 10px;
-        margin-bottom: 10px;
-        font-family: inherit;
-        font-size: inherit;
-    }
-
-    .contact-form textarea {
-        height: 120px;
-        resize: vertical;
-    }
-
-    .hotline-section {
-        border: 2px solid #ffb000;
-        padding: 20px;
-        margin: 20px 0;
-        background: #0a0a0a;
-    }
-
-    .hotline-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px;
-        border-bottom: 1px solid #333;
-    }
-
-    .hotline-item:last-child {
-        border-bottom: none;
-    }
-
-    .hotline-number {
-        color: #ffb000;
-        font-size: 1.2em;
-        font-weight: bold;
-    }
-
-    .hotline-description {
-        color: #aaa;
-        font-size: 0.9em;
-        flex: 1;
-        margin-left: 20px;
-    }
-
-    footer {
-        margin-top: 40px;
-        padding-top: 20px;
-        border-top: 2px solid #ffb000;
-        text-align: center;
-        color: #888;
-        font-size: 0.9em;
-    }
-
-    a {
-        color: #ffb000;
-        text-decoration: none;
-    }
-
-    a:hover {
-        text-decoration: underline;
-    }
-
-    /* Boot Screen Styles */
-    #bootScreen {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #000000;
-        color: #ffb000;
-        font-family: 'Courier New', Courier, monospace;
-        padding: 30px;
-        z-index: 9999;
-        overflow-y: auto;
-    }
-
-    #bootScreen.hidden {
-        display: none;
-    }
-
-    .boot-line {
-        display: block;
-        opacity: 0;
-        animation: fadeIn 0.3s forwards;
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-
-    .boot-cursor {
-        display: inline-block;
-        width: 10px;
-        height: 15px;
-        background: #ffb000;
-        animation: blink 1s infinite;
-        vertical-align: middle;
-    }
-
-    @keyframes blink {
-        0%, 50% { opacity: 1; }
-        51%, 100% { opacity: 0; }
-    }
-
-    .language-switch {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 1001;
-        background-color: #0a0a0a;
-        border: 2px solid #ffb000;
-        padding: 10px 20px;
-        font-family: 'Courier New', Courier, monospace;
-    }
-
-    @media (max-width: 600px) {
-        h1 { font-size: 1.5em; }
-        h2 { font-size: 1.2em; }
-        .hotline-item {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-        .hotline-description {
-            margin-left: 0;
-            margin-top: 5px;
-        }
-        .chat-input-area {
-            flex-direction: column;
-        }
-        .language-switch {
-            top: 10px;
-            right: 10px;
-            padding: 5px 10px;
-        }
-    }
-</style>
-
-
+    </style>
 </head>
 <body>
-    <!-- DOS Boot Screen -->
-    <div id="bootScreen">
-        <div id="bootContent"></div>
+    <script src="splash.js"></script>
+
+    <div class="language-switch">
+        <a href="index.html" style="color: #ffb000;">UA</a> |
+        <a href="index-en.html">EN</a>
     </div>
 
-<!-- Language Switch -->
-<div class="language-switch">
-    <a href="index.html" style="color: #ffb000;">UA</a> | 
-    <a href="index-en.html">EN</a>
-</div>
+    <div class="content-wrapper" style="display: none;">
+        <div class="terminal-header">
+            <h1>NEURICA</h1>
+            <p class="subtitle">AI ЧАТ-БОТ ПСИХОЛОГІЧНОЇ ПІДТРИМКИ ПРИ ПТСР</p>
+        </div>
 
-<!-- Main Content -->
-<div class="content-wrapper" style="display: none;">
-    <header>
-        <h1>&gt; NEURICA v1.0_</h1>
-        <p>:: AI ЧАТ-БОТ ПСИХОЛОГІЧНОЇ ПІДТРИМКИ ПРИ ПТСР ::</p>
-    </header>
+        <div class="system-message">
+            <p><strong>СИСТЕМНЕ ПОВІДОМЛЕННЯ</strong></p>
+            <p>&gt; Ініціалізація системи Neurica...</p>
+            <p>&gt; Модуль AI психологічної підтримки: АКТИВОВАНО</p>
+            <p>&gt; Протокол конфіденційності: УВІМКНЕНО</p>
+            <p>&gt; Система готова</p>
+        </div>
 
-    <section class="chat-interface">
-        <div class="chat-messages" id="chatMessages">
-            <div class="chat-message neurica">
-                <strong>[NEURICA]:</strong> Система ініціалізована. Я готовий допомогти вам з розумінням і проробкою ваших переживань. Повідомлю: я не замінюю психолога, але допоможу знайти правильний спеціаліст. Що вас турбує?</strong>
+        <section>
+            <h2>ПРО NEURICA</h2>
+            <p>Neurica — інноваційний AI чат-бот, розроблений для надання психологічної підтримки людям з посттравматичним стресовим розладом (ПТСР).</p>
+            <ul class="feature-list">
+                <li>Підтримка 24/7 без вихідних</li>
+                <li>Повна конфіденційність розмов</li>
+                <li>Емпатичний та безпечний підхід</li>
+                <li>Спеціалізована підтримка при ПТСР</li>
+            </ul>
+            <p style="margin-top: 20px; font-style: italic;">Neurica — гуманітарний проєкт EONYX</p>
+        </section>
+
+        <section class="demo-section">
+            <h2>ПЕРЕГЛЯД СИСТЕМИ</h2>
+            <p style="margin-bottom: 20px; color: #d4a000;">Приклад взаємодії з Neurica (демонстраційний діалог):</p>
+            <div class="chat-demo">
+                <div class="chat-message user">
+                    <div class="message-header user">&gt; КОРИСТУВАЧ:</div>
+                    <div class="message-text">Мені важко спати через постійні кошмари про те, що сталося...</div>
+                </div>
+                <div class="chat-message">
+                    <div class="message-header">&gt; NEURICA:</div>
+                    <div class="message-text">Я розумію, як це важко. Нав'язливі кошмари після травматичних подій — поширена реакція на стрес. Ви не одні у своїх переживаннях. Давайте спробуємо техніку заземлення перед сном: визначте 5 речей, які ви бачите, 4 речі, яких можете торкнутися, 3 звуки навколо вас. Це допоможе заспокоїти розум. Хочете спробувати зараз?</div>
+                </div>
+                <div class="chat-message user">
+                    <div class="message-header user">&gt; КОРИСТУВАЧ:</div>
+                    <div class="message-text">Так, спробую. Дякую за підтримку.</div>
+                </div>
+                <div class="chat-message">
+                    <div class="message-header">&gt; NEURICA:</div>
+                    <div class="message-text">Чудово. Пам'ятайте — відновлення це процес, і кожен крок вперед має значення. Я тут для вас 24/7. Якщо кошмари посиляться або у вас виникнуть думки про суїцид, будь ласка, зверніться до фахівця або зателефонуйте на кризову лінію. Ваше здоров'я — найважливіше.</div>
+                </div>
             </div>
-        </div>
-        <div class="chat-input-area">
-            <input type="text" id="userInput" placeholder="> введіть повідомлення..." />
-            <button onclick="sendMessage()">[НАДІСЛАТИ]</button>
-        </div>
-    </section>
+            <p style="margin-top: 20px; font-style: italic; color: #d4a000;">* Демонстраційний діалог. Реальна версія Neurica буде доступна після бета-тестування.</p>
+        </section>
 
-    <section>
-        <h2>> ПРО ПТСР [ПОСТТРАВМАТИЧНИЙ СТРЕСОВИЙ РОЗЛАД]</h2>
-        <p>ПТСР — це серйозний психічний стан, що розвивається після переживання травмуючої події. Він може зачіпати будь-яку людину — військових, цивільних, першорятувачів надзвичайних ситуацій.</p>
-        <p><strong>Симптоми:</strong> навторні кошмари, уникання спогадів, емоційне отуплення, гіперзбудливість, проблеми зі сном.</p>
+        <section>
+            <h2>РЕЄСТРАЦІЯ НА БЕТА-ТЕСТУВАННЯ</h2>
+            <div class="beta-form">
+                <p style="margin-bottom: 20px; text-align: center; font-size: 1.1em;">[ ФОРМА ЗАЯВКИ НА БЕТА-ДОСТУП ]</p>
+                <form id="betaForm">
+                    <div class="form-group">
+                        <label for="name">Ім'я *</label>
+                        <input type="text" id="name" name="name" placeholder="Введіть ваше ім'я" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" placeholder="example@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Телефон</label>
+                        <input type="tel" id="phone" name="phone" placeholder="+380">
+                    </div>
+                    <div class="form-group">
+                        <label for="reason">Чому ви хочете взяти участь у бета-тестуванні?</label>
+                        <textarea id="reason" name="reason" placeholder="Розкажіть про ваші очікування від Neurica..."></textarea>
+                    </div>
+                    <button type="submit">[ НАДІСЛАТИ ЗАЯВКУ ]</button>
+                    <div class="loading-animation" id="loadingAnimation">
+                        <p>&gt; Збереження на зашифрованому сервері<span class="boot-cursor" style="width:5px;height:15px;margin-left:5px;"></span></p>
+                        <p>&gt; Шифрування даних...</p>
+                    </div>
+                    <div class="success-message" id="successMessage">
+                        <p><strong>&#10003; УСПІШНО НАДІСЛАНО</strong></p>
+                        <p>Вашу заявку збережено. Ми зв'яжемося з вами найближчим часом!</p>
+                    </div>
+                </form>
+            </div>
+        </section>
 
-        <div class="faq-section">
-            <h2>> FAQ: ЧАСТО ЗАПИТУВАНІ ПИТАННЯ</h2>
-            
+        <section class="faq-section">
+            <h2>FAQ ПРО ПТСР</h2>
             <div class="faq-item">
-                <div class="faq-question">Запитання: Чи безпечно використовувати Neurica?</div>
-                <p>Так. Всі розмови шифруються і не зберігаються. Система працює відповідно до протоколів конфіденційності.</p>
+                <div class="faq-question">Що таке ПТСР?</div>
+                <div class="faq-answer">Посттравматичний стресовий розлад (ПТСР) — психічний розлад, який може розвинутися після переживання або свідчення травматичної події. Це може бути військовий конфлікт, аварія, насильство, природна катастрофа або інші небезпечні для життя ситуації.</div>
             </div>
             <div class="faq-item">
-                <div class="faq-question">Запитання: Чи є Neurica лікуванням?</div>
-                <p>Ні. Neurica — це інструмент першої допомоги і допоміжний ресурс для орієнтації. Для лікування необхідна консультація ліцензованого спеціаліста.</p>
+                <div class="faq-question">Які основні симптоми ПТСР?</div>
+                <div class="faq-answer">Основні симптоми включають: нав'язливі спогади про травматичну подію, кошмари, уникання нагадувань про травму, негативні зміни в думках і настрої, підвищену пильність і реакцію на загрозу.</div>
             </div>
             <div class="faq-item">
-                <div class="faq-question">Запитання: Швидко працює бот?</div>
-                <p>Відразу. Бот доступний 24/7 без аутентифікації.</p>
+                <div class="faq-question">Чи можна вилікувати ПТСР?</div>
+                <div class="faq-answer">Так, ПТСР піддається лікуванню. Ефективні методи включають психотерапію (когнітивно-поведінкова терапія, EMDR), медикаментозне лікування та техніки самодопомоги.</div>
             </div>
-        </div>
-    </section>
+            <div class="faq-item">
+                <div class="faq-question">Як Neurica може допомогти при ПТСР?</div>
+                <div class="faq-answer">Neurica забезпечує підтримку 24/7, допомагає відстежувати симптоми, пропонує заспокійливі техніки. Вона доповнює професійну допомогу, але не замінює психотерапевта.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Коли треба негайно звертатися за допомогою?</div>
+                <div class="faq-answer">Звертайтеся за допомогою негайно, якщо у вас є суїцидальні думки, плани завдати шкоди собі або іншим, важка депресія або панічні атаки, які суттєво погіршують повсякденне життя.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Чи є розмови з Neurica конфіденційними?</div>
+                <div class="faq-answer">Так, всі розмови повністю конфіденційні та захищені сучасним шифруванням. Ми не передаємо персональну інформацію третім сторонам без вашої згоди.</div>
+            </div>
+        </section>
 
-    <section>
-        <h2>> ЗВ'ЯЗАТИСЯ З НАМИ</h2>
-        <form class="contact-form" id="contactForm">
-            <input type="text" id="nameInput" placeholder="Ім'я" required />
-            <input type="email" id="emailInput" placeholder="Email" required />
-            <textarea id="messageInput" placeholder="Ваше повідомлення" required></textarea>
-            <button type="submit">[ НАДІСЛАТИ ЗАЯВКУ ]</button>
-        </form>
-        <div id="formSuccess" style="display:none; color: #ffb000; margin-top: 10px;">
-            &gt; Повідомлення надіслано. Очікуйте відповідь протягом 24 годин.
-        </div>
-    </section>
+        <section class="hotlines">
+            <h2>ГАРЯЧІ ЛІНІЇ КРИЗОВОЇ ДОПОМОГИ УКРАЇНИ</h2>
+            <p class="hotline-urgent">ЯКЩО ВИ В КРИЗОВІЙ СИТУАЦІЇ — НЕ ЧЕКАЙТЕ, ТЕЛЕФОНУЙТЕ ЗАРАЗ!</p>
+            <div class="hotline-item">
+                <div class="hotline-name">Лінія психологічної підтримки</div>
+                <div class="hotline-number">116 123</div>
+                <div class="hotline-description">Безкоштовна психологічна підтримка цілодобово</div>
+            </div>
+            <div class="hotline-item">
+                <div class="hotline-name">Ла Страда-Україна</div>
+                <div class="hotline-number">0 800 500 335</div>
+                <div class="hotline-description">Протидія торгівлі людьми, допомога жертвам насильства</div>
+            </div>
+            <div class="hotline-item">
+                <div class="hotline-name">Дитяча та молодіжна гаряча лінія</div>
+                <div class="hotline-number">116 111</div>
+                <div class="hotline-description">Безкоштовна психологічна підтримка для дітей та підлітків</div>
+            </div>
+            <div class="hotline-item">
+                <div class="hotline-name">Голоси дітей</div>
+                <div class="hotline-number">0 800 210 106</div>
+                <div class="hotline-description">Безкоштовна психологічна підтримка для дітей та батьків, будні 9:00–20:00</div>
+            </div>
+            <div class="hotline-item">
+                <div class="hotline-name">Психологічна підтримка ветеранів</div>
+                <div class="hotline-number">0 800 332 029</div>
+                <div class="hotline-description">Кризова підтримка для ветеранів та їх сімей, цілодобово</div>
+            </div>
+            <div class="hotline-item">
+                <div class="hotline-name">Lifeline Ukraine — Запобігання суїциду</div>
+                <div class="hotline-number">7333</div>
+                <div class="hotline-description">Цілодобова національна гаряча лінія психічного здоров'я</div>
+            </div>
+        </section>
 
-    <section class="hotline-section">
-        <h2>> ГАРЯЧІ ЛІНІЇ ПСИХОЛОГІЧНОЇ ДОПОМОГИ</h2>
-        <div class="hotline-item">
-            <span class="hotline-number">0-800-505-010</span>
-            <span class="hotline-description">Безкоштовна психологічна допомога для ветеранів та їх сімей (Мінветеранів)</span>
-        </div>
-        <div class="hotline-item">
-            <span class="hotline-number">116 123</span>
-            <span class="hotline-description">Лінія психологічної підтримки (цілодобово)</span>
-        </div>
-        <div class="hotline-item">
-            <span class="hotline-number">0-800-301-360</span>
-            <span class="hotline-description">Національна гаряча лінія з питань психічного здоров'я</span>
-        </div>
-        <div class="hotline-item">
-            <span class="hotline-number">1547</span>
-            <span class="hotline-description">Урядова гаряча лінія (для всіх громадян)</span>
-        </div>
-    </section>
+        <footer>
+            <p>&copy; 2026 NEURICA. Всі права захищені.</p>
+            <div class="footer-location">
+                <p style="font-weight:bold;">РОЗРОБЛЕНО:</p>
+                <p>EONYX Research Lab</p>
+                <p>Київ, Україна | 2026</p>
+            </div>
+            <p style="margin-top:20px; font-style:italic;">Гуманітарний проєкт EONYX</p>
+            <p style="margin-top:10px;">Створено з турботою про ваше психічне здоров'я</p>
+            <p style="margin-top:20px;"><a href="mailto:eonyx.info@gmail.com">eonyx.info@gmail.com</a></p>
+        </footer>
+    </div>
 
-    <footer>
-        <p>&gt; NEURICA v1.0 :: EONYX Research Lab :: 2026_</p>
-        <p>Гуманітарний проект | Конфіденційно | Безкоштовно</p>
-    </footer>
-</div>
-
-<script>
-    const bootLines = [
-        'NEURICA SYSTEM v1.0',
-        'Copyright (C) 2026 EONYX Research Lab',
-        '',
-        'Detecting hardware...',
-        'CPU: Neural Processing Unit [OK]',
-        'RAM: 256MB Empathy Memory [OK]',
-        'DISK: Secure Encrypted Storage [OK]',
-        '',
-        'Loading PTSD Support Module...',
-        'Initializing AI Core...',
-        'Loading confidentiality protocols...',
-        'Establishing secure connection...',
-        '',
-        'SYSTEM READY',
-        '',
-        'Press any key to continue...'
-    ];
-
-    let lineIndex = 0;
-    const bootContent = document.getElementById('bootContent');
-    const bootScreen = document.getElementById('bootScreen');
-    const contentWrapper = document.querySelector('.content-wrapper');
-
-    function typeBootLine() {
-        if (lineIndex < bootLines.length) {
-            const line = document.createElement('span');
-            line.className = 'boot-line';
-            line.textContent = bootLines[lineIndex];
-            bootContent.appendChild(line);
-            lineIndex++;
-            setTimeout(typeBootLine, 150);
-        } else {
-            const cursor = document.createElement('span');
-            cursor.className = 'boot-cursor';
-            bootContent.appendChild(cursor);
-
-            document.addEventListener('keydown', startSite, { once: true });
-            document.addEventListener('click', startSite, { once: true });
-            document.addEventListener('touchstart', startSite, { once: true });
-        }
-    }
-
-    function startSite() {
-        bootScreen.classList.add('hidden');
-        contentWrapper.style.display = 'block';
-    }
-
-    setTimeout(typeBootLine, 500);
-
-    const form = document.getElementById('contactForm');
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        form.style.display = 'none';
-        document.getElementById('formSuccess').style.display = 'block';
-        setTimeout(() => {
-            document.getElementById('formSuccess').style.display = 'none';
-            form.style.display = 'block';
-            form.reset();
-        }, 5000);
-    });
-
-    function sendMessage() {
-        const input = document.getElementById('userInput');
-        const messages = document.getElementById('chatMessages');
-        if (input.value.trim()) {
-            const userMsg = document.createElement('div');
-            userMsg.className = 'chat-message user';
-            userMsg.innerHTML = '<strong>[USER]:</strong> ' + input.value;
-            messages.appendChild(userMsg);
-            input.value = '';
-            setTimeout(() => {
-                const botMsg = document.createElement('div');
-                botMsg.className = 'chat-message neurica';
-                botMsg.innerHTML = '<strong>[NEURICA]:</strong> Дякую за ваше повідомлення. Я обробляю вашу відповідь...';
-                messages.appendChild(botMsg);
-                messages.scrollTop = messages.scrollHeight;
-            }, 1000);
-        }
-    }
-
-    document.getElementById('userInput').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') sendMessage();
-    });
-</script>
-
+    <script>
+        document.getElementById('betaForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var form = e.target;
+            var loading = document.getElementById('loadingAnimation');
+            var success = document.getElementById('successMessage');
+            form.style.display = 'none';
+            loading.classList.add('active');
+            setTimeout(function () {
+                loading.classList.remove('active');
+                success.classList.add('active');
+                setTimeout(function () {
+                    form.style.display = 'block';
+                    success.classList.remove('active');
+                    form.reset();
+                }, 5000);
+            }, 2000);
+        });
+    </script>
 </body>
 </html>
