@@ -5,11 +5,17 @@
 # Redirects
 # ---------------------------------------------------------------------------
 
-# Serve English version at clean /en URL (matches sitemap.xml + og:url)
+# Serve English version at clean /index-en URL (matches sitemap.xml + og:url)
 [[redirects]]
-  from = "/en"
+  from = "/index-en"
   to   = "/index-en.html"
   status = 200
+
+# Legacy /en URL — keep working for backlinks
+[[redirects]]
+  from = "/en"
+  to   = "/index-en"
+  status = 301
 
 # Fallback — unknown paths return Ukrainian homepage with 404 status
 [[redirects]]
