@@ -17,12 +17,6 @@
   to   = "/index-en"
   status = 301
 
-# Fallback — unknown paths return Ukrainian homepage with 404 status
-[[redirects]]
-  from   = "/*"
-  to     = "/index.html"
-  status = 404
-
 # ---------------------------------------------------------------------------
 # Security headers (applied to every response)
 # ---------------------------------------------------------------------------
