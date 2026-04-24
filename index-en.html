@@ -209,13 +209,18 @@
             <div class="beta-form">
                 <p style="margin-bottom: 20px; text-align: center; font-size: 1.1em;">[ BETA ACCESS APPLICATION FORM ]</p>
                 <form id="betaForm" name="beta" method="POST" data-netlify="true">
+                    <input type="hidden" name="form-name" value="beta">
                     <div class="form-group"><label for="name">Name *</label><input type="text" id="name" name="name" placeholder="Enter your name" required></div>
                     <div class="form-group"><label for="email">Email *</label><input type="email" id="email" name="email" placeholder="example@email.com" required></div>
                     <div class="form-group"><label for="phone">Phone</label><input type="tel" id="phone" name="phone" placeholder="+380"></div>
                     <div class="form-group"><label for="reason">Why do you want to participate in beta testing?</label><textarea id="reason" name="reason" placeholder="Tell us about your expectations from Neurica..."></textarea></div>
                     <button type="submit">[ SUBMIT APPLICATION ]</button>
                     <div class="loading-animation" id="loadingAnimation"><p>&gt; Saving to encrypted server<span class="boot-cursor" style="width:5px;height:15px;margin-left:5px;"></span></p><p>&gt; Encrypting data...</p></div>
-                    <div class="success-message" id="successMessage"><p><strong>&#10003; SUCCESSFULLY SUBMITTED</strong></p><p>Your application has been saved. We will contact you soon!</p></div>
+                    <div class="success-message" id="successMessage">
+                        <p><strong>&gt; APPLICATION RECEIVED &#10003;</strong></p>
+                        <p>&gt; Data encrypted and saved.</p>
+                        <p>&gt; Expect a reply to your address.<span class="boot-cursor" style="width:8px;height:14px;margin-left:4px;vertical-align:middle;"></span></p>
+                    </div>
                 </form>
             </div>
         </section>
@@ -247,5 +252,28 @@
         </footer>
     </div>
 
+    <script>
+        document.getElementById('betaForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var form = e.target;
+            var loading = document.getElementById('loadingAnimation');
+            var success = document.getElementById('successMessage');
+            form.style.display = 'none';
+            loading.classList.add('active');
+            fetch('/index-en', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams(new FormData(form)).toString()
+            })
+            .then(function () {
+                loading.classList.remove('active');
+                success.classList.add('active');
+            })
+            .catch(function () {
+                loading.classList.remove('active');
+                form.style.display = 'block';
+            });
+        });
+    </script>
 </body>
 </html>

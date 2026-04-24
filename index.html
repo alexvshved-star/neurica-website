@@ -224,6 +224,7 @@
             <div class="beta-form">
                 <p style="margin-bottom: 20px; text-align: center; font-size: 1.1em;">[ ФОРМА ЗАЯВКИ НА БЕТА-ДОСТУП ]</p>
                 <form id="betaForm" name="beta" method="POST" data-netlify="true">
+                    <input type="hidden" name="form-name" value="beta">
                     <div class="form-group">
                         <label for="name">Ім'я *</label>
                         <input type="text" id="name" name="name" placeholder="Введіть ваше ім'я" required>
@@ -246,8 +247,9 @@
                         <p>&gt; Шифрування даних...</p>
                     </div>
                     <div class="success-message" id="successMessage">
-                        <p><strong>&#10003; УСПІШНО НАДІСЛАНО</strong></p>
-                        <p>Вашу заявку збережено. Ми зв'яжемося з вами найближчим часом!</p>
+                        <p><strong>&gt; ЗАЯВКУ ОТРИМАНО &#10003;</strong></p>
+                        <p>&gt; Дані зашифровано та збережено.</p>
+                        <p>&gt; Очікуйте відповідь на вашу адресу.<span class="boot-cursor" style="width:8px;height:14px;margin-left:4px;vertical-align:middle;"></span></p>
                     </div>
                 </form>
             </div>
@@ -329,5 +331,28 @@
         </footer>
     </div>
 
+    <script>
+        document.getElementById('betaForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var form = e.target;
+            var loading = document.getElementById('loadingAnimation');
+            var success = document.getElementById('successMessage');
+            form.style.display = 'none';
+            loading.classList.add('active');
+            fetch('/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams(new FormData(form)).toString()
+            })
+            .then(function () {
+                loading.classList.remove('active');
+                success.classList.add('active');
+            })
+            .catch(function () {
+                loading.classList.remove('active');
+                form.style.display = 'block';
+            });
+        });
+    </script>
 </body>
 </html>
