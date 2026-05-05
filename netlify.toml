@@ -39,7 +39,7 @@
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 
-# JavaScript — long-term cache (filename-based cache busting via git)
+# JavaScript — long-term cache (update filename when content changes)
 [[headers]]
   for = "/*.js"
   [headers.values]
