@@ -1,0 +1,260 @@
+---
+// Type specimen — інструмент розробки, не публічна сторінка (розділ 7
+// typography-брифу). Збирається тільки при import.meta.env.DEV:
+// у production-білді компонент повертає 404-Response, і Astro не
+// записує dist/dev/type/index.html узагалі — маршруту не існує,
+// у sitemap.xml потрапити нічому.
+if (!import.meta.env.DEV) {
+  return new Response(null, { status: 404 });
+}
+
+import '@/styles/tokens.css';
+import '@/styles/base.css';
+import { getCollection } from 'astro:content';
+
+const all = (await getCollection('work')).map((e) => e.data);
+const longestUk = [...all].sort(
+  (a, b) => (b.translations.uk?.title.length ?? 0) - (a.translations.uk?.title.length ?? 0)
+)[0];
+const ukTitle = longestUk.translations.uk?.title ?? '';
+const enTitle = longestUk.translations.en?.title ?? '';
+
+const cyrillicTest = 'ЖИВА ЛАБОРАТОРІЯ · НЕ PRODUCTION-КОНТУР';
+---
+
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Type specimen — dev only</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Montserrat:wght@300;400;700;900&subset=cyrillic,cyrillic-ext,latin&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <main class="specimen">
+      <section class="specimen__section">
+        <h2 class="specimen__label small">1. Шкала</h2>
+
+        <div class="specimen__row">
+          <p class="specimen__tag mono">--type-display / weight-display (900)</p>
+          <p class="type-display">NEURICA</p>
+        </div>
+
+        <div class="specimen__row">
+          <p class="specimen__tag mono">--type-h1 / weight-strong (700)</p>
+          <h1>{ukTitle}</h1>
+          <h1>{enTitle}</h1>
+        </div>
+
+        <div class="specimen__row">
+          <p class="specimen__tag mono">--type-h2 / weight-strong (700)</p>
+          <h2>Приклад заголовка другого рівня</h2>
+        </div>
+
+        <div class="specimen__row">
+          <p class="specimen__tag mono">--type-lead</p>
+          <p style="font-size: var(--type-lead)">AI experiments, prototypes and selected work by EONYX</p>
+        </div>
+
+        <div class="specimen__row">
+          <p class="specimen__tag mono">--type-body (default)</p>
+          <p>Звичайний абзац тексту на --width-reading, --weight-body, --leading-body.</p>
+        </div>
+
+        <div class="specimen__row">
+          <p class="specimen__tag mono">--type-small (.small)</p>
+          <p class="small">Теги, підписи — каталог, altaco, візуальне дослідження</p>
+        </div>
+
+        <div class="specimen__row">
+          <p class="specimen__tag mono">--type-mono (.mono)</p>
+          <p class="mono" style="font-size: var(--type-mono)">inventory → catalog → select → PDF</p>
+        </div>
+
+        <div class="specimen__row">
+          <p class="specimen__tag mono">--type-metadata (.meta)</p>
+          <p class="meta">CASE · DEMO · 2026</p>
+        </div>
+      </section>
+
+      <section class="specimen__section">
+        <h2 class="specimen__label small">2. Mono-шар</h2>
+
+        <div class="specimen__row">
+          <p class="specimen__tag mono">Рядок об'єкта — TYPE · STATUS · рік</p>
+          <p class="meta">CASE<span class="meta meta--status"> · DEMO</span><span class="meta meta--status"> · 2026</span></p>
+        </div>
+
+        <div class="specimen__row">
+          <p class="specimen__tag mono">Бейдж картки — LIVE / FROZEN</p>
+          <p class="meta">TOOL<span class="meta meta--live"> · LIVE</span></p>
+          <p class="meta">CASE<span class="meta meta--frozen"> · FROZEN</span></p>
+        </div>
+
+        <div class="specimen__row">
+          <p class="specimen__tag mono">RuntimeNotice — DEMO</p>
+          <div class="runtime-notice-preview">
+            <p class="meta meta--status">DEMO · дані від 2026-08-12</p>
+            <p class="mono" style="margin-top: var(--space-2); color: var(--color-muted)">Демонстраційний набір. Не робоча система.</p>
+          </div>
+        </div>
+
+        <div class="specimen__row">
+          <p class="specimen__tag mono">by EONYX (шапка/підвал)</p>
+          <p class="mono" style="font-size: var(--type-metadata); color: var(--color-muted)">by EONYX</p>
+        </div>
+
+        <div class="specimen__row">
+          <p class="specimen__tag mono">
+            Кирилична розрядка — --tracking-label: 0.14em на верхньому регістрі.
+            У виробництві таксономія (type/status) завжди англійська; це єдине
+            місце, де перевіряється гіпотетичний кириличний .meta-рядок.
+          </p>
+          <p class="meta" data-test="cyrillic-tracking">{cyrillicTest}</p>
+        </div>
+      </section>
+
+      <section class="specimen__section">
+        <h2 class="specimen__label small">3. Ваги — рішення 017 (--weight-body: 300 проти 400)</h2>
+        <p class="specimen__tag mono">
+          Один і той самий абзац, обидві мови, на --color-bg. Порівняти
+          читабельність, дати рекомендацію в docs/05-decisions.md.
+        </p>
+
+        <div class="specimen__weight-grid">
+          <div>
+            <p class="specimen__tag mono">uk · weight 300 (Light)</p>
+            <p style="font-weight: 300">
+              Neurica — публічна експериментальна поверхня EONYX: прототипи,
+              live demo, візуальні дослідження, кейси. Жива лабораторія, а не
+              другий production-контур.
+            </p>
+          </div>
+          <div>
+            <p class="specimen__tag mono">uk · weight 400 (Regular)</p>
+            <p style="font-weight: 400">
+              Neurica — публічна експериментальна поверхня EONYX: прототипи,
+              live demo, візуальні дослідження, кейси. Жива лабораторія, а не
+              другий production-контур.
+            </p>
+          </div>
+          <div>
+            <p class="specimen__tag mono">en · weight 300 (Light)</p>
+            <p style="font-weight: 300">
+              Neurica is EONYX's public experimental surface: prototypes, live
+              demos, visual studies, case studies. A living lab, not a second
+              production surface.
+            </p>
+          </div>
+          <div>
+            <p class="specimen__tag mono">en · weight 400 (Regular)</p>
+            <p style="font-weight: 400">
+              Neurica is EONYX's public experimental surface: prototypes, live
+              demos, visual studies, case studies. A living lab, not a second
+              production surface.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="specimen__section">
+        <h2 class="specimen__label small">4. Фокус — усі чотири напрямки</h2>
+        <div class="specimen__focus-grid">
+          {(['monochrome', 'chromatic', 'material', 'organic'] as const).map((dir) => (
+            <div class="specimen__focus-swatch" data-direction={dir}>
+              <p class="meta">{dir}</p>
+              <a href="#" class="mono">Тестове посилання (Tab сюди)</a>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="specimen__section">
+        <h2 class="specimen__label small">5. Moushn — hover-lift (перевірити з prefers-reduced-motion)</h2>
+        <a href="#" class="specimen__motion mono">Наведи або протабуй — --hover-duration</a>
+      </section>
+    </main>
+
+    <style>
+      body {
+        padding: var(--space-8);
+      }
+
+      .specimen__section {
+        max-width: var(--width-content);
+        margin-bottom: var(--space-16);
+        padding-bottom: var(--space-8);
+        border-bottom: var(--rule-hairline) solid var(--color-rule);
+      }
+
+      .specimen__label {
+        text-transform: uppercase;
+        letter-spacing: var(--tracking-label);
+        color: var(--color-muted);
+        margin-bottom: var(--space-6);
+      }
+
+      .specimen__row {
+        margin-bottom: var(--space-8);
+      }
+
+      .specimen__row h1,
+      .specimen__row h2 {
+        margin-top: var(--space-2);
+      }
+
+      .specimen__tag {
+        color: var(--color-muted);
+        font-size: var(--type-small);
+      }
+
+      .runtime-notice-preview {
+        margin-top: var(--space-2);
+        padding: var(--space-4);
+        border: var(--rule-hairline) solid var(--color-rule);
+        background: var(--color-surface);
+        max-width: 400px;
+      }
+
+      .specimen__weight-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-8);
+        margin-top: var(--space-6);
+      }
+
+      .specimen__weight-grid p:not(.specimen__tag) {
+        max-width: var(--width-reading);
+      }
+
+      .specimen__focus-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--space-4);
+      }
+
+      .specimen__focus-swatch {
+        padding: var(--space-6);
+        background: var(--color-bg);
+      }
+
+      .specimen__focus-swatch > * + * {
+        margin-top: var(--space-4);
+      }
+
+      .specimen__motion {
+        display: inline-block;
+        transition: transform var(--hover-duration) var(--ease-out);
+      }
+
+      .specimen__motion:hover,
+      .specimen__motion:focus-visible {
+        transform: var(--hover-lift);
+      }
+    </style>
+  </body>
+</html>

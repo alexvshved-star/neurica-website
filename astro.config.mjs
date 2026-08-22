@@ -26,6 +26,25 @@ function getArchiveSlugs() {
 
 const archiveSlugs = getArchiveSlugs();
 
+// /dev/type (розділ 7 typography-брифу) — інструмент розробки, не
+// публічна сторінка. `output: 'static'` пререндерить усі маршрути на
+// build незалежно від import.meta.env.DEV — сторінка все одно
+// повернула б 404-Response у розмітці, але dist/dev/type/index.html
+// фізично лишився б файлом. Прибираємо його явно після build, тож
+// «маршруту не існує» виконується буквально, не тільки за кодом
+// статусу.
+function stripDevPagesIntegration() {
+  return {
+    name: 'strip-dev-pages',
+    hooks: {
+      'astro:build:done': ({ dir }) => {
+        const devDir = new URL('dev/', dir);
+        fs.rmSync(devDir, { recursive: true, force: true });
+      },
+    },
+  };
+}
+
 export default defineConfig({
   site: 'https://neurica.net',
   i18n: {
@@ -37,7 +56,9 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
-      filter: (url) => !archiveSlugs.some((slug) => url.includes(`/work/${slug}/`)),
+      filter: (url) =>
+        !archiveSlugs.some((slug) => url.includes(`/work/${slug}/`)) && !url.includes('/dev/'),
     }),
+    stripDevPagesIntegration(),
   ],
 });

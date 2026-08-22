@@ -47,33 +47,61 @@ ul, ol {
    lang-залежні, бо en і uk мають різні дефолтні hyphenation
    dictionaries в браузері. */
 
-h1, .type-display {
+h1, .type-display, h2 {
   font-family: var(--font-display);
-  font-weight: var(--weight-display);
-  letter-spacing: var(--tracking-display);
   overflow-wrap: break-word;
   hyphens: auto;
 }
 
 :lang(uk) h1,
-:lang(uk) .type-display {
+:lang(uk) .type-display,
+:lang(uk) h2 {
   hyphens: auto;
   -webkit-hyphens: auto;
 }
 
 :lang(en) h1,
-:lang(en) .type-display {
+:lang(en) .type-display,
+:lang(en) h2 {
   hyphens: auto;
   -webkit-hyphens: auto;
 }
 
+/* Рівні display і h1 — різні речі (розділ 1 typography-брифу):
+   .type-display — тільки знак NEURICA в hero, вага 900, найбільший
+   можливий кегль. h1 — заголовки сторінок і об'єктів, вага 700
+   (weight-strong, як h2 — різниця лише в розмірі), помітно менший
+   tracking. До цього виправлення жоден з двох не мав font-size
+   узагалі й падав на дефолт браузера. */
+
+.type-display {
+  font-weight: var(--weight-display);
+  font-size: var(--type-display);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+}
+
+h1 {
+  font-weight: var(--weight-strong);
+  font-size: var(--type-h1);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-tight);
+}
+
 h2 {
-  font-family: var(--font-display);
   font-weight: var(--weight-strong);
   font-size: var(--type-h2);
   line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-tight);
 }
 
 code, pre, .mono {
   font-family: var(--font-mono);
+}
+
+/* --type-small — рівень для другорядних людських підписів (теги,
+   caption), відмінний від .meta: не технічна мова, без uppercase
+   і розрядки. */
+.small {
+  font-size: var(--type-small);
 }

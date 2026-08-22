@@ -55,6 +55,11 @@ const slugHref = (slug: string) => (locale === 'uk' ? `/work/${slug}` : `/en/wor
       </p>
       <h1>{translation.title}</h1>
       <p class="work-detail__summary mono">{translation.summary}</p>
+      {translation.tags && translation.tags.length > 0 && (
+        <ul class="work-detail__tags small">
+          {translation.tags.map((tag) => <li>{tag}</li>)}
+        </ul>
+      )}
     </header>
 
     {showCover && (
@@ -97,7 +102,7 @@ const slugHref = (slug: string) => (locale === 'uk' ? `/work/${slug}` : `/en/wor
 
 <style>
   main {
-    padding: var(--section-gap-mobile) var(--grid-margin);
+    padding: var(--section-gap) var(--grid-margin);
   }
 
   main > * + * {
@@ -113,6 +118,13 @@ const slugHref = (slug: string) => (locale === 'uk' ? `/work/${slug}` : `/en/wor
   }
 
   .work-detail__summary {
+    color: var(--color-muted);
+  }
+
+  .work-detail__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
     color: var(--color-muted);
   }
 
