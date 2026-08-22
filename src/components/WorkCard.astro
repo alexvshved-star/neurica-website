@@ -1,0 +1,67 @@
+---
+import { t, type Locale } from '@/i18n';
+import { renderableStatus } from '@/lib/validate';
+import type { WorkEntry } from '@/content.config';
+
+interface Props {
+  entry: WorkEntry;
+  locale: Locale;
+}
+
+const { entry, locale } = Astro.props;
+const translation = entry.translations[locale];
+if (!translation) {
+  throw new Error(`WorkCard: ${entry.slug} не має перекладу для ${locale} (мало впасти на 5.7 раніше)`);
+}
+
+const href = locale === 'uk' ? `/work/${entry.slug}` : `/en/work/${entry.slug}`;
+const status = renderableStatus(entry.status);
+const statusClass = entry.status === 'LIVE'
+  ? 'meta--live'
+  : entry.status === 'FROZEN' || entry.status === 'ARCHIVE'
+    ? 'meta--frozen'
+    : 'meta--status';
+
+const snapshotDate = entry.status === 'DEMO' && entry.data_snapshot_date
+  ? entry.data_snapshot_date.toISOString().slice(0, 10)
+  : null;
+---
+
+<a class="work-card" href={href} data-direction={entry.art_direction.toLowerCase()}>
+  <p class="meta work-card__type">
+    {entry.type.replace('_', ' ')}{status && <span class={`meta ${statusClass}`}> · {status}</span>}
+    {snapshotDate && <span class="meta work-card__snapshot"> — {t(locale, 'meta.dataFrom')} {snapshotDate}</span>}
+  </p>
+  <h2 class="work-card__title">{translation.title}</h2>
+  <p class="work-card__summary mono">{translation.summary}</p>
+</a>
+
+<style>
+  .work-card {
+    display: block;
+    padding: var(--card-density, var(--space-8));
+    border: var(--card-border, var(--rule-hairline) solid var(--color-rule));
+    background: var(--color-surface);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .work-card__type {
+    margin-bottom: var(--space-2);
+  }
+
+  .work-card__title {
+    font-family: var(--font-display);
+    font-weight: var(--weight-strong);
+    font-size: var(--type-h2);
+    line-height: var(--leading-heading);
+    margin-bottom: var(--space-3);
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  .work-card__summary {
+    font-size: var(--type-mono);
+    color: var(--color-muted);
+  }
+</style>

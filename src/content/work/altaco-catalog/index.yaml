@@ -1,0 +1,18 @@
+type: CASE
+status: DEMO
+art_direction: MATERIAL
+year: 2026
+cover: ./cover.jpg
+context: ALTACO
+data_mode: SANITIZED
+data_snapshot_date: 2026-08-12
+source_repo: altaco-platform
+build_ref: a1b2c3d
+data_fields:
+  - name
+  - manufacturer
+  - collection
+  - format
+  - finish
+  - photo
+  - availability

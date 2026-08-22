@@ -1,0 +1,20 @@
+{
+  "nav.work": "Work",
+  "nav.about": "About",
+  "nav.archive": "Archive",
+  "work.title": "Work",
+  "work.filterType": "Type",
+  "work.filterStatus": "Status",
+  "work.allTypes": "All types",
+  "work.allStatuses": "All statuses",
+  "work.empty": "Nothing found.",
+  "about.title": "About",
+  "about.body": "Neurica is EONYX's public experimental surface: prototypes, live demos, visual studies, case studies. A living lab, but never a second production surface.",
+  "archive.title": "Archive",
+  "archive.empty": "Archive is empty.",
+  "notFound.title": "Page not found",
+  "notFound.body": "This page no longer exists.",
+  "notFound.backHome": "Back home",
+  "meta.dataFrom": "data from",
+  "footer.rights": "EONYX"
+}

@@ -1,0 +1,359 @@
+/* ============================================================
+   NEURICA — Design Tokens v0.1
+
+   Побудовано на візуальній системі EONYX, переведеній у більш
+   вільний режим.
+
+   Файл розділений на два шари, і це головне рішення:
+
+     INVARIANT   — не перевизначається ніде і ніколи.
+                   Це те, що робить Neurica впізнаваною попри
+                   різні арт-дирекшени.
+
+     DIRECTIONAL — перевизначається на рівні [data-direction].
+                   Це той обсяг свободи, який дозволено взяти.
+
+   «Одна система — багато арт-дирекшенів» працює рівно доти,
+   доки арт-дирекшен є набором override'ів над фіксованим ядром,
+   а не вільним вибором на кожній сторінці. Список DIRECTIONAL
+   нижче — це і є вичерпний перелік того, що взагалі може
+   змінюватися.
+
+   ⚠ Значення, позначені BRANDBOOK, — заглушки. Замінити на
+   точні з брендбука EONYX перед першою збіркою. Структура
+   тут перевірена, конкретні hex — ні.
+   ============================================================ */
+
+
+/* ============================================================
+   1. INVARIANT
+   ============================================================ */
+
+:root {
+
+  /* ---- 1.1 Гарнітури ---------------------------------- */
+
+  --font-display: "Montserrat", system-ui, sans-serif;
+  --font-body:    "Montserrat", system-ui, sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, monospace;
+
+  /* Дві гарнітури, три ролі. Mono несе всю технічну мову:
+     статуси, теги, метадані, summary-формули (inventory →
+     catalog → PDF). Розділення ролей — не стилістика, а
+     сигнал: mono означає «це технічна інформація». */
+
+
+  /* ---- 1.2 Насиченості -------------------------------- */
+
+  --weight-display: 800;
+  --weight-strong:  700;
+  --weight-body:    400;
+  --weight-mono:    500;
+
+  /* Проміжних значень немає навмисно. Montserrat має дев'ять
+     насиченостей; чотири дозволені — це те, що не дає
+     типографіці розповзтися між сторінками. */
+
+
+  /* ---- 1.3 Типографічна шкала ------------------------- */
+
+  /* Display тече від mobile до desktop. Решта — фіксована. */
+
+  --type-display:   clamp(3.5rem, 12vw, 11rem);
+  --type-h1:        clamp(2.25rem, 5vw, 4rem);
+  --type-h2:        clamp(1.5rem, 2.5vw, 2rem);
+  --type-lead:      1.25rem;
+  --type-body:      1rem;
+  --type-small:     0.875rem;
+  --type-mono:      0.8125rem;
+  --type-metadata:  0.6875rem;
+
+  --leading-display: 0.86;
+  --leading-tight:   1.08;
+  --leading-heading: 1.2;
+  --leading-body:    1.6;
+  --leading-mono:    1.45;
+
+  --tracking-display: -0.03em;
+  --tracking-tight:   -0.015em;
+  --tracking-normal:  0;
+  --tracking-mono:    0.02em;
+  --tracking-label:   0.14em;
+
+  /* leading-display 0.86 — з композицій брендбука з
+     гігантськими обрізаними літерами. На такому кеглі
+     нормальний інтерліньяж розриває блок на окремі рядки
+     замість цільної форми. */
+
+
+  /* ---- 1.4 Шкала відступів ---------------------------- */
+
+  /* Крок 4px. Проміжних значень не вводити — саме тут
+     системи розсипаються найшвидше. */
+
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+  --space-48: 12rem;
+
+  --section-gap:        var(--space-32);
+  --section-gap-mobile: var(--space-16);
+
+
+  /* ---- 1.5 Сітка й ширини ----------------------------- */
+
+  --grid-columns: 12;
+  --grid-gutter:  var(--space-6);
+  --grid-margin:  var(--space-8);
+
+  --width-max:     1680px;  /* повна ширина стрічки  */
+  --width-content: 1200px;  /* сторінка об'єкта      */
+  --width-reading: 680px;   /* суцільний текст       */
+
+  --bp-sm:  480px;
+  --bp-md:  768px;
+  --bp-lg:  1080px;
+  --bp-xl:  1440px;
+
+
+  /* ---- 1.6 Лінії -------------------------------------- */
+
+  --rule-hairline: 1px;
+  --rule-medium:   2px;
+  --rule-heavy:    4px;
+
+  --radius: 0;
+
+  /* Нуль. Геометрична мова системи — прямий кут; заокруглення
+     тут не стилістичний вибір, а вихід із неї. */
+
+
+  /* ---- 1.7 Геометрія шеврона -------------------------- */
+
+  --chevron-angle:     34deg;
+  --chevron-thickness: 0.18;  /* частка від висоти */
+  --chevron-gap:       0.32;  /* частка від ширини */
+
+  /* Кут фіксований. Шеврон масштабується, але не
+     перемальовується. */
+
+
+  /* ---- 1.8 Обрізані літери ---------------------------- */
+
+  --glyph-overflow-x: -0.08em;  /* виліт за поле        */
+  --glyph-crop-top:    0.12em;  /* зріз по верхній лінії */
+  --glyph-min-size:    clamp(8rem, 30vw, 26rem);
+
+  /* Обрізана літера має виходити за межі контейнера. Літера,
+     що вміщається повністю, — просто великий текст. */
+
+
+  /* ---- 1.9 Моушн -------------------------------------- */
+
+  --duration-fast:   120ms;
+  --duration-base:   240ms;
+  --duration-slow:   480ms;
+  --duration-reveal: 720ms;
+
+  --ease-out:   cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --hover-lift:    translateY(-2px);
+  --hover-duration: var(--duration-fast);
+
+
+  /* ---- 1.10 Нейтралі ---------------------------------- */
+
+  /* Каркас лишається спільним у всіх напрямках.
+     Змінюється акцент, не основа. */
+
+  --navy-900: #050B14;  /* BRANDBOOK */
+  --navy-800: #0A1628;  /* BRANDBOOK */
+  --navy-700: #14243D;  /* BRANDBOOK */
+  --white:    #FFFFFF;
+  --black:    #000000;
+  --grey-400: #8A94A3;
+  --grey-200: #C9CFD8;
+
+
+  /* ---- 1.11 Ролі кольору ------------------------------ */
+
+  --color-bg:       var(--navy-900);
+  --color-surface:  var(--navy-800);
+  --color-raised:   var(--navy-700);
+  --color-text:     var(--white);
+  --color-muted:    var(--grey-400);
+  --color-rule:     rgba(255, 255, 255, 0.14);
+  --color-inverse:  var(--black);
+}
+
+
+/* ============================================================
+   2. DIRECTIONAL
+
+   Вичерпний перелік. Усе, чого тут немає, змінювати не можна.
+   ============================================================ */
+
+/* ---- 2.1 MONOCHROME — architectural / structural -------
+   Бетон, метал, сходи, фасади. Мова структури й інженерії.
+   Базовий напрямок: якщо сумнів — цей.                     */
+
+[data-direction="monochrome"] {
+  --color-accent:      #E63329;  /* BRANDBOOK red */
+  --color-accent-text: var(--white);
+  --color-bg:          var(--navy-900);
+  --color-surface:     var(--navy-800);
+
+  --image-filter:      grayscale(1) contrast(1.12);
+  --image-overlay:     linear-gradient(
+                         180deg,
+                         rgba(5, 11, 20, 0) 40%,
+                         rgba(5, 11, 20, 0.86) 100%);
+  --image-ratio:       4 / 3;
+
+  --card-density:      var(--space-8);
+  --card-border:       var(--rule-hairline) solid var(--color-rule);
+}
+
+
+/* ---- 2.2 CHROMATIC — neon -------------------------------
+   Рожево-cyan коридор, нічне місто, motion blur.
+   Мова руху й запуску. Найсильніший entry point.           */
+
+[data-direction="chromatic"] {
+  --color-accent:      #22D3EE;  /* BRANDBOOK cyan */
+  --color-accent-text: var(--black);
+  --color-bg:          var(--black);
+  --color-surface:     #0D0A16;
+
+  --image-filter:      saturate(1.25) contrast(1.05);
+  --image-overlay:     linear-gradient(
+                         180deg,
+                         rgba(0, 0, 0, 0) 30%,
+                         rgba(0, 0, 0, 0.72) 100%);
+  --image-ratio:       16 / 9;
+
+  --card-density:      var(--space-12);
+  --card-border:       none;
+}
+
+
+/* ---- 2.3 MATERIAL — abstract / textural -----------------
+   Дим, бетонні поверхні, зношена графіка, фактури.
+   Найближче до готового графічного матеріалу.              */
+
+[data-direction="material"] {
+  --color-accent:      #E63329;  /* BRANDBOOK red */
+  --color-accent-text: var(--white);
+  --color-bg:          #0C0C0D;
+  --color-surface:     #16161A;
+
+  --image-filter:      grayscale(0.72) contrast(1.2) brightness(0.94);
+  --image-overlay:     none;
+  --image-ratio:       1 / 1;
+
+  --card-density:      var(--space-6);
+  --card-border:       var(--rule-medium) solid var(--color-rule);
+}
+
+
+/* ---- 2.4 ORGANIC — conceptual ---------------------------
+   Змія, пір'я, скульптурні обличчя, природні патерни.
+   Шар про pattern, adaptation, form — а не про technology. */
+
+[data-direction="organic"] {
+  --color-accent:      #C7B7A3;  /* BRANDBOOK — уточнити */
+  --color-accent-text: var(--black);
+  --color-bg:          var(--navy-900);
+  --color-surface:     #101A1C;
+
+  --image-filter:      saturate(0.86) contrast(1.06);
+  --image-overlay:     linear-gradient(
+                         180deg,
+                         rgba(5, 11, 20, 0) 55%,
+                         rgba(5, 11, 20, 0.9) 100%);
+  --image-ratio:       3 / 4;
+
+  --card-density:      var(--space-12);
+  --card-border:       none;
+}
+
+
+/* ============================================================
+   3. Дозволені пари
+
+   Акцент має рівно два допустимі вживання: на фоні сторінки
+   і на surface. Акцент на акценті або два акценти поруч
+   не використовуються.
+   ============================================================ */
+
+.accent-on-bg      { color: var(--color-accent);
+                     background: var(--color-bg); }
+.accent-on-surface { color: var(--color-accent);
+                     background: var(--color-surface); }
+.inverse-block     { color: var(--color-inverse);
+                     background: var(--color-accent); }
+
+
+/* ============================================================
+   4. Технічна мова
+
+   Статуси, теги, номери, метадані. Завжди mono, завжди
+   у верхньому регістрі, завжди з розрядкою. Це те, що
+   тримає сторінку впізнаваною навіть коли все навколо
+   змінилося.
+   ============================================================ */
+
+.meta {
+  font-family:    var(--font-mono);
+  font-size:      var(--type-metadata);
+  font-weight:    var(--weight-mono);
+  letter-spacing: var(--tracking-label);
+  line-height:    var(--leading-mono);
+  text-transform: uppercase;
+  color:          var(--color-muted);
+}
+
+.meta--status  { color: var(--color-text); }
+.meta--live    { color: var(--color-accent); }
+.meta--frozen,
+.meta--archive { color: var(--color-muted); }
+
+/* STATIC не має класу: за правилом 5.5 content model він
+   не рендериться взагалі. */
+
+
+/* ============================================================
+   5. Поріг якості
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast:   0ms;
+    --duration-base:   0ms;
+    --duration-slow:   0ms;
+    --duration-reveal: 0ms;
+    --hover-lift:      none;
+  }
+}
+
+:where(a, button, [tabindex]):focus-visible {
+  outline:        var(--rule-medium) solid var(--color-accent);
+  outline-offset: var(--space-1);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --grid-columns:  4;
+    --grid-margin:   var(--space-4);
+    --section-gap:   var(--section-gap-mobile);
+    --type-display:  clamp(2.75rem, 16vw, 5rem);
+  }
+}

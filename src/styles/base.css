@@ -1,0 +1,79 @@
+/* ============================================================
+   NEURICA — base.css
+   Reset + застосування tokens.css. Каркас, не дизайн: мінімум
+   правил, потрібних для читабельності структурних сторінок.
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body, h1, h2, h3, p, ul, ol, dl, dd, figure {
+  margin: 0;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-weight: var(--weight-body);
+  font-size: var(--type-body);
+  line-height: var(--leading-body);
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+ul, ol {
+  padding: 0;
+  list-style: none;
+}
+
+/* ---- Display-рівень: hyphens/overflow-wrap -------------
+   Українська довша за англійську на 10-15%, а --type-display
+   доходить до 11rem. Без цих правил довгі українські слова
+   на такому кеглі не переносяться й вилазять за viewport.
+   lang-залежні, бо en і uk мають різні дефолтні hyphenation
+   dictionaries в браузері. */
+
+h1, .type-display {
+  font-family: var(--font-display);
+  font-weight: var(--weight-display);
+  letter-spacing: var(--tracking-display);
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+:lang(uk) h1,
+:lang(uk) .type-display {
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+:lang(en) h1,
+:lang(en) .type-display {
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-weight: var(--weight-strong);
+  font-size: var(--type-h2);
+  line-height: var(--leading-heading);
+}
+
+code, pre, .mono {
+  font-family: var(--font-mono);
+}

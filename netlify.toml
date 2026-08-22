@@ -1,0 +1,65 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# ---------------------------------------------------------------------------
+# Redirects
+# ---------------------------------------------------------------------------
+# Стара мовна схема (index-en.html відданий як /index-en, плюс legacy-аліас
+# /en) замінена на нову: префікс /en/. Порядок має значення — перший збіг
+# виграє, тому конкретні правила йдуть перед /en/... маршрутами колекції.
+# На / редиректу немає: це та сама головна сторінка сайту, що релончиться.
+# 410 не застосовується — підсторінок закритого продукту не існувало,
+# весь старий сайт був однією сторінкою у двох мовах (рішення 005).
+
+[[redirects]]
+  from = "/index-en"
+  to   = "/en/"
+  status = 301
+
+[[redirects]]
+  from = "/en"
+  to   = "/en/"
+  status = 301
+
+# ---------------------------------------------------------------------------
+# Security headers (applied to every response)
+# Перенесено без змін з попереднього сайту (коміт fdcd322).
+# ---------------------------------------------------------------------------
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options            = "DENY"
+    X-Content-Type-Options     = "nosniff"
+    X-XSS-Protection           = "1; mode=block"
+    Referrer-Policy            = "strict-origin-when-cross-origin"
+    Permissions-Policy         = "camera=(), microphone=(), geolocation=()"
+
+# ---------------------------------------------------------------------------
+# Cache headers
+# Перенесено без змін з попереднього сайту (коміт fdcd322).
+# ---------------------------------------------------------------------------
+
+# HTML — always revalidate (content changes frequently)
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# JavaScript — long-term cache (filename-based cache busting via git)
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# SVG icons — long-term cache
+[[headers]]
+  for = "/*.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Sitemap — revalidate daily
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate"

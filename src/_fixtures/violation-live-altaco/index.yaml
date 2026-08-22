@@ -1,0 +1,13 @@
+# Фікстура порушення правила 5.1.
+# НЕ в колекції: src/_fixtures/ не сканується loader'ом src/content/work.
+# Перевіряє, що context=ALTACO + status=LIVE зупиняє збірку.
+type: CASE
+status: LIVE
+art_direction: MATERIAL
+year: 2026
+cover: ./cover.jpg
+context: ALTACO
+owner: eonyx
+last_checked: 2026-08-20
+data_mode: SANITIZED
+data_snapshot_date: 2026-08-12

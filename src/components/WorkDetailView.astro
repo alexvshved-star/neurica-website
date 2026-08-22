@@ -1,0 +1,69 @@
+---
+import Base from '@/layouts/Base.astro';
+import Nav from '@/components/Nav.astro';
+import Footer from '@/components/Footer.astro';
+import { t, type Locale } from '@/i18n';
+import { renderableStatus } from '@/lib/validate';
+import type { WorkEntry } from '@/content.config';
+
+interface Props {
+  entry: WorkEntry;
+  locale: Locale;
+}
+
+const { entry, locale } = Astro.props;
+const translation = entry.translations[locale];
+if (!translation) {
+  throw new Error(`WorkDetailView: ${entry.slug} не має перекладу для ${locale}`);
+}
+
+const status = renderableStatus(entry.status);
+const snapshotDate = entry.status === 'DEMO' && entry.data_snapshot_date
+  ? entry.data_snapshot_date.toISOString().slice(0, 10)
+  : null;
+
+// Мінімальний рендер body: абзаци, розділені порожнім рядком.
+// Повноцінний markdown-рендеринг — поза межами каркасу (крок 05).
+const paragraphs = translation.body ? translation.body.split(/\n\s*\n/) : [];
+---
+
+<Base locale={locale} title={translation.title} description={translation.summary}>
+  <Nav locale={locale} />
+  <main data-direction={entry.art_direction.toLowerCase()}>
+    <p class="meta">
+      {entry.type.replace('_', ' ')}{status && <span class="meta meta--status"> · {status}</span>}
+      {snapshotDate && <span class="meta"> — {t(locale, 'meta.dataFrom')} {snapshotDate}</span>}
+    </p>
+    <h1>{translation.title}</h1>
+    <p class="work-detail__summary mono">{translation.summary}</p>
+    {translation.tags && translation.tags.length > 0 && (
+      <ul class="work-detail__tags mono">
+        {translation.tags.map((tag) => <li>{tag}</li>)}
+      </ul>
+    )}
+    {paragraphs.map((p) => <p class="work-detail__body">{p}</p>)}
+  </main>
+  <Footer locale={locale} />
+</Base>
+
+<style>
+  main {
+    padding: var(--section-gap-mobile) var(--grid-margin);
+    max-width: var(--width-reading);
+  }
+
+  main > * + * {
+    margin-top: var(--space-4);
+  }
+
+  .work-detail__tags {
+    display: flex;
+    gap: var(--space-3);
+    color: var(--color-muted);
+  }
+
+  .work-detail__body {
+    font-size: var(--type-body);
+    line-height: var(--leading-body);
+  }
+</style>

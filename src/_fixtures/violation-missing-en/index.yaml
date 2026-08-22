@@ -1,0 +1,9 @@
+# Фікстура порушення правила 5.7.
+# НЕ в колекції: src/_fixtures/ не сканується loader'ом src/content/work.
+# Перевіряє, що відсутність en.md зупиняє збірку.
+type: VISUAL_STUDY
+status: STATIC
+art_direction: CHROMATIC
+year: 2026
+cover: ./cover.jpg
+data_mode: NONE

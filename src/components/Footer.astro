@@ -1,0 +1,24 @@
+---
+import { t, type Locale } from '@/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<footer class="site-footer mono">
+  <span>© {new Date().getFullYear()} {t(locale, 'footer.rights')}</span>
+</footer>
+
+<style>
+  .site-footer {
+    padding: var(--space-8) var(--grid-margin);
+    border-top: var(--rule-hairline) solid var(--color-rule);
+    font-size: var(--type-metadata);
+    color: var(--color-muted);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+  }
+</style>
