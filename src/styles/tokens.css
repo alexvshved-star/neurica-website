@@ -19,9 +19,8 @@
    нижче — це і є вичерпний перелік того, що взагалі може
    змінюватися.
 
-   ⚠ Значення, позначені BRANDBOOK, — заглушки. Замінити на
-   точні з брендбука EONYX перед першою збіркою. Структура
-   тут перевірена, конкретні hex — ні.
+   Кольори підтверджені брендбуком EONYX (PANTONE-еквіваленти
+   в 1.10). Заглушок більше немає.
    ============================================================ */
 
 
@@ -45,14 +44,17 @@
 
   /* ---- 1.2 Насиченості -------------------------------- */
 
-  --weight-display: 800;
+  --weight-display: 900;
   --weight-strong:  700;
   --weight-body:    400;
-  --weight-mono:    500;
+  --weight-mono:    400;
 
-  /* Проміжних значень немає навмисно. Montserrat має дев'ять
-     насиченостей; чотири дозволені — це те, що не дає
-     типографіці розповзтися між сторінками. */
+  /* Проміжних значень немає навмисно. Ваги звірені з набором
+     брендбука EONYX (Light/SemiBold/Bold/Black для Montserrat):
+     display=900 (Black — ExtraBold у наборі немає), mono=400
+     (JetBrains Mono Regular, позначена Recommended). weight-body
+     лишений 400 — Montserrat Regular у переліку брендбука
+     відсутній, відкрите питання, див. 05-decisions.md, 017. */
 
 
   /* ---- 1.3 Типографічна шкала ------------------------- */
@@ -169,14 +171,17 @@
   --hover-duration: var(--duration-fast);
 
 
-  /* ---- 1.10 Нейтралі ---------------------------------- */
+  /* ---- 1.10 Бренд-кольори ------------------------------ */
 
-  /* Каркас лишається спільним у всіх напрямках.
-     Змінюється акцент, не основа. */
+  /* Чотири окремі кольори з брендбука EONYX, не градації —
+     брендбук не задає шкалу navy, тому вона тут не вигадана
+     (рішення 015). Каркас лишається спільним у всіх напрямках,
+     змінюється акцент, не основа. */
 
-  --navy-900: #050B14;  /* BRANDBOOK */
-  --navy-800: #0A1628;  /* BRANDBOOK */
-  --navy-700: #14243D;  /* BRANDBOOK */
+  --brand-black: #101820;  /* PANTONE Black 6 C */
+  --brand-navy:  #1F1646;  /* PANTONE 2765 C */
+  --brand-cyan:  #00BCE7;  /* PANTONE 306 C */
+  --brand-red:   #EA002A;  /* PANTONE 185 C */
   --white:    #FFFFFF;
   --black:    #000000;
   --grey-400: #8A94A3;
@@ -185,9 +190,9 @@
 
   /* ---- 1.11 Ролі кольору ------------------------------ */
 
-  --color-bg:       var(--navy-900);
-  --color-surface:  var(--navy-800);
-  --color-raised:   var(--navy-700);
+  --color-bg:       var(--brand-black);
+  --color-surface:  var(--brand-navy);
+  --color-raised:   var(--brand-navy);
   --color-text:     var(--white);
   --color-muted:    var(--grey-400);
   --color-rule:     rgba(255, 255, 255, 0.14);
@@ -206,16 +211,16 @@
    Базовий напрямок: якщо сумнів — цей.                     */
 
 [data-direction="monochrome"] {
-  --color-accent:      #E63329;  /* BRANDBOOK red */
+  --color-accent:      var(--brand-red);
   --color-accent-text: var(--white);
-  --color-bg:          var(--navy-900);
-  --color-surface:     var(--navy-800);
+  --color-bg:          var(--brand-black);
+  --color-surface:     var(--brand-navy);
 
   --image-filter:      grayscale(1) contrast(1.12);
   --image-overlay:     linear-gradient(
                          180deg,
-                         rgba(5, 11, 20, 0) 40%,
-                         rgba(5, 11, 20, 0.86) 100%);
+                         rgba(16, 24, 32, 0) 40%,
+                         rgba(16, 24, 32, 0.86) 100%);
   --image-ratio:       4 / 3;
 
   --card-density:      var(--space-8);
@@ -228,10 +233,10 @@
    Мова руху й запуску. Найсильніший entry point.           */
 
 [data-direction="chromatic"] {
-  --color-accent:      #22D3EE;  /* BRANDBOOK cyan */
+  --color-accent:      var(--brand-cyan);
   --color-accent-text: var(--black);
   --color-bg:          var(--black);
-  --color-surface:     #0D0A16;
+  --color-surface:     var(--brand-navy);
 
   --image-filter:      saturate(1.25) contrast(1.05);
   --image-overlay:     linear-gradient(
@@ -250,10 +255,10 @@
    Найближче до готового графічного матеріалу.              */
 
 [data-direction="material"] {
-  --color-accent:      #E63329;  /* BRANDBOOK red */
+  --color-accent:      var(--brand-red);
   --color-accent-text: var(--white);
-  --color-bg:          #0C0C0D;
-  --color-surface:     #16161A;
+  --color-bg:          var(--black);
+  --color-surface:     var(--brand-black);
 
   --image-filter:      grayscale(0.72) contrast(1.2) brightness(0.94);
   --image-overlay:     none;
@@ -269,16 +274,18 @@
    Шар про pattern, adaptation, form — а не про technology. */
 
 [data-direction="organic"] {
-  --color-accent:      #C7B7A3;  /* BRANDBOOK — уточнити */
-  --color-accent-text: var(--black);
-  --color-bg:          var(--navy-900);
-  --color-surface:     #101A1C;
+  --color-accent:      var(--brand-cyan);
+  --color-accent-text: var(--brand-black);
+  --color-bg:          var(--brand-black);
+  --color-surface:     var(--brand-navy);
 
+  /* Відмінність від інших напрямків дають зображення — crop і
+     saturation — не п'ятий бренд-колір (рішення 015). */
   --image-filter:      saturate(0.86) contrast(1.06);
   --image-overlay:     linear-gradient(
                          180deg,
-                         rgba(5, 11, 20, 0) 55%,
-                         rgba(5, 11, 20, 0.9) 100%);
+                         rgba(16, 24, 32, 0) 55%,
+                         rgba(16, 24, 32, 0.9) 100%);
   --image-ratio:       3 / 4;
 
   --card-density:      var(--space-12);
