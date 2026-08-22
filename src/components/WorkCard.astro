@@ -1,4 +1,5 @@
 ---
+import { Picture } from 'astro:assets';
 import { type Locale } from '@/i18n';
 import { renderableStatus, cardScale } from '@/lib/validate';
 import type { WorkEntry } from '@/content.config';
@@ -9,9 +10,11 @@ interface Props {
   /** /work, /archive — компактний однорідний рядок, без cover і без
    * масштабної варіації (розділ 2 IA-брифу: повнота важливіша за акцент). */
   compact?: boolean;
+  /** Перший екран — без lazy (§2.1 content-prep брифу). */
+  priority?: boolean;
 }
 
-const { entry, locale, compact = false } = Astro.props;
+const { entry, locale, compact = false, priority = false } = Astro.props;
 const translation = entry.translations[locale];
 if (!translation) {
   throw new Error(`WorkCard: ${entry.slug} не має перекладу для ${locale} (мало впасти на 5.7 раніше)`);
@@ -35,7 +38,17 @@ const scale = cardScale(entry);
   data-direction={entry.art_direction.toLowerCase()}
   data-scale={compact ? undefined : scale}
 >
-  {!compact && <img class="work-card__cover" src={entry.cover} alt="" loading="lazy" />}
+  {!compact && (
+    <Picture
+      class="work-card__cover"
+      src={entry.cover}
+      alt=""
+      formats={['avif', 'webp']}
+      widths={[400, 800, 1200]}
+      sizes="(min-width: 768px) 50vw, 100vw"
+      loading={priority ? 'eager' : 'lazy'}
+    />
+  )}
   <div class="work-card__body">
     <p class="meta work-card__type">
       {entry.type.replace('_', ' ')}{status && <span class={`meta ${statusClass}`}> · {status}</span>}
@@ -59,10 +72,12 @@ const scale = cardScale(entry);
     padding: var(--space-4);
   }
 
-  .work-card__cover {
+  .work-card :global(.work-card__cover) {
+    display: block;
     margin-bottom: var(--space-4);
     aspect-ratio: var(--image-ratio, 16 / 9);
     width: 100%;
+    height: auto;
     object-fit: cover;
     filter: var(--image-filter, none);
   }

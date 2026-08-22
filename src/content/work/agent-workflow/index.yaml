@@ -2,6 +2,6 @@ type: PROTOTYPE
 status: STATIC
 art_direction: MONOCHROME
 published: 2026-07-20
-cover: /covers/agent-workflow.jpg
+cover: ./cover.placeholder.jpg
 context: EONYX
 data_mode: NONE

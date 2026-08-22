@@ -1,20 +1,31 @@
 # Публікація об'єкта
 
+Повна специфікація для автора — без потреби заглядати в код —
+[`07-content-spec.md`](./07-content-spec.md): назви файлів, розміри
+зображень за `art_direction`, межі довжини заголовка українською,
+структура `body` за типом, і чек-лист по кожному з п'яти стартових
+об'єктів. Цей документ — швидка технічна довідка для того самого
+процесу.
+
 ## Як додати об'єкт
 
 1. Створити `src/content/work/<slug>/` — `<slug>` унікальний,
    kebab-case.
 2. `index.yaml` — структурні поля (розділ 4a моделі): `type`,
-   `status`, `art_direction`, `cover`, `year`, `data_mode`, і за
+   `status`, `art_direction`, `cover`, `published`, `data_mode`, і за
    потреби `context`, `endpoint`, `owner`, `last_checked`,
-   `source_repo`, `build_ref`, `data_snapshot_date`, `data_fields[]`.
+   `source_repo`, `build_ref`, `data_snapshot_date`, `data_fields[]`,
+   `media[]`, `feature`.
 3. `uk.md` і `en.md` — **обидва**, кожен з frontmatter (`title`,
-   `summary`, за потреби `tags[]`) і markdown body нижче. `body`
-   обов'язкове для `type: CASE` і `type: EDITORIAL`.
-4. `cover.jpg` (або інший растровий формат) — заглушка достатня,
-   фінальний ассет не потрібен на цьому кроці.
+   `summary`, за потреби `tags[]`, `media` alt/caption) і markdown
+   body нижче. `body` обов'язкове для `type: CASE` і `type: EDITORIAL`.
+4. `cover.<ext>` — заглушка допустима на цьому кроці, але назвати її
+   з `.placeholder.` у імені (`cover.placeholder.jpg`) — інакше вона
+   проскочить у публікацію тихо. Розміри за `art_direction` —
+   `07-content-spec.md`, розділ 3.2.
 5. `npm run build`. Якщо збірка падає — повідомлення називає slug і
-   номер правила (`[5.1] ...`, `[5.7] ...`) з `src/content.config.ts`.
+   номер правила (`[5.1] ...`, `[5.7] ...`, `[5.8] ...`) з
+   `src/content.config.ts`.
 
 ## Поля й правила
 
@@ -33,6 +44,8 @@
 | `data_mode` не NONE і не SYNTHETIC | треба `data_snapshot_date` | 5.4 |
 | `type` CASE або EDITORIAL | треба `body` в обох мовах | розділ 4 |
 | відсутній `uk.md` або `en.md` | збірка падає | 5.7 |
+| `endpoint`/`build_ref` виглядає як плейсхолдер | збірка падає | 5.8 |
+| `media[]` id без `alt` в обох мовах | збірка падає | `07-content-spec.md` §3.3 |
 
 ## Що робити, коли демо зупиняється
 

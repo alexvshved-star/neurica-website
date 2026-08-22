@@ -76,7 +76,8 @@ Item
                                  картки виводиться з нього + type/status
                                  (рішення 021), не задається вручну інакше
   tags[]
-  media[]
+  media[]                        { id, src } структурно + { alt, caption }
+                                 локалізовано за тим самим id — розділ 4a
   body                           обов'язкове для CASE та EDITORIAL
   context                        ALTACO | EONYX | EXTERNAL | INTERNAL
   # рантайм
@@ -120,12 +121,21 @@ Item
 ```
 slug  type  status  art_direction  cover  published  feature  context
 endpoint  owner  last_checked  source_repo  build_ref
-data_mode  data_snapshot_date  data_fields[]  media[]
+data_mode  data_snapshot_date  data_fields[]
+media[]  { id, src }             — шлях, не мовний
 ```
 **Локалізовані — по одному на мову:**
 ```
 title  summary  body  tags[]
+media  { <id>: { alt, caption } } — прив'язка до id зі structural media[]
 ```
+`media[]` — складене поле, розділене так само, як решта: шлях до
+файлу (`src`) структурний, `alt`/`caption` — локалізовані, за тим
+самим `id`. Кожен `id` зі structural-масиву має мати відповідник в
+**обох** мовних файлах — інакше збірка падає (той самий принцип, що
+5.7, на рівні окремого зображення; рішення 024, `07-content-spec.md`
+розділ 3.3).
+
 Структурні поля не дублюються по мовах. Дубльовані — розходяться: об'єкт
 стає `DEMO` в одній мові й `LIVE` в іншій, і правило 5.1 виконується
 вибірково. Це та сама проблема розходження, через яку демо вбудовується
@@ -134,8 +144,8 @@ title  summary  body  tags[]
 ```
 src/content/work/<slug>/
   index.yaml     структурні поля
-  uk.md          title, summary, body, tags
-  en.md          title, summary, body, tags
+  uk.md          title, summary, body, tags, media (alt/caption)
+  en.md          те саме англійською
 ```
 ### Що не перекладається ніколи
 Значення `type`, `status`, `art_direction` — англійські в обох версіях.
@@ -205,6 +215,17 @@ if not exists(uk.md) or not exists(en.md): fail build
 запасного варіанту. Якщо колись об'єктів стане достатньо, щоб це
 заважало, вводиться поле `translations[]` із явним переліком доступних
 мов — але не раніше.
+### 5.8 Заборона плейсхолдерів (рішення 022)
+```
+if endpoint matches placeholder pattern: fail build
+if build_ref matches placeholder pattern: fail build
+```
+Патерни: `example.com`, `localhost`, `<...>`, `TODO`, `TBD`, а також
+`build_ref`, що не є валідним SHA чи тегом. Той самий випадок, від
+якого мав захищати блок демонстрації на сторінці об'єкта: користувач
+бачить `DEMO`, клікає — і отримує помилку, бо посилання веде в
+неіснуючий домен. Якщо демо ще не готове — не заповнювати `endpoint`
+узагалі (`status: STATIC`), а не ставити тимчасове значення.
 ---
 ## 6. Стартовий набір
 П'ять слагів: `altaco-catalog`, `agent-workflow`,
@@ -216,13 +237,15 @@ type: CASE
 status: DEMO
 art_direction: MATERIAL
 published: 2026-08-12
-cover: /covers/altaco-catalog.jpg
+cover: ./cover.jpg
 context: ALTACO
 data_mode: SANITIZED
 data_snapshot_date: 2026-08-12
 source_repo: altaco-platform
-build_ref: <tag>
+build_ref: 4f8a1c2
 ```
+(`build_ref` тут ілюстративний, не плейсхолдер — правило 5.8 забороняє
+буквальний синтаксис на кшталт `<tag>`, TODO, example.com.)
 ```yaml
 # work/altaco-catalog/uk.md
 title: Динамічний каталог ALTACO

@@ -1,4 +1,5 @@
 ---
+import { Picture } from 'astro:assets';
 import Base from '@/layouts/Base.astro';
 import Nav from '@/components/Nav.astro';
 import Footer from '@/components/Footer.astro';
@@ -56,14 +57,24 @@ const slugHref = (slug: string) => (locale === 'uk' ? `/work/${slug}` : `/en/wor
       <p class="work-detail__summary mono">{translation.summary}</p>
     </header>
 
-    {showCover && <img class="work-detail__cover" src={entry.cover} alt="" />}
+    {showCover && (
+      <Picture
+        class="work-detail__cover"
+        src={entry.cover}
+        alt=""
+        formats={['avif', 'webp']}
+        widths={[600, 1200, 1800]}
+        sizes="(min-width: 1200px) 1200px, 100vw"
+        loading="eager"
+      />
+    )}
 
     <div class="work-detail__body">
       {entry.type === 'CASE' && <CaseTemplate entry={entry} locale={locale} body={body} />}
       {(entry.type === 'PROTOTYPE' || entry.type === 'TOOL' || entry.type === 'EXPERIMENT') && (
         <PrototypeTemplate entry={entry} locale={locale} body={body} />
       )}
-      {entry.type === 'VISUAL_STUDY' && <VisualStudyTemplate entry={entry} body={body} />}
+      {entry.type === 'VISUAL_STUDY' && <VisualStudyTemplate entry={entry} locale={locale} body={body} />}
       {entry.type === 'EDITORIAL' && <EditorialTemplate body={body} />}
     </div>
 
@@ -105,8 +116,10 @@ const slugHref = (slug: string) => (locale === 'uk' ? `/work/${slug}` : `/en/wor
     color: var(--color-muted);
   }
 
-  .work-detail__cover {
+  main :global(.work-detail__cover) {
+    display: block;
     max-width: var(--width-content);
+    height: auto;
   }
 
   .work-detail__pager {

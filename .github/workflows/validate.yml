@@ -22,3 +22,10 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      # §1.3 content-prep брифу, рішення 023 — окремий, не блокуючий крок.
+      # Зовнішній збій ендпоінта не повинен зупиняти збірку сайту, але
+      # має лишатись видимим у прогоні CI.
+      - name: Check LIVE/DEMO endpoint availability (non-blocking)
+        run: node scripts/check-endpoints.mjs
+        continue-on-error: true

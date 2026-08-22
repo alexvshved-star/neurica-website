@@ -2,8 +2,10 @@ type: VISUAL_STUDY
 status: STATIC
 art_direction: ORGANIC
 published: 2026-05-01
-cover: /covers/organic-intelligence.jpg
+cover: ./cover.placeholder.jpg
 data_mode: NONE
 media:
-  - /covers/organic-intelligence-media-1.jpg
-  - /covers/organic-intelligence-media-2.jpg
+  - id: m1
+    src: ./01.placeholder.jpg
+  - id: m2
+    src: ./02.placeholder.jpg

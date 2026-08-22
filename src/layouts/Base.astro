@@ -1,4 +1,5 @@
 ---
+import { getImage, type ImageMetadata } from 'astro:assets';
 import { getAlternate, type Locale } from '@/i18n';
 import '@/styles/tokens.css';
 import '@/styles/base.css';
@@ -7,9 +8,10 @@ interface Props {
   locale: Locale;
   title: string;
   description?: string;
-  /** Публічний шлях (напр. з entry.cover). За замовчуванням — спільна
-   * заглушка для сторінок-індексів, без per-object обкладинки. */
-  image?: string;
+  /** Обкладинка об'єкта (entry.cover) — кропиться під OG на збірці
+   * (§2.4 content-prep брифу), не вимагає окремого файлу. Публічний
+   * шлях-рядок — для сторінок-індексів без per-object обкладинки. */
+  image?: string | ImageMetadata;
   ogType?: 'website' | 'article';
 }
 
@@ -19,6 +21,14 @@ const pathname = Astro.url.pathname;
 const ukPath = getAlternate(pathname, 'uk');
 const enPath = getAlternate(pathname, 'en');
 const canonicalOrigin = 'https://neurica.net';
+
+// og:image вимагає ~1.91:1 — обкладинки за напрямками мають різні
+// пропорції (§2.2). Кропимо по центру під конкретний розмір на
+// збірці замість вимоги окремого og-файлу на об'єкт (§2.4).
+const ogImagePath =
+  typeof image === 'string'
+    ? image
+    : (await getImage({ src: image, width: 1200, height: 630, format: 'jpg', fit: 'cover' })).src;
 ---
 
 <!doctype html>
@@ -39,7 +49,7 @@ const canonicalOrigin = 'https://neurica.net';
     <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
     {description && <meta property="og:description" content={description} />}
-    <meta property="og:image" content={`${canonicalOrigin}${image}`} />
+    <meta property="og:image" content={`${canonicalOrigin}${ogImagePath}`} />
     <meta property="og:url" content={`${canonicalOrigin}${pathname}`} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />

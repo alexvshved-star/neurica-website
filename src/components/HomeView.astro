@@ -27,7 +27,7 @@ const workHref = locale === 'uk' ? '/work' : '/en/work';
       <p class="hero__descriptor mono">{brandDescriptor}</p>
     </header>
     <section class="feed">
-      {items.map((entry) => <WorkCard entry={entry} locale={locale} />)}
+      {items.map((entry, i) => <WorkCard entry={entry} locale={locale} priority={i === 0} />)}
     </section>
     <a class="feed__view-all mono" href={workHref}>{t(locale, 'work.viewAll')} →</a>
   </main>

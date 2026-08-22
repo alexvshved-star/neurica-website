@@ -1,14 +1,12 @@
 type: CASE
-status: DEMO
+status: STATIC
 art_direction: MATERIAL
 published: 2026-08-12
-cover: /covers/altaco-catalog.jpg
+cover: ./cover.placeholder.jpg
 context: ALTACO
 data_mode: SANITIZED
 data_snapshot_date: 2026-08-12
 source_repo: altaco-platform
-build_ref: a1b2c3d
-endpoint: https://demo.altaco.neurica.net/catalog
 data_fields:
   - name
   - manufacturer

@@ -41,6 +41,8 @@ npm run preview   # переглянути dist/ локально
 - [`docs/05-decisions.md`](./docs/05-decisions.md) — журнал рішень
 - [`docs/06-information-architecture.md`](./docs/06-information-architecture.md) —
   ролі сторінок, шаблони об'єкта, масштаб картки
+- [`docs/07-content-spec.md`](./docs/07-content-spec.md) —
+  специфікація для автора: файли, розміри зображень, межі довжини
 
 ## Ліцензія
 

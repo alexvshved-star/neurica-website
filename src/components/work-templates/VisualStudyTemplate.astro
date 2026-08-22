@@ -1,23 +1,42 @@
 ---
 // VISUAL_STUDY — послідовність зображень із media[], мінімум тексту.
-// body опційний і короткий: це шаблон, де проза заважає (розділ 3.4).
+// body опційний і короткий: це шаблон, де проза заважає (розділ 3.4
+// IA-брифу). media[] структурне (id+src), alt/caption локалізовані
+// за тим самим id (розділ 3 content-prep брифу, рішення 024).
+import { Picture } from 'astro:assets';
+import type { Locale } from '@/i18n';
 import type { WorkEntry } from '@/content.config';
 
 interface Props {
   entry: WorkEntry;
+  locale: Locale;
   body: string[];
 }
 
-const { entry, body } = Astro.props;
+const { entry, locale, body } = Astro.props;
 const media = entry.media ?? [];
+const localizedMedia = entry.translations[locale]?.media ?? {};
 ---
 
 <div class="visual-study-template">
   {media.length > 0 && (
     <div class="visual-study-template__sequence">
-      {media.map((src) => (
-        <img src={src} alt="" loading="lazy" />
-      ))}
+      {media.map((item, i) => {
+        const meta = localizedMedia[item.id];
+        return (
+          <figure>
+            <Picture
+              src={item.src}
+              alt={meta?.alt ?? ''}
+              formats={['avif', 'webp']}
+              widths={[600, 1200, 1800]}
+              sizes="100vw"
+              loading={i === 0 ? 'eager' : 'lazy'}
+            />
+            {meta?.caption && <figcaption class="mono">{meta.caption}</figcaption>}
+          </figure>
+        );
+      })}
     </div>
   )}
   {body.length > 0 && (
@@ -30,6 +49,18 @@ const media = entry.media ?? [];
     display: flex;
     flex-direction: column;
     gap: var(--space-6);
+  }
+
+  .visual-study-template__sequence :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .visual-study-template__sequence figcaption {
+    margin-top: var(--space-2);
+    font-size: var(--type-mono);
+    color: var(--color-muted);
   }
 
   .visual-study-template__note {
