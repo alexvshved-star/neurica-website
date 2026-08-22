@@ -10,18 +10,53 @@ export function renderableStatus(status: WorkEntry['status']): WorkEntry['status
 }
 
 /**
- * Правило 5.4/5.7 — сторінки-списки не показують ARCHIVE окрім
- * /archive. Використовується головною і /work.
+ * Сторінки-списки (стрічка, індекс) не показують ARCHIVE — воно
+ * доступне лише за прямим посиланням і на /archive. FROZEN лишається
+ * скрізь нарівні з рештою (рішення 018): відключене демо — це досі
+ * добрий кейс, не привід зникнути зі стрічки.
  */
 export function excludeArchive(items: WorkEntry[]): WorkEntry[] {
   return items.filter((item) => item.status !== 'ARCHIVE');
 }
 
 /**
- * /archive — тільки ARCHIVE і FROZEN.
+ * /archive — тільки ARCHIVE (рішення 018). FROZEN туди не потрапляє:
+ * «сторінка живе далі» (правило 5.3) означає лишитися в /work, а не
+ * переїхати в архів.
  */
 export function archiveOnly(items: WorkEntry[]): WorkEntry[] {
-  return items.filter((item) => item.status === 'ARCHIVE' || item.status === 'FROZEN');
+  return items.filter((item) => item.status === 'ARCHIVE');
+}
+
+export function sortByPublishedDesc(items: WorkEntry[]): WorkEntry[] {
+  return [...items].sort((a, b) => b.published.getTime() - a.published.getTime());
+}
+
+/**
+ * Головна — кураторський зріз, не повний перелік: об'єкти з
+ * feature=true плюс найсвіжіші за published, разом не більше восьми,
+ * фінально впорядковані хронологічно (стрічка, не групування
+ * "спершу featured"). ARCHIVE вже відфільтрований на вході.
+ */
+export function selectHomeFeed(items: WorkEntry[], limit = 8): WorkEntry[] {
+  const featured = items.filter((item) => item.feature);
+  const rest = sortByPublishedDesc(items.filter((item) => !item.feature));
+  const fillCount = Math.max(0, limit - featured.length);
+  const selected = [...featured, ...rest.slice(0, fillCount)];
+  return sortByPublishedDesc(selected);
+}
+
+export type CardScale = 'large' | 'medium' | 'small';
+
+/**
+ * Масштаб картки виводиться, не задається вручну (розділ 4 IA,
+ * рішення 021): feature → large, інтерактивні (LIVE/DEMO) → medium,
+ * решта → small. `feature` — єдине ручне поле.
+ */
+export function cardScale(entry: WorkEntry): CardScale {
+  if (entry.feature) return 'large';
+  if (entry.status === 'LIVE' || entry.status === 'DEMO') return 'medium';
+  return 'small';
 }
 
 /**

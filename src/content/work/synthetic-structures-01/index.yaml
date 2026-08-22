@@ -1,6 +1,9 @@
 type: VISUAL_STUDY
 status: STATIC
 art_direction: CHROMATIC
-year: 2026
-cover: ./cover.jpg
+published: 2026-06-10
+cover: /covers/synthetic-structures-01.jpg
 data_mode: NONE
+media:
+  - /covers/synthetic-structures-01-media-1.jpg
+  - /covers/synthetic-structures-01-media-2.jpg

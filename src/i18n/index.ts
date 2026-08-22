@@ -14,6 +14,15 @@ const dictionaries: Record<Locale, Dictionary> = { uk, en };
  */
 export const brandDescriptor = 'AI experiments, prototypes and selected work by EONYX';
 
+/**
+ * Підпис бренду під знаком у шапці й підвалі — англійський в обох
+ * мовах, з тієї самої причини, і веде на eonyx.net. Разом рівно два
+ * виходи на EONYX на сайт (розділ 5 IA-брифу) — жодного іншого місця
+ * з посиланням на eonyx.net бути не повинно.
+ */
+export const byEonyx = 'by EONYX';
+export const eonyxUrl = 'https://eonyx.net';
+
 export function getLocale(pathname: string): Locale {
   return pathname === '/en' || pathname.startsWith('/en/') ? 'en' : 'uk';
 }

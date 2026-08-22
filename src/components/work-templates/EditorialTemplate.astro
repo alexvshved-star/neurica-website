@@ -1,0 +1,24 @@
+---
+// EDITORIAL — тільки проза на --width-reading. Без cover у тілі,
+// обкладинка вже відпрацювала як картка (розділ 3.5 IA-брифу) —
+// придушення cover для цього типу відбувається в WorkDetailView.
+interface Props {
+  body: string[];
+}
+
+const { body } = Astro.props;
+---
+
+<article class="editorial-template">
+  {body.map((p) => <p>{p}</p>)}
+</article>
+
+<style>
+  .editorial-template {
+    max-width: var(--width-reading);
+  }
+
+  .editorial-template > * + * {
+    margin-top: var(--space-4);
+  }
+</style>

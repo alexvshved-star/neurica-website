@@ -48,7 +48,10 @@ const structuralSchema = z.object({
   status: z.enum(STATUS_VALUES),
   art_direction: z.enum(ART_DIRECTION_VALUES),
   cover: z.string(),
-  year: z.number(),
+  // published замінює year (рішення 019) — рік сам по собі не задає
+  // порядку двох об'єктів того самого року. `year` для показу
+  // виводиться з published у .transform() нижче.
+  published: z.coerce.date(),
   context: z.enum(CONTEXT_VALUES).optional(),
   endpoint: z.string().url().optional(),
   owner: z.string().optional(),
@@ -58,6 +61,10 @@ const structuralSchema = z.object({
   data_mode: z.enum(DATA_MODE_VALUES),
   data_snapshot_date: z.coerce.date().optional(),
   data_fields: z.array(z.string()).optional(),
+  media: z.array(z.string()).optional(),
+  // Єдине ручне поле масштабу картки (розділ 4 брифу IA, рішення 021).
+  // Решта масштабу виводиться з type/status — див. lib/validate.ts.
+  feature: z.boolean().optional(),
 });
 
 const rawWorkSchema = structuralSchema.extend({
@@ -131,16 +138,19 @@ const workSchema = rawWorkSchema
   .transform((data) => {
     // 5.3 — LIVE понижується сам, якщо lastChecked старший за 45 днів.
     // Не помилка збірки: це downgrade, не fail.
-    if (data.status === 'LIVE' && data.last_checked) {
+    let status = data.status;
+    if (status === 'LIVE' && data.last_checked) {
       const ageDays = (Date.now() - data.last_checked.getTime()) / 86_400_000;
       if (ageDays > 45) {
         console.warn(
           `[5.3] ${data.slug}: LIVE, last_checked ${Math.round(ageDays)} днів тому (> 45) → знижено до FROZEN на збірці`
         );
-        return { ...data, status: 'FROZEN' as WorkStatus };
+        status = 'FROZEN' as WorkStatus;
       }
     }
-    return data;
+    // year виводиться з published — лише для показу, не окреме поле джерела.
+    const year = data.published.getUTCFullYear();
+    return { ...data, status, year };
   });
 
 export type WorkEntry = z.infer<typeof workSchema>;
@@ -197,6 +207,8 @@ function workLoader(baseDir: string): Loader {
         .map((entry) => entry.name)
         .sort();
 
+      const featuredSlugs: string[] = [];
+
       for (const slug of slugs) {
         const dir = path.join(baseDir, slug);
         const indexPath = path.join(dir, 'index.yaml');
@@ -217,6 +229,19 @@ function workLoader(baseDir: string): Loader {
 
         const parsed = await parseData({ id: slug, data: raw, filePath: indexPath });
         store.set({ id: slug, data: parsed });
+
+        if ((parsed as { feature?: boolean }).feature) {
+          featuredSlugs.push(slug);
+        }
+      }
+
+      // Рішення 021 — feature максимум три одночасно. Попередження,
+      // не fail: масштаб карток лишається виведеним, просто на
+      // головній featured-об'єктів стане більше, ніж задумано.
+      if (featuredSlugs.length > 3) {
+        console.warn(
+          `[feature] більше трьох featured-об'єктів (${featuredSlugs.length}): ${featuredSlugs.join(', ')} — задумано максимум 3`
+        );
       }
     },
   };

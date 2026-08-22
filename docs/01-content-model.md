@@ -69,7 +69,12 @@ Item
   summary             required   один рядок механіки:
                                  "inventory → catalog → PDF"
   cover               required
-  year                required
+  published           required   ISO-дата; year для показу виводиться з неї
+                                 (рішення 019 — year сам по собі не задає
+                                 порядку двох об'єктів того самого року)
+  feature                        опційне, максимум 3 одночасно; масштаб
+                                 картки виводиться з нього + type/status
+                                 (рішення 021), не задається вручну інакше
   tags[]
   media[]
   body                           обов'язкове для CASE та EDITORIAL
@@ -113,9 +118,9 @@ Item
 ### Розділення полів
 **Структурні — спільні, в одному екземплярі:**
 ```
-slug  type  status  art_direction  cover  year  context
+slug  type  status  art_direction  cover  published  feature  context
 endpoint  owner  last_checked  source_repo  build_ref
-data_mode  data_snapshot_date  data_fields[]
+data_mode  data_snapshot_date  data_fields[]  media[]
 ```
 **Локалізовані — по одному на мову:**
 ```
@@ -210,8 +215,8 @@ if not exists(uk.md) or not exists(en.md): fail build
 type: CASE
 status: DEMO
 art_direction: MATERIAL
-year: 2026
-cover: ./cover.jpg
+published: 2026-08-12
+cover: /covers/altaco-catalog.jpg
 context: ALTACO
 data_mode: SANITIZED
 data_snapshot_date: 2026-08-12

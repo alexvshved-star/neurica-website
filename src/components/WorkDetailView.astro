@@ -2,6 +2,10 @@
 import Base from '@/layouts/Base.astro';
 import Nav from '@/components/Nav.astro';
 import Footer from '@/components/Footer.astro';
+import CaseTemplate from '@/components/work-templates/CaseTemplate.astro';
+import PrototypeTemplate from '@/components/work-templates/PrototypeTemplate.astro';
+import VisualStudyTemplate from '@/components/work-templates/VisualStudyTemplate.astro';
+import EditorialTemplate from '@/components/work-templates/EditorialTemplate.astro';
 import { t, type Locale } from '@/i18n';
 import { renderableStatus } from '@/lib/validate';
 import type { WorkEntry } from '@/content.config';
@@ -9,39 +13,73 @@ import type { WorkEntry } from '@/content.config';
 interface Props {
   entry: WorkEntry;
   locale: Locale;
+  prevEntry: WorkEntry | null;
+  nextEntry: WorkEntry | null;
 }
 
-const { entry, locale } = Astro.props;
+const { entry, locale, prevEntry, nextEntry } = Astro.props;
 const translation = entry.translations[locale];
 if (!translation) {
   throw new Error(`WorkDetailView: ${entry.slug} не має перекладу для ${locale}`);
 }
 
 const status = renderableStatus(entry.status);
-const snapshotDate = entry.status === 'DEMO' && entry.data_snapshot_date
-  ? entry.data_snapshot_date.toISOString().slice(0, 10)
-  : null;
+const metaLine = [entry.type.replace('_', ' '), status, String(entry.year)].filter(Boolean);
 
 // Мінімальний рендер body: абзаци, розділені порожнім рядком.
-// Повноцінний markdown-рендеринг — поза межами каркасу (крок 05).
-const paragraphs = translation.body ? translation.body.split(/\n\s*\n/) : [];
+// Повноцінний markdown-рендеринг — поза межами каркасу.
+const body = translation.body ? translation.body.split(/\n\s*\n/) : [];
+
+// EDITORIAL не показує cover у тілі — обкладинка вже відпрацювала
+// як картка в стрічці й у og:image (розділ 3.5 IA-брифу).
+const showCover = entry.type !== 'EDITORIAL';
+
+const workHref = locale === 'uk' ? '/work' : '/en/work';
+const slugHref = (slug: string) => (locale === 'uk' ? `/work/${slug}` : `/en/work/${slug}`);
 ---
 
-<Base locale={locale} title={translation.title} description={translation.summary}>
+<Base
+  locale={locale}
+  title={translation.title}
+  description={translation.summary}
+  image={entry.cover}
+  ogType="article"
+>
   <Nav locale={locale} />
   <main data-direction={entry.art_direction.toLowerCase()}>
-    <p class="meta">
-      {entry.type.replace('_', ' ')}{status && <span class="meta meta--status"> · {status}</span>}
-      {snapshotDate && <span class="meta"> — {t(locale, 'meta.dataFrom')} {snapshotDate}</span>}
-    </p>
-    <h1>{translation.title}</h1>
-    <p class="work-detail__summary mono">{translation.summary}</p>
-    {translation.tags && translation.tags.length > 0 && (
-      <ul class="work-detail__tags mono">
-        {translation.tags.map((tag) => <li>{tag}</li>)}
-      </ul>
-    )}
-    {paragraphs.map((p) => <p class="work-detail__body">{p}</p>)}
+    <header class="work-detail__header">
+      <p class="meta">
+        {metaLine[0]}
+        {metaLine.slice(1).map((part) => <span class="meta meta--status"> · {part}</span>)}
+      </p>
+      <h1>{translation.title}</h1>
+      <p class="work-detail__summary mono">{translation.summary}</p>
+    </header>
+
+    {showCover && <img class="work-detail__cover" src={entry.cover} alt="" />}
+
+    <div class="work-detail__body">
+      {entry.type === 'CASE' && <CaseTemplate entry={entry} locale={locale} body={body} />}
+      {(entry.type === 'PROTOTYPE' || entry.type === 'TOOL' || entry.type === 'EXPERIMENT') && (
+        <PrototypeTemplate entry={entry} locale={locale} body={body} />
+      )}
+      {entry.type === 'VISUAL_STUDY' && <VisualStudyTemplate entry={entry} body={body} />}
+      {entry.type === 'EDITORIAL' && <EditorialTemplate body={body} />}
+    </div>
+
+    <nav class="work-detail__pager mono" aria-label="pagination">
+      {prevEntry && (
+        <a href={slugHref(prevEntry.slug)}>
+          ← {t(locale, 'work.prev')}: {prevEntry.translations[locale]?.title}
+        </a>
+      )}
+      {nextEntry && (
+        <a href={slugHref(nextEntry.slug)}>
+          {t(locale, 'work.next')}: {nextEntry.translations[locale]?.title} →
+        </a>
+      )}
+      <a href={workHref}>{t(locale, 'work.backToWork')}</a>
+    </nav>
   </main>
   <Footer locale={locale} />
 </Base>
@@ -49,21 +87,33 @@ const paragraphs = translation.body ? translation.body.split(/\n\s*\n/) : [];
 <style>
   main {
     padding: var(--section-gap-mobile) var(--grid-margin);
-    max-width: var(--width-reading);
   }
 
   main > * + * {
-    margin-top: var(--space-4);
+    margin-top: var(--space-6);
   }
 
-  .work-detail__tags {
-    display: flex;
-    gap: var(--space-3);
+  .work-detail__header {
+    max-width: var(--width-reading);
+  }
+
+  .work-detail__header > * + * {
+    margin-top: var(--space-3);
+  }
+
+  .work-detail__summary {
     color: var(--color-muted);
   }
 
-  .work-detail__body {
-    font-size: var(--type-body);
-    line-height: var(--leading-body);
+  .work-detail__cover {
+    max-width: var(--width-content);
+  }
+
+  .work-detail__pager {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+    padding-top: var(--space-6);
+    border-top: var(--rule-hairline) solid var(--color-rule);
   }
 </style>

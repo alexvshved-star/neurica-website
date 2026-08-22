@@ -39,6 +39,8 @@ npm run preview   # переглянути dist/ локально
 - [`docs/04-architecture.md`](./docs/04-architecture.md) — стек,
   збірка, Netlify
 - [`docs/05-decisions.md`](./docs/05-decisions.md) — журнал рішень
+- [`docs/06-information-architecture.md`](./docs/06-information-architecture.md) —
+  ролі сторінок, шаблони об'єкта, масштаб картки
 
 ## Ліцензія
 

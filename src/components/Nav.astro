@@ -1,5 +1,5 @@
 ---
-import { t, getAlternate, type Locale } from '@/i18n';
+import { t, getAlternate, byEonyx, eonyxUrl, type Locale } from '@/i18n';
 
 interface Props {
   locale: Locale;
@@ -10,19 +10,20 @@ const pathname = Astro.url.pathname;
 const home = locale === 'uk' ? '/' : '/en/';
 const workHref = locale === 'uk' ? '/work' : '/en/work';
 const aboutHref = locale === 'uk' ? '/about' : '/en/about';
-const archiveHref = locale === 'uk' ? '/archive' : '/en/archive';
 const otherLocale: Locale = locale === 'uk' ? 'en' : 'uk';
 const switchHref = getAlternate(pathname, otherLocale);
 ---
 
 <nav class="site-nav">
-  <a class="site-nav__brand mono" href={home}>NEURICA</a>
+  <div class="site-nav__brand-block">
+    <a class="site-nav__brand mono" href={home}>NEURICA</a>
+    <a class="site-nav__by mono" href={eonyxUrl}>{byEonyx}</a>
+  </div>
   <ul class="site-nav__links mono">
     <li><a href={workHref}>{t(locale, 'nav.work')}</a></li>
     <li><a href={aboutHref}>{t(locale, 'nav.about')}</a></li>
-    <li><a href={archiveHref}>{t(locale, 'nav.archive')}</a></li>
-    <li><a href={switchHref} hreflang={otherLocale}>{otherLocale.toUpperCase()}</a></li>
   </ul>
+  <a class="site-nav__lang mono" href={switchHref} hreflang={otherLocale}>{otherLocale.toUpperCase()}</a>
 </nav>
 
 <style>
@@ -35,9 +36,21 @@ const switchHref = getAlternate(pathname, otherLocale);
     border-bottom: var(--rule-hairline) solid var(--color-rule);
   }
 
+  .site-nav__brand-block {
+    display: flex;
+    flex-direction: column;
+    line-height: var(--leading-tight);
+  }
+
   .site-nav__brand {
     font-weight: var(--weight-strong);
     letter-spacing: var(--tracking-label);
+    text-decoration: none;
+  }
+
+  .site-nav__by {
+    font-size: var(--type-metadata);
+    color: var(--color-muted);
     text-decoration: none;
   }
 
@@ -48,7 +61,8 @@ const switchHref = getAlternate(pathname, otherLocale);
     letter-spacing: var(--tracking-mono);
   }
 
-  .site-nav__links a {
+  .site-nav__links a,
+  .site-nav__lang {
     text-decoration: none;
   }
 </style>

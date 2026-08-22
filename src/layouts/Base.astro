@@ -7,9 +7,13 @@ interface Props {
   locale: Locale;
   title: string;
   description?: string;
+  /** Публічний шлях (напр. з entry.cover). За замовчуванням — спільна
+   * заглушка для сторінок-індексів, без per-object обкладинки. */
+  image?: string;
+  ogType?: 'website' | 'article';
 }
 
-const { locale, title, description } = Astro.props;
+const { locale, title, description, image = '/og-default.jpg', ogType = 'website' } = Astro.props;
 
 const pathname = Astro.url.pathname;
 const ukPath = getAlternate(pathname, 'uk');
@@ -32,6 +36,11 @@ const canonicalOrigin = 'https://neurica.net';
 
     <meta property="og:locale" content={locale === 'uk' ? 'uk_UA' : 'en_US'} />
     <meta property="og:locale:alternate" content={locale === 'uk' ? 'en_US' : 'uk_UA'} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:image" content={`${canonicalOrigin}${image}`} />
+    <meta property="og:url" content={`${canonicalOrigin}${pathname}`} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

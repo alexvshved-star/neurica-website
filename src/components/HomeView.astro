@@ -4,8 +4,8 @@ import Base from '@/layouts/Base.astro';
 import Nav from '@/components/Nav.astro';
 import Footer from '@/components/Footer.astro';
 import WorkCard from '@/components/WorkCard.astro';
-import { brandDescriptor, type Locale } from '@/i18n';
-import { excludeArchive, warnArtDirectionRepeats } from '@/lib/validate';
+import { brandDescriptor, t, type Locale } from '@/i18n';
+import { excludeArchive, selectHomeFeed, warnArtDirectionRepeats } from '@/lib/validate';
 
 interface Props {
   locale: Locale;
@@ -13,8 +13,10 @@ interface Props {
 
 const { locale } = Astro.props;
 const all = (await getCollection('work')).map((e) => e.data);
-const items = excludeArchive(all);
+const items = selectHomeFeed(excludeArchive(all));
 warnArtDirectionRepeats(items, `home/${locale}`);
+
+const workHref = locale === 'uk' ? '/work' : '/en/work';
 ---
 
 <Base locale={locale} title="NEURICA" description={brandDescriptor}>
@@ -24,9 +26,10 @@ warnArtDirectionRepeats(items, `home/${locale}`);
       <h1 class="type-display">NEURICA</h1>
       <p class="hero__descriptor mono">{brandDescriptor}</p>
     </header>
-    <section class="work-grid">
+    <section class="feed">
       {items.map((entry) => <WorkCard entry={entry} locale={locale} />)}
     </section>
+    <a class="feed__view-all mono" href={workHref}>{t(locale, 'work.viewAll')} →</a>
   </main>
   <Footer locale={locale} />
 </Base>
@@ -42,16 +45,32 @@ warnArtDirectionRepeats(items, `home/${locale}`);
     color: var(--color-muted);
   }
 
-  .work-grid {
+  /* Стрічка: масштаб картки (data-scale на WorkCard) виражається як
+     ширина в сітці — саме те, що робить головну "живою стрічкою",
+     не однорідним переліком (розділ 2/4 IA-брифу). */
+  .feed {
     display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--grid-gutter);
     padding: 0 var(--grid-margin) var(--section-gap-mobile);
-    grid-template-columns: 1fr;
   }
 
-  @media (min-width: 768px) {
-    .work-grid {
-      grid-template-columns: repeat(2, 1fr);
+  .feed :global([data-scale='large']) {
+    grid-column: span 2;
+  }
+
+  @media (max-width: 768px) {
+    .feed {
+      grid-template-columns: 1fr;
     }
+
+    .feed :global([data-scale='large']) {
+      grid-column: span 1;
+    }
+  }
+
+  .feed__view-all {
+    display: block;
+    margin: 0 var(--grid-margin) var(--section-gap-mobile);
   }
 </style>

@@ -1,0 +1,37 @@
+---
+// CASE — задача → підхід → результат. Проза на ширині читання.
+// Якщо DEMO — блок демонстрації над прозою (розділ 3.2, 3.6 IA-брифу):
+// читач має спершу побачити, що це працює, перш ніж читати опис.
+import RuntimeNotice from '@/components/RuntimeNotice.astro';
+import type { Locale } from '@/i18n';
+import type { WorkEntry } from '@/content.config';
+
+interface Props {
+  entry: WorkEntry;
+  locale: Locale;
+  body: string[];
+}
+
+const { entry, locale, body } = Astro.props;
+---
+
+<div class="case-template">
+  <RuntimeNotice entry={entry} locale={locale} />
+  <article class="case-template__prose">
+    {body.map((p) => <p>{p}</p>)}
+  </article>
+</div>
+
+<style>
+  .case-template {
+    max-width: var(--width-reading);
+  }
+
+  .case-template__prose {
+    margin-top: var(--space-6);
+  }
+
+  .case-template__prose > * + * {
+    margin-top: var(--space-4);
+  }
+</style>

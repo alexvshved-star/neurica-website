@@ -15,7 +15,21 @@ const { locale } = Astro.props;
   <Nav locale={locale} />
   <main>
     <h1>{t(locale, 'about.title')}</h1>
-    <p class="about-body">{t(locale, 'about.body')}</p>
+
+    <section class="about-block">
+      <h2>{t(locale, 'about.block1Title')}</h2>
+      <p>{t(locale, 'about.block1Body')}</p>
+    </section>
+
+    <section class="about-block">
+      <h2>{t(locale, 'about.block2Title')}</h2>
+      <p>{t(locale, 'about.block2Body')}</p>
+    </section>
+
+    <section class="about-block">
+      <h2>{t(locale, 'about.block3Title')}</h2>
+      <p>{t(locale, 'about.block3Body')}</p>
+    </section>
   </main>
   <Footer locale={locale} />
 </Base>
@@ -26,8 +40,15 @@ const { locale } = Astro.props;
     max-width: var(--width-reading);
   }
 
-  .about-body {
-    margin-top: var(--space-6);
-    font-size: var(--type-lead);
+  main > * + * {
+    margin-top: var(--space-8);
+  }
+
+  .about-block > * + * {
+    margin-top: var(--space-3);
+  }
+
+  .about-block p {
+    color: var(--color-muted);
   }
 </style>

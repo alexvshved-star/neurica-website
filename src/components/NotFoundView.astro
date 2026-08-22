@@ -10,6 +10,7 @@ interface Props {
 
 const { locale } = Astro.props;
 const home = locale === 'uk' ? '/' : '/en/';
+const workHref = locale === 'uk' ? '/work' : '/en/work';
 ---
 
 <Base locale={locale} title={t(locale, 'notFound.title')}>
@@ -17,7 +18,10 @@ const home = locale === 'uk' ? '/' : '/en/';
   <main>
     <h1>{t(locale, 'notFound.title')}</h1>
     <p>{t(locale, 'notFound.body')}</p>
-    <a href={home} class="mono">{t(locale, 'notFound.backHome')}</a>
+    <p class="not-found__links mono">
+      <a href={home}>{t(locale, 'notFound.backHome')}</a>
+      <a href={workHref}>{t(locale, 'work.backToWork')}</a>
+    </p>
   </main>
   <Footer locale={locale} />
 </Base>
@@ -29,5 +33,10 @@ const home = locale === 'uk' ? '/' : '/en/';
 
   main > * + * {
     margin-top: var(--space-4);
+  }
+
+  .not-found__links {
+    display: flex;
+    gap: var(--space-6);
   }
 </style>

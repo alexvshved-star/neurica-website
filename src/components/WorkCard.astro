@@ -1,14 +1,17 @@
 ---
-import { t, type Locale } from '@/i18n';
-import { renderableStatus } from '@/lib/validate';
+import { type Locale } from '@/i18n';
+import { renderableStatus, cardScale } from '@/lib/validate';
 import type { WorkEntry } from '@/content.config';
 
 interface Props {
   entry: WorkEntry;
   locale: Locale;
+  /** /work, /archive — компактний однорідний рядок, без cover і без
+   * масштабної варіації (розділ 2 IA-брифу: повнота важливіша за акцент). */
+  compact?: boolean;
 }
 
-const { entry, locale } = Astro.props;
+const { entry, locale, compact = false } = Astro.props;
 const translation = entry.translations[locale];
 if (!translation) {
   throw new Error(`WorkCard: ${entry.slug} не має перекладу для ${locale} (мало впасти на 5.7 раніше)`);
@@ -22,18 +25,24 @@ const statusClass = entry.status === 'LIVE'
     ? 'meta--frozen'
     : 'meta--status';
 
-const snapshotDate = entry.status === 'DEMO' && entry.data_snapshot_date
-  ? entry.data_snapshot_date.toISOString().slice(0, 10)
-  : null;
+const scale = cardScale(entry);
 ---
 
-<a class="work-card" href={href} data-direction={entry.art_direction.toLowerCase()}>
-  <p class="meta work-card__type">
-    {entry.type.replace('_', ' ')}{status && <span class={`meta ${statusClass}`}> · {status}</span>}
-    {snapshotDate && <span class="meta work-card__snapshot"> — {t(locale, 'meta.dataFrom')} {snapshotDate}</span>}
-  </p>
-  <h2 class="work-card__title">{translation.title}</h2>
-  <p class="work-card__summary mono">{translation.summary}</p>
+<a
+  class="work-card"
+  class:list={{ 'work-card--compact': compact }}
+  href={href}
+  data-direction={entry.art_direction.toLowerCase()}
+  data-scale={compact ? undefined : scale}
+>
+  {!compact && <img class="work-card__cover" src={entry.cover} alt="" loading="lazy" />}
+  <div class="work-card__body">
+    <p class="meta work-card__type">
+      {entry.type.replace('_', ' ')}{status && <span class={`meta ${statusClass}`}> · {status}</span>}
+    </p>
+    <h2 class="work-card__title">{translation.title}</h2>
+    <p class="work-card__summary mono">{translation.summary}</p>
+  </div>
 </a>
 
 <style>
@@ -46,8 +55,24 @@ const snapshotDate = entry.status === 'DEMO' && entry.data_snapshot_date
     text-decoration: none;
   }
 
+  .work-card--compact {
+    padding: var(--space-4);
+  }
+
+  .work-card__cover {
+    margin-bottom: var(--space-4);
+    aspect-ratio: var(--image-ratio, 16 / 9);
+    width: 100%;
+    object-fit: cover;
+    filter: var(--image-filter, none);
+  }
+
   .work-card__type {
     margin-bottom: var(--space-2);
+  }
+
+  .work-card--compact .work-card__type {
+    margin-bottom: var(--space-1);
   }
 
   .work-card__title {
@@ -60,8 +85,17 @@ const snapshotDate = entry.status === 'DEMO' && entry.data_snapshot_date
     hyphens: auto;
   }
 
+  .work-card--compact .work-card__title {
+    font-size: var(--type-lead);
+    margin-bottom: 0;
+  }
+
   .work-card__summary {
     font-size: var(--type-mono);
     color: var(--color-muted);
+  }
+
+  .work-card--compact .work-card__summary {
+    display: none;
   }
 </style>

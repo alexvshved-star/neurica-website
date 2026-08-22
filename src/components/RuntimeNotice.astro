@@ -1,0 +1,66 @@
+---
+import { t, type Locale } from '@/i18n';
+import type { WorkEntry } from '@/content.config';
+
+interface Props {
+  entry: WorkEntry;
+  locale: Locale;
+}
+
+const { entry, locale } = Astro.props;
+const snapshotDate = entry.data_snapshot_date
+  ? entry.data_snapshot_date.toISOString().slice(0, 10)
+  : null;
+---
+
+{entry.status === 'DEMO' && (
+  <div class="runtime-notice runtime-notice--demo">
+    <p class="meta meta--status">
+      DEMO{snapshotDate && <>{' '}· {t(locale, 'meta.dataFrom')} {snapshotDate}</>}
+    </p>
+    <p class="runtime-notice__text mono">{t(locale, 'demo.notice')}</p>
+    {entry.endpoint && (
+      <a class="runtime-notice__link mono" href={entry.endpoint} rel="noopener noreferrer" target="_blank">
+        {t(locale, 'demo.openLink')}
+      </a>
+    )}
+  </div>
+)}
+
+{entry.status === 'FROZEN' && (
+  <div class="runtime-notice runtime-notice--frozen">
+    <p class="meta meta--frozen">FROZEN</p>
+    <p class="runtime-notice__text mono">{t(locale, 'frozen.notice')}</p>
+  </div>
+)}
+
+{entry.status === 'LIVE' && entry.endpoint && (
+  <div class="runtime-notice runtime-notice--live">
+    <p class="meta meta--live">LIVE</p>
+    <a class="runtime-notice__link mono" href={entry.endpoint} rel="noopener noreferrer" target="_blank">
+      {t(locale, 'meta.open')}
+    </a>
+  </div>
+)}
+
+<style>
+  /* Один блок для тексту застереження й посилання разом — саме тому,
+     що застереження, розділене з посиланням, читач пропускає (розділ
+     3.6 IA-брифу): до нього не доходять, бо клікають одразу. */
+  .runtime-notice {
+    padding: var(--space-4);
+    border: var(--rule-hairline) solid var(--color-rule);
+    background: var(--color-surface);
+  }
+
+  .runtime-notice__text {
+    margin-top: var(--space-2);
+    color: var(--color-muted);
+    font-size: var(--type-mono);
+  }
+
+  .runtime-notice__link {
+    display: inline-block;
+    margin-top: var(--space-3);
+  }
+</style>

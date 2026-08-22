@@ -1,0 +1,40 @@
+---
+// VISUAL_STUDY — послідовність зображень із media[], мінімум тексту.
+// body опційний і короткий: це шаблон, де проза заважає (розділ 3.4).
+import type { WorkEntry } from '@/content.config';
+
+interface Props {
+  entry: WorkEntry;
+  body: string[];
+}
+
+const { entry, body } = Astro.props;
+const media = entry.media ?? [];
+---
+
+<div class="visual-study-template">
+  {media.length > 0 && (
+    <div class="visual-study-template__sequence">
+      {media.map((src) => (
+        <img src={src} alt="" loading="lazy" />
+      ))}
+    </div>
+  )}
+  {body.length > 0 && (
+    <p class="visual-study-template__note mono">{body[0]}</p>
+  )}
+</div>
+
+<style>
+  .visual-study-template__sequence {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .visual-study-template__note {
+    margin-top: var(--space-6);
+    max-width: var(--width-reading);
+    color: var(--color-muted);
+  }
+</style>

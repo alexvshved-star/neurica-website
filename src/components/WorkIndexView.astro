@@ -5,7 +5,7 @@ import Nav from '@/components/Nav.astro';
 import Footer from '@/components/Footer.astro';
 import WorkCard from '@/components/WorkCard.astro';
 import { t, type Locale } from '@/i18n';
-import { excludeArchive, warnArtDirectionRepeats } from '@/lib/validate';
+import { excludeArchive, sortByPublishedDesc, warnArtDirectionRepeats } from '@/lib/validate';
 
 interface Props {
   locale: Locale;
@@ -13,21 +13,24 @@ interface Props {
 
 const { locale } = Astro.props;
 const all = (await getCollection('work')).map((e) => e.data);
-const items = excludeArchive(all);
+// Індекс: усе крім ARCHIVE, включно з FROZEN (рішення 018), зворотний
+// хронологічний порядок за published. Повнота важливіша за акцент —
+// картки тут не отримують масштабної варіації (це для стрічки).
+const items = sortByPublishedDesc(excludeArchive(all));
 warnArtDirectionRepeats(items, `work/${locale}`);
 
-// Фільтри за type/status — заплановані на крок 05 (верстка стрічки).
-// NON-GOALS цієї сесії забороняє форми й поля вводу, тому на каркасі
-// це повний список без інтерактивного UI фільтрів.
+// Фільтр за type — статичні /work/[type], зарезервовано, не
+// реалізовано в v1 (рішення 020). Фільтр за type/status як
+// інтерактивний UI заборонений NON-GOALS (форми, поля вводу).
 ---
 
 <Base locale={locale} title={t(locale, 'work.title')}>
   <Nav locale={locale} />
   <main>
     <h1>{t(locale, 'work.title')}</h1>
-    <section class="work-grid">
+    <section class="work-index">
       {items.length > 0
-        ? items.map((entry) => <WorkCard entry={entry} locale={locale} />)
+        ? items.map((entry) => <WorkCard entry={entry} locale={locale} compact />)
         : <p class="mono">{t(locale, 'work.empty')}</p>}
     </section>
   </main>
@@ -39,16 +42,12 @@ warnArtDirectionRepeats(items, `work/${locale}`);
     padding: var(--section-gap-mobile) var(--grid-margin) 0;
   }
 
-  .work-grid {
-    display: grid;
-    gap: var(--grid-gutter);
+  /* Компактно, однорідно (розділ 2 IA-брифу): одна колонка, без
+     масштабної варіації карток — тут повнота важливіша за акцент. */
+  .work-index {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rule-hairline);
     padding: var(--space-8) 0 var(--section-gap-mobile);
-    grid-template-columns: 1fr;
-  }
-
-  @media (min-width: 768px) {
-    .work-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
   }
 </style>

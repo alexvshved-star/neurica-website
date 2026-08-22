@@ -1,7 +1,8 @@
 type: EDITORIAL
 status: STATIC
 art_direction: MONOCHROME
-year: 2026
-cover: ./cover.jpg
+published: 2026-08-15
+cover: /covers/what-neurica-is.jpg
 context: EONYX
 data_mode: NONE
+feature: true

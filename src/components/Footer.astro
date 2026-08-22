@@ -1,24 +1,41 @@
 ---
-import { t, type Locale } from '@/i18n';
+import { t, byEonyx, eonyxUrl, type Locale } from '@/i18n';
 
 interface Props {
   locale: Locale;
 }
 
 const { locale } = Astro.props;
+const home = locale === 'uk' ? '/' : '/en/';
+const archiveHref = locale === 'uk' ? '/archive' : '/en/archive';
 ---
 
 <footer class="site-footer mono">
+  <a class="site-footer__brand" href={home}>NEURICA</a>
+  <a href={eonyxUrl}>{byEonyx}</a>
+  <a href={archiveHref}>{t(locale, 'nav.archive')}</a>
   <span>© {new Date().getFullYear()} {t(locale, 'footer.rights')}</span>
 </footer>
 
 <style>
   .site-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6);
     padding: var(--space-8) var(--grid-margin);
     border-top: var(--rule-hairline) solid var(--color-rule);
     font-size: var(--type-metadata);
     color: var(--color-muted);
     letter-spacing: var(--tracking-label);
     text-transform: uppercase;
+  }
+
+  .site-footer a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .site-footer__brand {
+    font-weight: var(--weight-strong);
   }
 </style>

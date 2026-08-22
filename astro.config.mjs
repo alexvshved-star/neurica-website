@@ -1,5 +1,30 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { load as loadYaml } from 'js-yaml';
+
+// Sitemap не повинен містити ARCHIVE-об'єкти (доступні лише за прямим
+// посиланням, зі стрічки й індексу прибрані — рішення 018) ані
+// фікстури порушень (src/_fixtures/ поза колекцією й так ніколи сюди
+// не потрапляють). Читаємо index.yaml напряму, а не через
+// content.config.ts — конфіг збірки виконується до Content Layer.
+function getArchiveSlugs() {
+  const workDir = path.join(process.cwd(), 'src/content/work');
+  if (!fs.existsSync(workDir)) return [];
+  return fs
+    .readdirSync(workDir, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .filter((slug) => {
+      const indexPath = path.join(workDir, slug, 'index.yaml');
+      if (!fs.existsSync(indexPath)) return false;
+      const data = loadYaml(fs.readFileSync(indexPath, 'utf-8'));
+      return data?.status === 'ARCHIVE';
+    });
+}
+
+const archiveSlugs = getArchiveSlugs();
 
 export default defineConfig({
   site: 'https://neurica.net',
@@ -10,5 +35,9 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      filter: (url) => !archiveSlugs.some((slug) => url.includes(`/work/${slug}/`)),
+    }),
+  ],
 });

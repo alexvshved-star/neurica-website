@@ -1,16 +1,21 @@
 ---
 import { getCollection } from 'astro:content';
 import WorkDetailView from '@/components/WorkDetailView.astro';
+import { sortByPublishedDesc } from '@/lib/validate';
 
 export async function getStaticPaths() {
-  const entries = await getCollection('work');
-  return entries.map((entry) => ({
-    params: { slug: entry.id },
-    props: { entry: entry.data },
+  const entries = sortByPublishedDesc((await getCollection('work')).map((e) => e.data));
+  return entries.map((entry, i) => ({
+    params: { slug: entry.slug },
+    props: {
+      entry,
+      prevEntry: entries[i - 1] ?? null,
+      nextEntry: entries[i + 1] ?? null,
+    },
   }));
 }
 
-const { entry } = Astro.props;
+const { entry, prevEntry, nextEntry } = Astro.props;
 ---
 
-<WorkDetailView entry={entry} locale="en" />
+<WorkDetailView entry={entry} locale="en" prevEntry={prevEntry} nextEntry={nextEntry} />
