@@ -1,0 +1,31 @@
+---
+// Інлайн SVG-знаки EONYX з брендбука (BRAND BLOCK / Main and
+// additional compositions), контури не редаговані. Інлайн, не
+// <img>: fill="currentColor" має успадковувати колір із CSS.
+//
+// Пропорції ширина:висота, для верстки розміру через CSS
+// (aspect-ratio або явні width/height):
+//   mark     2.166:1
+//   wordmark 4.259:1
+//   chevron  0.592:1
+import markRaw from '@/assets/brand/eonyx-mark.svg?raw';
+import wordmarkRaw from '@/assets/brand/eonyx-wordmark.svg?raw';
+import chevronRaw from '@/assets/brand/eonyx-chevron.svg?raw';
+
+const svgs = { mark: markRaw, wordmark: wordmarkRaw, chevron: chevronRaw } as const;
+
+interface Props {
+  name: keyof typeof svgs;
+  class?: string;
+}
+
+const { name, class: className = '' } = Astro.props;
+
+// Знак — декоративний, без власного тексту; читабельний підпис
+// (якщо потрібен) поруч у розмітці. aria-hidden завжди, атрибути
+// оригінальних файлів (role/aria-label "EONYX") прибрані як зайві
+// при інлайні.
+const html = svgs[name].replace('<svg ', `<svg class="${className}" aria-hidden="true" `);
+---
+
+<Fragment set:html={html} />

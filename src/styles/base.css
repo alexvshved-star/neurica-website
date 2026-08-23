@@ -107,3 +107,17 @@ code, pre, .mono {
 .small {
   font-size: var(--type-small);
 }
+
+/* Видимий лише для скрінрідерів — доповнює інлайн-знаки/wordmark
+   (aria-hidden) текстовим еквівалентом без візуального місця. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

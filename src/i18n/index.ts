@@ -19,8 +19,13 @@ export const brandDescriptor = 'AI experiments, prototypes and selected work by 
  * мовах, з тієї самої причини, і веде на eonyx.net. Разом рівно два
  * виходи на EONYX на сайт (розділ 5 IA-брифу) — жодного іншого місця
  * з посиланням на eonyx.net бути не повинно.
+ *
+ * "EONYX" рендериться як inline-SVG wordmark (BrandMark), не текст —
+ * byLabel/eonyxLabel лишаються рядками для видимого "by" і для
+ * прихованого (.sr-only) текстового еквіваленту знака.
  */
-export const byEonyx = 'by EONYX';
+export const byLabel = 'by';
+export const eonyxLabel = 'EONYX';
 export const eonyxUrl = 'https://eonyx.net';
 
 export function getLocale(pathname: string): Locale {

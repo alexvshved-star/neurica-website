@@ -1,5 +1,6 @@
 ---
-import { t, byEonyx, eonyxUrl, type Locale } from '@/i18n';
+import { t, byLabel, eonyxLabel, eonyxUrl, type Locale } from '@/i18n';
+import BrandMark from './BrandMark.astro';
 
 interface Props {
   locale: Locale;
@@ -12,7 +13,9 @@ const archiveHref = locale === 'uk' ? '/archive' : '/en/archive';
 
 <footer class="site-footer">
   <a class="site-footer__brand" href={home}>NEURICA</a>
-  <a class="site-footer__by" href={eonyxUrl}>{byEonyx}</a>
+  <a class="site-footer__by" href={eonyxUrl}
+    >{byLabel} <BrandMark name="wordmark" class="site-footer__by-mark" /><span class="sr-only">{eonyxLabel}</span></a
+  >
   <a class="mono" href={archiveHref}>{t(locale, 'nav.archive')}</a>
   <span class="mono">© {new Date().getFullYear()} {t(locale, 'footer.rights')}</span>
 </footer>
@@ -43,7 +46,19 @@ const archiveHref = locale === 'uk' ? '/archive' : '/en/archive';
   }
 
   .site-footer__by {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.1em;
     font-weight: var(--weight-regular);
+  }
+
+  /* :global — BrandMark інлайнить <svg> через set:html в іншому
+     компоненті, скоуп-атрибут Astro на нього не потрапляє. Висота
+     1em, відступ від "by" (gap) = 0.1 висоти знака (X1), правило
+     MINIMUM INDENT FOR TEXT з брендбука. */
+  .site-footer__by :global(.site-footer__by-mark) {
+    height: 1em;
+    width: auto;
   }
 
   .site-footer .mono {

@@ -1,5 +1,6 @@
 ---
-import { t, getAlternate, byEonyx, eonyxUrl, type Locale } from '@/i18n';
+import { t, getAlternate, byLabel, eonyxLabel, eonyxUrl, type Locale } from '@/i18n';
+import BrandMark from './BrandMark.astro';
 
 interface Props {
   locale: Locale;
@@ -17,7 +18,9 @@ const switchHref = getAlternate(pathname, otherLocale);
 <nav class="site-nav">
   <div class="site-nav__brand-block">
     <a class="site-nav__brand" href={home}>NEURICA</a>
-    <a class="site-nav__by" href={eonyxUrl}>{byEonyx}</a>
+    <a class="site-nav__by" href={eonyxUrl}
+      >{byLabel} <BrandMark name="wordmark" class="site-nav__by-mark" /><span class="sr-only">{eonyxLabel}</span></a
+    >
   </div>
   <ul class="site-nav__links mono">
     <li><a href={workHref}>{t(locale, 'nav.work')}</a></li>
@@ -54,10 +57,24 @@ const switchHref = getAlternate(pathname, otherLocale);
   }
 
   .site-nav__by {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.1em;
     font-weight: var(--weight-regular);
     font-size: var(--type-metadata);
     color: var(--color-muted);
     text-decoration: none;
+  }
+
+  /* Wordmark замінює слово "EONYX" — висота прив'язана до кегля
+     рядка (1em), відстань між "by" і знаком (--space між flex-items,
+     тут gap) = 0.1 висоти знака (X1), правило MINIMUM INDENT FOR
+     TEXT з брендбука. */
+  /* :global — BrandMark інлайнить <svg> через set:html в іншому
+     компоненті, скоуп-атрибут Astro на нього не потрапляє. */
+  .site-nav__by :global(.site-nav__by-mark) {
+    height: 1em;
+    width: auto;
   }
 
   .site-nav__links {
