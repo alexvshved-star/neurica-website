@@ -93,16 +93,26 @@
   --leading-body:    1.6;
   --leading-mono:    1.45;
 
-  --tracking-display: -0.03em;
-  --tracking-tight:   -0.015em;
-  --tracking-normal:  0;
-  --tracking-mono:    0.02em;
-  --tracking-label:   0.14em;
+  --tracking-display:  -0.03em;
+  --tracking-wordmark:  0.06em;
+  --tracking-tight:    -0.015em;
+  --tracking-normal:    0;
+  --tracking-mono:      0.02em;
+  --tracking-label:     0.14em;
 
   /* leading-display 0.86 — з композицій брендбука з
      гігантськими обрізаними літерами. На такому кеглі
      нормальний інтерліньяж розриває блок на окремі рядки
      замість цільної форми. */
+
+  /* --tracking-wordmark — новий, окремий від --tracking-display:
+     позитивна розрядка з подачі ALTACO MONOCHROME, застосовується
+     ТІЛЬКИ до слова NEURICA в hero. --tracking-display лишається
+     незмінним (-0.03em) — той самий негативний трекінг, що й
+     раніше, для .type-display як загального рівня шкали. Позитивна
+     розрядка на кириличних капітелях (H1 сторінок/об'єктів
+     перекладаються) поводиться інакше, ніж на латиниці NEURICA —
+     тягнути --tracking-wordmark у h1 не можна (рішення 032). */
 
 
   /* ---- 1.4 Шкала відступів ---------------------------- */

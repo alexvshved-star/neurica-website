@@ -132,6 +132,45 @@ PANTONE-еквіваленти в `tokens.css` 1.9) — рішення 015. За
 and selected work by EONYX") — тепер `--type-lead`/`--weight-lead`,
 Montserrat Light.
 
+## Hero — трирівневий лок-ап
+
+`HomeView.astro`, подача за зразком ALTACO MONOCHROME:
+
+1. **`NEURICA`** — `.type-display` + `.hero__wordmark`, той самий
+   Montserrat 900, `--tracking-wordmark` (0.06em, позитивний) замість
+   `--tracking-display`.
+2. **`experiments`** — `.hero__eyebrow`, Montserrat 700
+   (`--weight-strong`), lowercase, `letter-spacing: 0.26em` (значення
+   лок-апа, не токен — застосовується тільки тут), кегль
+   `calc(var(--type-display) * 0.44)`, `margin-top:
+   calc(var(--type-display) * 0.151)` — коефіцієнт виміряний реальним
+   рендером (canvas `TextMetrics`, Chromium/Playwright) так, щоб
+   базова лінія рядка лягала на 0,83 × cap-height `NEURICA` нижче
+   базової лінії wordmark (виміряно: 0,8298 × cap-height,
+   похибка ≈0,03px на 1440px). Обидва розміри прив'язані до
+   `--type-display`, тому лок-ап масштабується разом на будь-якому
+   брейкпойнті, включно з mobile-перевизначенням `--type-display` в
+   tokens.css.
+3. **Дескриптор** — `.hero__descriptor`, без змін, окремим блоком
+   нижче (не третій рівень того самого лок-апа).
+
+`NEURICA` і `experiments` — англійські в обох мовних версіях, як і
+дескриптор (підпис бренду, не контент сторінки).
+
+### `--tracking-wordmark` — окремий токен, не правка `--tracking-display`
+
+`--tracking-wordmark: 0.06em` — новий токен (`tokens.css`, розділ
+1.3), не заміна значення `--tracking-display` (-0.03em, лишається
+незмінним). Причина розділення: `--tracking-display` теоретично
+спільний рівень шкали для всього display-регістру, а позитивний
+трекінг, що добре читається на латинських капітелях `NEURICA`,
+поводиться інакше на кириличних — розтягує форму літер, а не робить
+її чіткішою. `--tracking-wordmark` застосований компаунд-селектором
+`.type-display.hero__wordmark` (специфічність вища за сам
+`.type-display`, надійно перекриває незалежно від порядку в CSS-бандлі)
+тільки до слова `NEURICA` в hero — жоден H1 сторінки чи об'єкта
+(кириличний, перекладається) його не успадковує. Рішення 032.
+
 ## Вертикальний ритм
 
 `--section-gap` — не фіксоване значення, а responsive-токен: сам

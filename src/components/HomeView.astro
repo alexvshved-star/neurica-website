@@ -23,7 +23,8 @@ const workHref = locale === 'uk' ? '/work' : '/en/work';
   <Nav locale={locale} />
   <main>
     <header class="hero">
-      <h1 class="type-display">NEURICA</h1>
+      <h1 class="type-display hero__wordmark">NEURICA</h1>
+      <p class="hero__eyebrow">experiments</p>
       <p class="hero__descriptor">{brandDescriptor}</p>
     </header>
     <section class="feed">
@@ -37,6 +38,26 @@ const workHref = locale === 'uk' ? '/work' : '/en/work';
 <style>
   .hero {
     padding: var(--section-gap) var(--grid-margin);
+  }
+
+  /* Wordmark — трекінг окремим токеном (--tracking-wordmark),
+     джерело: подача ALTACO MONOCHROME. Компонована пара з
+     .hero__eyebrow нижче, .type-display сам лишається незмінним. */
+  .hero__wordmark {
+    letter-spacing: var(--tracking-wordmark);
+  }
+
+  /* Другий рівень лок-апа — відлуння слова з дескриптора нижче,
+     Montserrat (голос, не mono), кегль і базова лінія прив'язані до
+     --type-display, тому масштабуються разом з wordmark на будь-якому
+     брейкпойнті (значення виміряні реальним рендером, не абстрактно). */
+  .hero__eyebrow {
+    margin-top: calc(var(--type-display) * 0.151);
+    font-weight: var(--weight-strong);
+    font-size: calc(var(--type-display) * 0.44);
+    line-height: 1;
+    letter-spacing: 0.26em;
+    text-transform: lowercase;
   }
 
   /* Дескриптор бренду — речення, не метадані: Montserrat Light, не
