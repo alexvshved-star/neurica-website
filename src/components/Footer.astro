@@ -10,24 +10,23 @@ const home = locale === 'uk' ? '/' : '/en/';
 const archiveHref = locale === 'uk' ? '/archive' : '/en/archive';
 ---
 
-<footer class="site-footer mono">
+<footer class="site-footer">
   <a class="site-footer__brand" href={home}>NEURICA</a>
-  <a href={eonyxUrl}>{byEonyx}</a>
-  <a href={archiveHref}>{t(locale, 'nav.archive')}</a>
-  <span>© {new Date().getFullYear()} {t(locale, 'footer.rights')}</span>
+  <a class="site-footer__by" href={eonyxUrl}>{byEonyx}</a>
+  <a class="mono" href={archiveHref}>{t(locale, 'nav.archive')}</a>
+  <span class="mono">© {new Date().getFullYear()} {t(locale, 'footer.rights')}</span>
 </footer>
 
 <style>
   .site-footer {
     display: flex;
     flex-wrap: wrap;
+    align-items: baseline;
     gap: var(--space-6);
     padding: var(--space-8) var(--grid-margin);
     border-top: var(--rule-hairline) solid var(--color-rule);
     font-size: var(--type-metadata);
     color: var(--color-muted);
-    letter-spacing: var(--tracking-label);
-    text-transform: uppercase;
   }
 
   .site-footer a {
@@ -35,7 +34,20 @@ const archiveHref = locale === 'uk' ? '/archive' : '/en/archive';
     color: inherit;
   }
 
+  /* Знак і підпис бренду — голос, не стан (типографічний прохід
+     v0.2): Montserrat, не форсовано в uppercase. Archive-посилання
+     й copyright лишаються mono/все-капс — метадані сторінки. */
   .site-footer__brand {
     font-weight: var(--weight-strong);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .site-footer__by {
+    font-weight: var(--weight-regular);
+  }
+
+  .site-footer .mono {
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
   }
 </style>

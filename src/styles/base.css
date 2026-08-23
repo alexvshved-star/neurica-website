@@ -67,29 +67,30 @@ h1, .type-display, h2 {
   -webkit-hyphens: auto;
 }
 
-/* Рівні display і h1 — різні речі (розділ 1 typography-брифу):
-   .type-display — тільки знак NEURICA в hero, вага 900, найбільший
-   можливий кегль. h1 — заголовки сторінок і об'єктів, вага 700
-   (weight-strong, як h2 — різниця лише в розмірі), помітно менший
-   tracking. До цього виправлення жоден з двох не мав font-size
-   узагалі й падав на дефолт браузера. */
+/* Рівні display і h1 — різні речі (розділ 1 IA-брифу кроку 05a):
+   .type-display — тільки знак NEURICA в hero, вага wordmark (900),
+   найбільший можливий кегль. h1/h2 — заголовки сторінок, об'єктів і
+   карток, вага h1/h2 (600, semibold — рекомендована брендбуком,
+   типографічний прохід v0.2 розділ 2), не weight-strong (700 —
+   окрема роль для дрібних акцентних заголовків, де менший кегль
+   потребує більшої ваги, щоб триматися). */
 
 .type-display {
-  font-weight: var(--weight-display);
+  font-weight: var(--weight-wordmark);
   font-size: var(--type-display);
   line-height: var(--leading-display);
   letter-spacing: var(--tracking-display);
 }
 
 h1 {
-  font-weight: var(--weight-strong);
+  font-weight: var(--weight-h1);
   font-size: var(--type-h1);
   line-height: var(--leading-heading);
   letter-spacing: var(--tracking-tight);
 }
 
 h2 {
-  font-weight: var(--weight-strong);
+  font-weight: var(--weight-h2);
   font-size: var(--type-h2);
   line-height: var(--leading-heading);
   letter-spacing: var(--tracking-tight);
@@ -97,6 +98,7 @@ h2 {
 
 code, pre, .mono {
   font-family: var(--font-mono);
+  font-weight: var(--weight-mono);
 }
 
 /* --type-small — рівень для другорядних людських підписів (теги,

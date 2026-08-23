@@ -44,17 +44,34 @@
 
   /* ---- 1.2 Насиченості -------------------------------- */
 
-  --weight-display: 900;
-  --weight-strong:  700;
-  --weight-body:    400;
-  --weight-mono:    400;
+  /* Два шари, як і з кольором (--brand-navy → --color-surface,
+     рішення 015): палітра — що фізично є в наборі брендбука;
+     ролі — де застосовується. Роль можна перевизначити, не
+     перейменовуючи змінну в розмітці (типографічний прохід v0.2,
+     розділ 1). */
 
-  /* Проміжних значень немає навмисно. Ваги звірені з набором
-     брендбука EONYX (Light/SemiBold/Bold/Black для Montserrat):
-     display=900 (Black — ExtraBold у наборі немає), mono=400
-     (JetBrains Mono Regular, позначена Recommended). weight-body
-     лишений 400 — Montserrat Regular у переліку брендбука
-     відсутній, відкрите питання, див. 05-decisions.md, 017. */
+  --weight-light:    300;
+  --weight-regular:  400;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+  --weight-black:    900;
+
+  --weight-wordmark: var(--weight-black);    /* NEURICA в hero */
+  --weight-h1:       var(--weight-semibold); /* заголовки сторінок/об'єктів */
+  --weight-h2:       var(--weight-semibold); /* h2, заголовок картки */
+  --weight-strong:   var(--weight-bold);     /* дрібний акцентний заголовок */
+  --weight-lead:      var(--weight-light);   /* лід, дескриптор бренду */
+  --weight-body:      var(--weight-regular); /* проза — рішення 017 */
+  --weight-mono:      var(--weight-regular); /* технічний шар */
+
+  /* Проміжних значень у палітрі немає навмисно. 700 (bold) не
+     дефолтний strong для h1/h2 — ним стає 600 (semibold),
+     рекомендована брендбуком; 700 лишається для дрібних заголовків
+     (напр. знак NEURICA в шапці/підвалі), де менший кегль потребує
+     більшої ваги, щоб триматися — оптична компенсація, не
+     непослідовність. wordmark лишається на 900: на екрані знак
+     працює як графічна форма, не жирний текст. Резолюція для body —
+     05-decisions.md, 017. */
 
 
   /* ---- 1.3 Типографічна шкала ------------------------- */

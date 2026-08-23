@@ -16,8 +16,8 @@ const switchHref = getAlternate(pathname, otherLocale);
 
 <nav class="site-nav">
   <div class="site-nav__brand-block">
-    <a class="site-nav__brand mono" href={home}>NEURICA</a>
-    <a class="site-nav__by mono" href={eonyxUrl}>{byEonyx}</a>
+    <a class="site-nav__brand" href={home}>NEURICA</a>
+    <a class="site-nav__by" href={eonyxUrl}>{byEonyx}</a>
   </div>
   <ul class="site-nav__links mono">
     <li><a href={workHref}>{t(locale, 'nav.work')}</a></li>
@@ -42,13 +42,19 @@ const switchHref = getAlternate(pathname, otherLocale);
     line-height: var(--leading-tight);
   }
 
+  /* Знак і підпис бренду — голос, не стан: Montserrat, не mono
+     (типографічний прохід v0.2, принцип). "NEURICA" — дрібний
+     акцентний заголовок (weight-strong, 700 — оптична компенсація
+     на малому кеглі). "by EONYX" лишається mixed-case тегліном
+     бренду, не .meta: regular, не форсовано в uppercase. */
   .site-nav__brand {
     font-weight: var(--weight-strong);
-    letter-spacing: var(--tracking-label);
+    letter-spacing: var(--tracking-tight);
     text-decoration: none;
   }
 
   .site-nav__by {
+    font-weight: var(--weight-regular);
     font-size: var(--type-metadata);
     color: var(--color-muted);
     text-decoration: none;

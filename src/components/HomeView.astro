@@ -24,7 +24,7 @@ const workHref = locale === 'uk' ? '/work' : '/en/work';
   <main>
     <header class="hero">
       <h1 class="type-display">NEURICA</h1>
-      <p class="hero__descriptor mono">{brandDescriptor}</p>
+      <p class="hero__descriptor">{brandDescriptor}</p>
     </header>
     <section class="feed">
       {items.map((entry, i) => <WorkCard entry={entry} locale={locale} priority={i === 0} />)}
@@ -39,8 +39,11 @@ const workHref = locale === 'uk' ? '/work' : '/en/work';
     padding: var(--section-gap) var(--grid-margin);
   }
 
+  /* Дескриптор бренду — речення, не метадані: Montserrat Light, не
+     mono (типографічний прохід v0.2, принцип). Не успадковує .meta. */
   .hero__descriptor {
     margin-top: var(--space-4);
+    font-weight: var(--weight-lead);
     font-size: var(--type-lead);
     color: var(--color-muted);
   }

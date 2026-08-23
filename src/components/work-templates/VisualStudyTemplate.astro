@@ -33,14 +33,14 @@ const localizedMedia = entry.translations[locale]?.media ?? {};
               sizes="100vw"
               loading={i === 0 ? 'eager' : 'lazy'}
             />
-            {meta?.caption && <figcaption class="mono">{meta.caption}</figcaption>}
+            {meta?.caption && <figcaption class="small">{meta.caption}</figcaption>}
           </figure>
         );
       })}
     </div>
   )}
   {body.length > 0 && (
-    <p class="visual-study-template__note mono">{body[0]}</p>
+    <p class="visual-study-template__note">{body[0]}</p>
   )}
 </div>
 
@@ -59,7 +59,6 @@ const localizedMedia = entry.translations[locale]?.media ?? {};
 
   .visual-study-template__sequence figcaption {
     margin-top: var(--space-2);
-    font-size: var(--type-mono);
     color: var(--color-muted);
   }
 
