@@ -57,9 +57,13 @@ const localizedMedia = entry.translations[locale]?.media ?? {};
     height: auto;
   }
 
+  /* Підпис центрований — VISUAL_STUDY завжди центрований шаблон
+     (розділ 2 брифу центрування); саме зображення над підписом
+     лишається на всю ширину, розкладку не чіпаємо. */
   .visual-study-template__sequence figcaption {
     margin-top: var(--space-2);
     color: var(--color-muted);
+    text-align: center;
   }
 
   .visual-study-template__note {
