@@ -14,22 +14,24 @@ const { locale } = Astro.props;
 <Base locale={locale} title={t(locale, 'about.title')}>
   <Nav locale={locale} />
   <main>
-    <h1>{t(locale, 'about.title')}</h1>
+    <div class="about-content">
+      <h1>{t(locale, 'about.title')}</h1>
 
-    <section class="about-block">
-      <h2>{t(locale, 'about.block1Title')}</h2>
-      <p>{t(locale, 'about.block1Body')}</p>
-    </section>
+      <section class="about-block">
+        <h2>{t(locale, 'about.block1Title')}</h2>
+        <p>{t(locale, 'about.block1Body')}</p>
+      </section>
 
-    <section class="about-block">
-      <h2>{t(locale, 'about.block2Title')}</h2>
-      <p>{t(locale, 'about.block2Body')}</p>
-    </section>
+      <section class="about-block">
+        <h2>{t(locale, 'about.block2Title')}</h2>
+        <p>{t(locale, 'about.block2Body')}</p>
+      </section>
 
-    <section class="about-block">
-      <h2>{t(locale, 'about.block3Title')}</h2>
-      <p>{t(locale, 'about.block3Body')}</p>
-    </section>
+      <section class="about-block">
+        <h2>{t(locale, 'about.block3Title')}</h2>
+        <p>{t(locale, 'about.block3Body')}</p>
+      </section>
+    </div>
   </main>
   <Footer locale={locale} />
 </Base>
@@ -37,10 +39,23 @@ const { locale } = Astro.props;
 <style>
   main {
     padding: var(--section-gap) var(--grid-margin);
-    max-width: var(--width-reading);
   }
 
-  main > * + * {
+  /* Центрування — наскрізне для всієї прози сайту
+     (docs/02-design-system.md, «Центрування»): міра локальна 560px,
+     не --width-reading (той токен лишається джерелом істини, тут
+     просто без активних споживачів). Окремий внутрішній блок, не
+     `main` сам — інакше горизонтальний padding `main` віднімається
+     ще раз усередині вже звуженої 560px колонки. */
+  .about-content {
+    max-width: 560px;
+    margin-inline: auto;
+    text-align: center;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  .about-content > * + * {
     margin-top: var(--space-8);
   }
 

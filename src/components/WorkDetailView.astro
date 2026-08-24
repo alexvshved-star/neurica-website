@@ -35,11 +35,10 @@ const body = translation.body ? translation.body.split(/\n\s*\n/) : [];
 // як картка в стрічці й у og:image (розділ 3.5 IA-брифу).
 const showCover = entry.type !== 'EDITORIAL';
 
-// Центрування позначає редакційний голос (EDITORIAL, VISUAL_STUDY) —
-// заявний текст, не довідковий/діяльний (docs/02-design-system.md,
-// «Центрування»). Одна вісь на всю сторінку: header і pager
-// центруються тут, кожен шаблон центрує власний вміст сам.
-const centered = entry.type === 'EDITORIAL' || entry.type === 'VISUAL_STUDY';
+// Центрування — наскрізне для всієї прози сайту (docs/02-design-system.md,
+// «Центрування»): усі типи об'єкта центруються однаково, /work і
+// /archive (переліки карток, не проза) не зачіпаються. Header і
+// pager центруються тут, кожен шаблон центрує власний вміст сам.
 
 // Формула зі стрілками лишається mono/ліворуч завжди — центрований
 // моноширинний рядок читається як зламаний код (розділ 3 брифу
@@ -58,7 +57,7 @@ const slugHref = (slug: string) => (locale === 'uk' ? `/work/${slug}` : `/en/wor
   ogType="article"
 >
   <Nav locale={locale} />
-  <main data-direction={entry.art_direction.toLowerCase()} data-align={centered ? 'center' : undefined}>
+  <main data-direction={entry.art_direction.toLowerCase()}>
     <header class="work-detail__header">
       <p class="meta">
         {metaLine[0]}
@@ -122,8 +121,18 @@ const slugHref = (slug: string) => (locale === 'uk' ? `/work/${slug}` : `/en/wor
     margin-top: var(--space-6);
   }
 
+  /* Центрування — наскрізне для всієї прози сайту, одна вісь на всю
+     сторінку: header звужується до тієї самої міри, що й центрований
+     блок контенту (560px, локальне значення шаблонів, не
+     --width-reading — той токен лишається джерелом істини, просто
+     без активних споживачів на цьому кроці), і отримує
+     margin-inline: auto — інакше текст центрується всередині лівого
+     стовпця, а не сторінки. Cover не чіпається — розкладка зображень
+     поза межами правила центрування. */
   .work-detail__header {
-    max-width: var(--width-reading);
+    max-width: 560px;
+    margin-inline: auto;
+    text-align: center;
   }
 
   .work-detail__header > * + * {
@@ -137,6 +146,7 @@ const slugHref = (slug: string) => (locale === 'uk' ? `/work/${slug}` : `/en/wor
   .work-detail__tags {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: var(--space-3);
     color: var(--color-muted);
   }
@@ -150,37 +160,18 @@ const slugHref = (slug: string) => (locale === 'uk' ? `/work/${slug}` : `/en/wor
   .work-detail__pager {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: var(--space-6);
     padding-top: var(--space-6);
     border-top: var(--rule-hairline) solid var(--color-rule);
-  }
-
-  /* Центрування — одна вісь на всю сторінку (EDITORIAL, VISUAL_STUDY):
-     header звужується до тієї самої міри, що й центрований блок
-     контенту (560px, локальне значення шаблонів, не --width-reading),
-     і отримує margin-inline: auto — інакше текст центрується
-     всередині лівого стовпця, а не сторінки (саме цей дефект
-     виправляє цей прохід). Cover не чіпається — розкладка зображень
-     поза межами правила центрування (розділ 2 брифу). */
-  main[data-align='center'] .work-detail__header {
-    max-width: 560px;
-    margin-inline: auto;
-    text-align: center;
-  }
-
-  main[data-align='center'] .work-detail__tags {
-    justify-content: center;
-  }
-
-  main[data-align='center'] .work-detail__pager {
-    justify-content: center;
     text-align: center;
   }
 
   /* Формула зі стрілками — завжди ліворуч, навіть на центрованій
      сторінці: mono означає машинну інформацію, а її вирівнюють
-     ліворуч (розділ 3 брифу центрування). Звичайне речення в summary
-     не отримує ні .mono, ні цього класу — йде за правилом шаблону. */
+     ліворуч (docs/02-design-system.md, «Центрування» → «Формули
+     ніколи не центруються»). Звичайне речення в summary не отримує
+     ні .mono, ні цього класу — йде за правилом шаблону. */
   .work-detail__summary--formula {
     text-align: left;
   }

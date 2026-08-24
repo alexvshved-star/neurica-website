@@ -3,6 +3,12 @@
 // одразу під summary (тобто першим у цьому шаблоні), проза після
 // (розділ 3.3 IA-брифу). Для EXPERIMENT у body очікується відкрите
 // питання й те, що вийшло — це вимога до контенту, не до розмітки.
+// Проза центрована, наскрізно з рештою сайту (docs/02-design-system.md,
+// «Центрування») — міра локальна ≈560px, не --width-reading (той
+// токен лишається джерелом істини, тут просто без активних
+// споживачів). RuntimeNotice центрується як блок (позиція на осі),
+// не як текст усередині — посилання на демо лишається по лівому
+// краю в межах own box, центроване посилання виглядало б випадково.
 import RuntimeNotice from '@/components/RuntimeNotice.astro';
 import type { Locale } from '@/i18n';
 import type { WorkEntry } from '@/content.config';
@@ -27,12 +33,16 @@ const { entry, locale, body } = Astro.props;
 
 <style>
   .prototype-template {
-    max-width: var(--width-reading);
+    max-width: 560px;
+    margin-inline: auto;
   }
 
   .prototype-template__prose {
     margin-top: var(--space-6);
     color: var(--color-muted);
+    text-align: center;
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
 
   .prototype-template__prose > * + * {

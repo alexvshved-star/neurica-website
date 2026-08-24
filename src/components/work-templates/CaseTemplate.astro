@@ -1,7 +1,13 @@
 ---
-// CASE — задача → підхід → результат. Проза на ширині читання.
-// Якщо DEMO — блок демонстрації над прозою (розділ 3.2, 3.6 IA-брифу):
-// читач має спершу побачити, що це працює, перш ніж читати опис.
+// CASE — задача → підхід → результат. Проза центрована, наскрізно
+// з рештою сайту (docs/02-design-system.md, «Центрування») — міра
+// локальна ≈560px, не --width-reading (той токен лишається
+// джерелом істини, тут просто без активних споживачів). Якщо DEMO —
+// блок демонстрації над прозою (розділ 3.2, 3.6 IA-брифу): читач має
+// спершу побачити, що це працює, перш ніж читати опис. RuntimeNotice
+// центрується як блок (позиція на осі), не як текст усередині —
+// статус/опис/посилання лишаються по лівому краю в межах own box,
+// так природніше читається notice-панель.
 import RuntimeNotice from '@/components/RuntimeNotice.astro';
 import type { Locale } from '@/i18n';
 import type { WorkEntry } from '@/content.config';
@@ -24,11 +30,15 @@ const { entry, locale, body } = Astro.props;
 
 <style>
   .case-template {
-    max-width: var(--width-reading);
+    max-width: 560px;
+    margin-inline: auto;
   }
 
   .case-template__prose {
     margin-top: var(--space-6);
+    text-align: center;
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
 
   .case-template__prose > * + * {
