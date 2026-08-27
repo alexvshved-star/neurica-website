@@ -3,6 +3,7 @@ import { Picture } from 'astro:assets';
 import Base from '@/layouts/Base.astro';
 import Nav from '@/components/Nav.astro';
 import Footer from '@/components/Footer.astro';
+import BrandMark, { type BrandMarkName } from '@/components/BrandMark.astro';
 import CaseTemplate from '@/components/work-templates/CaseTemplate.astro';
 import PrototypeTemplate from '@/components/work-templates/PrototypeTemplate.astro';
 import VisualStudyTemplate from '@/components/work-templates/VisualStudyTemplate.astro';
@@ -45,6 +46,15 @@ const showCover = entry.type !== 'EDITORIAL';
 // центрування). Звичайне речення в summary йде за правилом шаблону.
 const isFormulaSummary = translation.summary.includes('→');
 
+// Знак контексту — мапа context → BrandMark, не хардком під ALTACO:
+// додати EONYX пізніше означає додати рядок сюди, не правити шаблон.
+// EXTERNAL/INTERNAL без знака — чужого бренду для показу нема
+// (docs/02-design-system.md, «Чужі знаки»).
+const CONTEXT_MARKS: Partial<Record<NonNullable<WorkEntry['context']>, BrandMarkName>> = {
+  ALTACO: 'altaco-wordmark',
+};
+const contextMark = entry.context ? CONTEXT_MARKS[entry.context] : undefined;
+
 const workHref = locale === 'uk' ? '/work' : '/en/work';
 const slugHref = (slug: string) => (locale === 'uk' ? `/work/${slug}` : `/en/work/${slug}`);
 ---
@@ -63,6 +73,12 @@ const slugHref = (slug: string) => (locale === 'uk' ? `/work/${slug}` : `/en/wor
         {metaLine[0]}
         {metaLine.slice(1).map((part) => <span class="meta meta--status"> · {part}</span>)}
       </p>
+      {contextMark && (
+        <p class="work-detail__context">
+          <BrandMark name={contextMark} class="work-detail__context-mark" />
+          <span class="sr-only">{entry.context}</span>
+        </p>
+      )}
       <h1>{translation.title}</h1>
       <p class={`work-detail__summary${isFormulaSummary ? ' mono work-detail__summary--formula' : ''}`}>
         {translation.summary}
@@ -141,6 +157,27 @@ const slugHref = (slug: string) => (locale === 'uk' ? `/work/${slug}` : `/en/wor
 
   .work-detail__summary {
     color: var(--color-muted);
+  }
+
+  /* Знак контексту — позначка, не заголовок: висота = висота рядка
+     метаданих (--type-metadata), а не окремий вибраний розмір. При
+     10.87:1 це дає ширину ≈120px на десктопі (виміряно: 0.6875rem
+     × 10.87 ≈ 119.6px). currentColor — успадковує --color-muted,
+     контраст проти всіх чотирьох art_direction — той самий токен,
+     що вже використовує .work-detail__summary/.work-detail__tags
+     на цих самих фонах. */
+  .work-detail__context {
+    font-size: var(--type-metadata);
+    color: var(--color-muted);
+  }
+
+  /* :global — BrandMark інлайнить <svg> через set:html в іншому
+     компоненті, скоуп-атрибут Astro на нього не потрапляє. */
+  .work-detail__context :global(.work-detail__context-mark) {
+    display: inline-block;
+    height: 1em;
+    width: auto;
+    vertical-align: middle;
   }
 
   .work-detail__tags {

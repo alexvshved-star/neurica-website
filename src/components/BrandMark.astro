@@ -1,21 +1,34 @@
 ---
-// Інлайн SVG-знаки EONYX з брендбука (BRAND BLOCK / Main and
-// additional compositions), контури не редаговані. Інлайн, не
-// <img>: fill="currentColor" має успадковувати колір із CSS.
+// Інлайн SVG-знаки з брендбуків (EONYX: BRAND BLOCK / Main and
+// additional compositions; ALTACO: оригінальний wordmark), контури
+// не редаговані. Інлайн, не <img>: fill="currentColor" має
+// успадковувати колір із CSS.
 //
 // Пропорції ширина:висота, для верстки розміру через CSS
 // (aspect-ratio або явні width/height):
-//   mark     2.166:1
-//   wordmark 4.259:1
-//   chevron  0.592:1
+//   mark             2.166:1
+//   wordmark         4.259:1
+//   chevron          0.592:1
+//   altaco-wordmark  10.87:1
+//
+// altaco-wordmark — чужий знак (атрибуція контексту, не елемент
+// дизайн-системи EONYX): docs/02-design-system.md, «Чужі знаки».
 import markRaw from '@/assets/brand/eonyx-mark.svg?raw';
 import wordmarkRaw from '@/assets/brand/eonyx-wordmark.svg?raw';
 import chevronRaw from '@/assets/brand/eonyx-chevron.svg?raw';
+import altacoWordmarkRaw from '@/assets/brand/altaco-wordmark.svg?raw';
 
-const svgs = { mark: markRaw, wordmark: wordmarkRaw, chevron: chevronRaw } as const;
+const svgs = {
+  mark: markRaw,
+  wordmark: wordmarkRaw,
+  chevron: chevronRaw,
+  'altaco-wordmark': altacoWordmarkRaw,
+} as const;
+
+export type BrandMarkName = keyof typeof svgs;
 
 interface Props {
-  name: keyof typeof svgs;
+  name: BrandMarkName;
   class?: string;
 }
 
