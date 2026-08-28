@@ -61,11 +61,16 @@ const pairIndex = Math.floor(index / 2);
 const imageRow = pairIndex * 2 + 1;
 const captionRow = imageRow + 1;
 
-// Останній ряд не отримує нижній відступ (design-brief п.2): це той
-// самий gap-принцип, що й CSS row-gap — простір МІЖ рядами, не після
-// останнього.
+// Останній ряд (desktop, 2 колонки) не отримує нижній відступ —
+// простір МІЖ рядами, не після останнього. Але "останній ряд" у
+// 2-колоночній розкладці — це ПАРА елементів (напр. 2 і 3 з 4), а на
+// мобільному (1 колонка, крок "проміжки в сітці") реально останній
+// лише ОДИН елемент (3) — звідси окремий isLastItem нижче: --last-row
+// зайшов у дію тільки на desktop-медіа-запиті (HomeGridCell.astro
+// style), --last-item скидає відступ на будь-якій ширині.
 const totalPairs = Math.ceil(total / 2);
 const isLastRow = pairIndex === totalPairs - 1;
+const isLastItem = index === total - 1;
 ---
 
 <a
@@ -87,7 +92,10 @@ const isLastRow = pairIndex === totalPairs - 1;
 </a>
 <div
   class="grid-cell__caption"
-  class:list={{ 'grid-cell__caption--last-row': isLastRow }}
+  class:list={{
+    'grid-cell__caption--last-row': isLastRow,
+    'grid-cell__caption--last-item': isLastItem,
+  }}
   style={`--cell-col:${column}; --cell-row:${captionRow};`}
 >
   <p class="meta grid-cell__type">
@@ -128,22 +136,38 @@ const isLastRow = pairIndex === totalPairs - 1;
 
   /* Підпис — етикетка під експонатом (design-brief крок "пропорції й
      типографіка підписів"), не проза між рядами: margin-top малий
-     (14px, від низу кадру до TYPE), margin-bottom великий (55px,
-     "row-gap" до наступного ряду — зменшено з 85px, крок "зменшити
-     row-gap") — CSS Grid row-gap не може дати різні значення для
-     двох різних меж (фото→підпис і підпис→наступне фото), тому
-     вертикальний ритм керується тут margin'ами, а не властивістю
-     gap на .feed__grid (там лишається лише column-gap,
-     HomeView.astro). Останній ряд — без margin-bottom, той самий
-     принцип, що й у справжнього gap: простір МІЖ рядами, не після
-     останнього. */
+     (14px, від низу кадру до TYPE), margin-bottom — "row-gap" до
+     наступного ряду. Виміряно реальним рендером (крок "проміжки в
+     сітці"): попередні 55px (самі мали замінити 85px) давали повний
+     проміжок кадр→кадр 124px (14 + висота блоку підпису ≈55 + 55) —
+     забагато; тепер 30px → повний проміжок ≈99px (14+55+30), теж
+     виміряно, не округлено з цілі "85" — той орієнтир припускав
+     блок підпису ≈40px, реальний блок ≈55px (два рядки TYPE+заголовок
+     з --tracking-label і min-height), типографіку підписів цей крок
+     свідомо не чіпає. CSS Grid row-gap не може дати різні значення
+     для двох різних меж (фото→підпис і підпис→наступне фото), тому
+     вертикальний ритм керується тут margin'ами, а не властивістю gap
+     на .feed__grid (там лишається лише column-gap, HomeView.astro). */
   .grid-cell__caption {
     text-align: center;
     margin-top: 14px;
-    margin-bottom: 55px;
+    margin-bottom: 30px;
   }
 
-  .grid-cell__caption--last-row {
+  /* --last-row (обидва елементи останньої ПАРИ, напр. 2 і 3 з 4) —
+     лише на desktop (2 колонки, поріг синхронізований з HomeView.astro
+     .feed__grid). На мобільному (1 колонка) останній РЯД — це один
+     елемент, не пара: там працює --last-item нижче, без медіа-умови,
+     інакше передостанній елемент (напр. 2 з 4) хибно втрачає
+     margin-bottom і дає нерівний проміжок (виявлено виміром: 124 /
+     124 / 69px замість трьох однакових). */
+  @media (min-width: 769px) {
+    .grid-cell__caption--last-row {
+      margin-bottom: 0;
+    }
+  }
+
+  .grid-cell__caption--last-item {
     margin-bottom: 0;
   }
 
