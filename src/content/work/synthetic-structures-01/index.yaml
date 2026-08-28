@@ -2,7 +2,7 @@ type: VISUAL_STUDY
 status: STATIC
 art_direction: CHROMATIC
 published: 2026-06-10
-cover: ./cover.jpg
+cover: ./cover.placeholder.jpg
 data_mode: NONE
 media:
   - id: m1
