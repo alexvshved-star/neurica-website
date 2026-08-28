@@ -59,9 +59,16 @@ const scale = cardScale(entry);
 </a>
 
 <style>
+  /* Картка — це зображення, а не зображення в оправі (крок 05b):
+     border лишається на самій `.work-card` (тонка лінія на межі
+     кадру, не товста рамка), але padding (--card-density) переїхав
+     на `.work-card__body` — так `--color-surface` лишається видимою
+     тільки під підписом (TYPE/заголовок/summary), а не навколо
+     фото. Компактний список (/work, /archive) не рендерить cover
+     узагалі — там `.work-card--compact` зберігає точний попередній
+     padding через окремий override на body, нижче. */
   .work-card {
     display: block;
-    padding: var(--card-density, var(--space-8));
     border: var(--card-border, var(--rule-hairline) solid var(--color-rule));
     background: var(--color-surface);
     color: var(--color-text);
@@ -74,12 +81,22 @@ const scale = cardScale(entry);
 
   .work-card :global(.work-card__cover) {
     display: block;
-    margin-bottom: var(--space-4);
     aspect-ratio: var(--image-ratio, 16 / 9);
     width: 100%;
     height: auto;
     object-fit: cover;
     filter: var(--image-filter, none);
+  }
+
+  .work-card__body {
+    padding: var(--card-density, var(--space-8));
+  }
+
+  /* Компакт: padding уже є на `.work-card--compact` (вище, той самий
+     var(--space-4), що й до цього кроку) — тут обнуляється, щоб не
+     подвоїтись. */
+  .work-card--compact .work-card__body {
+    padding: 0;
   }
 
   .work-card__type {
