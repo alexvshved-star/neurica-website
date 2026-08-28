@@ -2,7 +2,7 @@ type: CASE
 status: STATIC
 art_direction: MATERIAL
 published: 2026-08-12
-cover: ./cover.placeholder.jpg
+cover: ./cover.jpg
 context: ALTACO
 data_mode: SANITIZED
 data_snapshot_date: 2026-08-12
