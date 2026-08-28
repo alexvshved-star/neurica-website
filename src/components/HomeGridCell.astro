@@ -1,0 +1,101 @@
+---
+import { Picture } from 'astro:assets';
+import { type Locale } from '@/i18n';
+import { renderableStatus } from '@/lib/validate';
+import type { WorkEntry } from '@/content.config';
+
+// Клітинка сітки 2×2 на головній (design-brief "hero+grid", крок
+// hero-тільки-текст): --image-ratio свідомо не діє тут — усі
+// клітинки 1/1 незалежно від art_direction (докладніше —
+// docs/02-design-system.md, «Стрічка головної»). Окремий компонент,
+// не WorkCard: WorkCard лишається для /archive (compact), його
+// не-компактний режим більше нізвідки не викликається — свідомо
+// не видалений, див. звіт кроку.
+
+interface Props {
+  entry: WorkEntry;
+  locale: Locale;
+  priority?: boolean;
+}
+
+const { entry, locale, priority = false } = Astro.props;
+const translation = entry.translations[locale];
+if (!translation) {
+  throw new Error(`HomeGridCell: ${entry.slug} не має перекладу для ${locale} (мало впасти на 5.7 раніше)`);
+}
+
+const href = locale === 'uk' ? `/work/${entry.slug}` : `/en/work/${entry.slug}`;
+const status = renderableStatus(entry.status);
+const statusClass = entry.status === 'LIVE'
+  ? 'meta--live'
+  : entry.status === 'FROZEN' || entry.status === 'ARCHIVE'
+    ? 'meta--frozen'
+    : 'meta--status';
+
+// object-position покадрово, не однаково (design-brief п.2): де кроп
+// справді відбувається (портретна ORGANIC у квадратній клітинці),
+// позиція підібрана під сюжет конкретного кадру — see docs/05-
+// decisions.md. altaco-catalog (MATERIAL) уже нативно 1:1, кропу
+// нема, тому без запису тут нічого не змінює. Заглушки — тимчасові,
+// без спеціального значення.
+const COVER_POSITION: Partial<Record<string, string>> = {
+  'what-neurica-is': '50% 25%',
+};
+const cellPosition = COVER_POSITION[entry.slug] ?? '50% 50%';
+---
+
+<a class="grid-cell" href={href} data-direction={entry.art_direction.toLowerCase()}>
+  <Picture
+    class="grid-cell__cover"
+    src={entry.cover}
+    alt=""
+    formats={['avif', 'webp']}
+    widths={[400, 800]}
+    sizes="(min-width: 769px) 360px, 46vw"
+    loading={priority ? 'eager' : 'lazy'}
+    style={`--cell-position: ${cellPosition}`}
+  />
+  <div class="grid-cell__caption">
+    <p class="meta grid-cell__type">
+      {entry.type.replace('_', ' ')}{status && <span class={`meta ${statusClass}`}> · {status}</span>}
+    </p>
+    <h2 class="grid-cell__title">{translation.title}</h2>
+  </div>
+</a>
+
+<style>
+  .grid-cell {
+    display: block;
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  /* aspect-ratio:1/1 фіксовано (design-brief п.4) — --image-ratio
+     свідомо не застосований тут, на відміну від сторінки об'єкта
+     (WorkDetailView.astro) і раніше стрічки (тепер /work). */
+  .grid-cell :global(.grid-cell__cover) {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: var(--cell-position, 50% 50%);
+    filter: var(--image-filter, none);
+  }
+
+  .grid-cell__caption {
+    margin-top: var(--space-3);
+    text-align: center;
+  }
+
+  .grid-cell__type {
+    margin-bottom: var(--space-1);
+  }
+
+  .grid-cell__title {
+    font-family: var(--font-display);
+    font-weight: var(--weight-h2);
+    font-size: var(--type-lead);
+    line-height: var(--leading-heading);
+  }
+</style>

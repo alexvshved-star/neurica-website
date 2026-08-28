@@ -1,11 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
-import { Picture } from 'astro:assets';
 import Base from '@/layouts/Base.astro';
 import Nav from '@/components/Nav.astro';
 import Footer from '@/components/Footer.astro';
-import WorkCard from '@/components/WorkCard.astro';
-import heroImage from '@/assets/hero/entry.png';
+import HomeGridCell from '@/components/HomeGridCell.astro';
 import { brandDescriptor, t, type Locale } from '@/i18n';
 import { excludeArchive, selectHomeFeed, warnArtDirectionRepeats } from '@/lib/validate';
 
@@ -24,18 +22,7 @@ const workHref = locale === 'uk' ? '/work' : '/en/work';
 <Base locale={locale} title="NEURICA" description={brandDescriptor}>
   <Nav locale={locale} />
   <main>
-    <header class="hero" data-direction="chromatic">
-      <Picture
-        class="hero__bg"
-        src={heroImage}
-        alt=""
-        role="presentation"
-        formats={['avif', 'webp']}
-        widths={[640, 1024, 1440, 1672]}
-        sizes="(max-width: 767px) 1px, 100vw"
-        loading="eager"
-        fetchpriority="high"
-      />
+    <header class="hero">
       <div class="hero__content">
         <h1 class="type-display hero__wordmark">NEURICA</h1>
         <p class="hero__eyebrow">experiments</p>
@@ -43,7 +30,9 @@ const workHref = locale === 'uk' ? '/work' : '/en/work';
       </div>
     </header>
     <section class="feed">
-      {items.map((entry, i) => <WorkCard entry={entry} locale={locale} priority={i === 0} />)}
+      <div class="feed__grid">
+        {items.map((entry, i) => <HomeGridCell entry={entry} locale={locale} priority={i === 0} />)}
+      </div>
     </section>
     <a class="feed__view-all mono" href={workHref}>{t(locale, 'work.viewAll')} →</a>
   </main>
@@ -51,93 +40,47 @@ const workHref = locale === 'uk' ? '/work' : '/en/work';
 </Base>
 
 <style>
-  /* Неоновий коридор — CHROMATIC (рішення 033): --color-accent
-     cyan, жодного red-акценту на цьому екрані (домінує маджента
-     кадру, поруч --brand-red читається як помилка друку). .hero
-     сам без явного background — фон під зображенням лишається
-     сторінковим --color-bg (#101820, з :root, не chromatic-scope),
-     саме до нього піднята чорна точка зображення нижче. */
+  /* Hero — третя ітерація (design-brief "hero+grid"): тільки текст,
+     без фото/градієнтів/оверлею тексту на кадр. Неоновий коридор
+     (рішення 033/034) прибрано разом із зображенням —
+     src/assets/hero/entry.png видалено з репозиторію, entry.png
+     більше не імпортується. Локап однаковий на mobile і desktop
+     (це й було цілю — попередній варіант ховав/показував фон за
+     брейкпойнтом, тепер брейкпойнту для hero взагалі нема).
+     --type-display повертається до дефолтного токена (tokens.css) —
+     вузький clamp під 45%-колонку зображення (рішення попереднього
+     проходу) більше не потрібен, зображення нема. */
   .hero {
-    position: relative;
-    overflow: hidden;
-    min-height: clamp(480px, 44vw, 680px);
-  }
-
-  /* Колонка тексту звужена до 45% (нижче) — той самий --type-display,
-     що заповнював усю ширину сторінки, у неї не влазить (NEURICA
-     переносилась на два рядки при 172.8px на 584px доступної
-     ширини). Локальний, менший clamp тільки в .hero — виміряний
-     реальним рендером (canvas measureText з --tracking-wordmark),
-     не підібраний на око: 7.35vw дає ~106px на 1440px проти
-     виміряних 584px доступної ширини колонки (з запасом). Тільки
-     ≥768px, де взагалі
-     є зображення й звужена колонка — на мобільному (нижче)
-     повертається звичайний --type-display на повній ширині. */
-  @media (min-width: 768px) {
-    .hero {
-      --type-display: clamp(2.25rem, 7.35vw, 6.8rem);
-    }
-  }
-
-  /* :global — Picture рендерить <picture><source/><img/></picture>;
-     клас лягає на сам <img>, але <picture>-обгортку теж потрібно
-     розкласти на весь блок, інакше вона лишається inline. */
-  .hero :global(picture) {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    display: block;
-  }
-
-  .hero :global(.hero__bg) {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: right center;
-    filter: var(--image-filter, none);
+    padding: var(--section-gap) var(--grid-margin);
+    text-align: center;
   }
 
   .hero__content {
-    position: relative;
-    z-index: 1;
-    max-width: 45%;
-    padding: var(--section-gap) var(--grid-margin);
+    max-width: 900px;
+    margin-inline: auto;
   }
 
-  /* Мобільний варіант — обране рішення 034: 16:9-кадр не влазить у
-     повноширинну колонку осмислено, а кроп із затемненням до порогу
-     контрасту (перевірено: 0,35 непрозорості дає 2.89:1 на
-     дескрипторі — провал; 0.13 дає 4.71:1, прохід, але зображення
-     тоді ледь помітне) не виправдовує крихкість — чисте
-     --color-bg надійніше. Зображення взагалі не завантажується на
-     цій ширині (sizes 1px вище, не lazy — просто найменший srcset-
-     кандидат, елемент лишається в DOM для ≥768px). */
-  @media (max-width: 767px) {
+  /* --type-display локально звужено під нову фіксовану колонку
+     900px (без зображення дефолтна шкала токена, до 11rem=176px,
+     переносить NEURICA на два рядки — виміряно реальним рендером,
+     Range.getClientRects() на текстовому вузлі: перенос настає вже
+     на 168px при 900px доступної ширини). 9.5rem=152px — стеля з
+     запасом ≈40px; 9vw на 1680px дає 151.2px (менше стелі — vw
+     керує), на 1440px — 129.6px. Мобільна шкала (≤768px, tokens.css
+     :root) не чіпається — дефолт там уже вужчий за замовчуванням. */
+  @media (min-width: 768px) {
     .hero {
-      min-height: 0;
-    }
-
-    .hero :global(picture) {
-      display: none;
-    }
-
-    .hero__content {
-      max-width: 100%;
+      --type-display: clamp(2.75rem, 9vw, 9.5rem);
     }
   }
 
-  /* Wordmark — трекінг окремим токеном (--tracking-wordmark),
-     джерело: подача ALTACO MONOCHROME. Компонована пара з
-     .hero__eyebrow нижче, .type-display сам лишається незмінним. */
   .hero__wordmark {
     letter-spacing: var(--tracking-wordmark);
   }
 
-  /* Другий рівень лок-апа — відлуння слова з дескриптора нижче,
-     Montserrat (голос, не mono), кегль і базова лінія прив'язані до
-     --type-display, тому масштабуються разом з wordmark на будь-якому
-     брейкпойнті (значення виміряні реальним рендером, не абстрактно). */
+  /* Другий рівень лок-апа — той самий рецепт, що й раніше (рішення
+     032): кегль і базова лінія прив'язані до --type-display,
+     масштабуються разом на будь-якому брейкпойнті. */
   .hero__eyebrow {
     margin-top: calc(var(--type-display) * 0.151);
     font-weight: var(--weight-strong);
@@ -147,8 +90,6 @@ const workHref = locale === 'uk' ? '/work' : '/en/work';
     text-transform: lowercase;
   }
 
-  /* Дескриптор бренду — речення, не метадані: Montserrat Light, не
-     mono (типографічний прохід v0.2, принцип). Не успадковує .meta. */
   .hero__descriptor {
     margin-top: var(--space-4);
     font-weight: var(--weight-lead);
@@ -156,108 +97,39 @@ const workHref = locale === 'uk' ? '/work' : '/en/work';
     color: var(--color-muted);
   }
 
-  /* Стрічка — editorial wall (крок 05b), не стовпчик однакових
-     прямокутників: рядок має цільову висоту (--row-height, за
-     масштабом картки), ширина картки = ця висота × пропорція її
-     art_direction (--image-ratio, встановлюється в tokens.css за
-     [data-direction], не змінюється тут). Портретна ORGANIC 3:4
-     виходить вузькою, квадратна MATERIAL 1:1 — середньою, широка
-     CHROMATIC 16:9 — довгою — самé це й дає "стіну" з різних
-     пропорцій замість однорідних плиток.
-
-     Механіка: flex-basis = row-height × ratio (стартова заявка на
-     ширину), flex-grow:1 порівну на всіх картках рядка — flexbox
-     сам розподіляє залишок ширини рядка між картками, тобто рядок
-     завжди заповнює контейнер по ширині (той самий трюк, що і в
-     "CSS-only justified gallery": рівний grow — не точна
-     пропорційна юстировка, як у JS-версій, але для 2-4 карток у
-     рядку різниця непомітна на око). Сама high (aspect-ratio +
-     width:100% на .work-card__cover, WorkCard.astro) далі похідна
-     від фінальної, розтягнутої flex-шириною — пропорція зображення
-     від цього не ламається: після grow ширина/висота картки
-     завжди лишаються в тому самому співвідношенні --image-ratio.
-
-     Масштаб (data-scale) міняє --row-height, не кількість колонок
-     (немає колонок узагалі — тільки рядки змінної висоти). */
+  /* Сітка 2×2 (design-brief п.2) — фіксований блок, не розтягується
+     на всю ширину сторінки: min(720px, 92vw) — стеля 720px на
+     широких viewport, пропорційне звуження на вузьких, той самий
+     центр, що й hero__content (margin-inline:auto відносно того
+     самого батька). На 1440/1680 це і є перевірка "сітка не
+     розтягується": ширина лишається 720px, не 100% контейнера. */
   .feed {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    gap: var(--grid-gutter);
-    padding: 0 var(--grid-margin) var(--section-gap);
+    padding-bottom: var(--section-gap);
   }
 
-  /* Стелі — min(vh, px): vh-складова свідомо в рази нижче 70vh
-     (правило "жодна картка не вища за 70vh"), px-стеля — щоб
-     рядок не роздувався на дуже високих viewport'ах. Це висота
-     ЗОБРАЖЕННЯ (--row-height живить лише flex-basis/max-width
-     нижче) — підпис (padding + текст) додає висоту ПОНАД неї,
-     заявлені значення лишають запас під нього; перевірено
-     реальним рендером на 375/768/1440/1680, обидві мови (сумарна
-     висота картки, не тільки зображення, лишається ≤70vh).
-
-     max-width поряд із flex-basis — страховка проти краю рядка:
-     рівний flex-grow:1 на всіх картках чудово заповнює рядок,
-     доки картки не закінчуються нерівно — картка-одиначка на
-     власному рядку інакше розтягнулась би на всю ширину
-     контейнера (і, відповідно, по висоті — через aspect-ratio),
-     ламаючи 70vh. Стеля 1.5× від базової ширини — рядок і далі
-     заповнюється в звичайному випадку (2-3 картки), одиначка
-     просто не роздувається понад розумну межу. */
-  .feed :global(.work-card) {
-    --row-height: min(24vh, 300px);
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: calc(var(--row-height) * var(--image-ratio, 16 / 9));
-    max-width: calc(var(--row-height) * var(--image-ratio, 16 / 9) * 1.5);
+  .feed__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2);
+    width: min(720px, 92vw);
+    margin-inline: auto;
   }
 
-  .feed :global([data-scale='large']) {
-    --row-height: min(28vh, 400px);
-  }
-
-  .feed :global([data-scale='medium']) {
-    --row-height: min(28vh, 340px);
-  }
-
-  /* Мобільний: рядок вироджується в стовпчик (одна картка на
-     ширину контейнера) — 70vh далі рахується для картки цілком
-     (зображення + підпис), тому бюджет на зображення — 70vh мінус
-     орієнтовний резерв під підпис (14rem, з запасом під
-     найгрубіший підпис — ORGANIC/CHROMATIC --card-density
-     (--space-12, 2×48px) + дворядковий заголовок). max-width (не
-     max-height!) на зображенні — та сама техніка, що вище: якщо
-     портретна 3:4 не влазить у бюджет на всю ширину контейнера,
-     звужується САМЕ зображення (пропорція лишається точною), а не
-     кадр обрізається і не висота продавлює 70vh. */
+  /* Мобільний: один стовпчик (design-brief п.3), клітинки лишаються
+     КВАДРАТНИМИ — aspect-ratio:1/1 заданий прямо на .grid-cell__cover
+     (HomeGridCell.astro), не залежить від кількості колонок, тому
+     той самий кроп кадру на телефоні й на десктопі. Той самий поріг
+     768px, що й скрізь на сайті (tokens.css, тут — раніше .feed). */
   @media (max-width: 768px) {
-    .feed :global(.work-card) {
-      flex-grow: 0;
-      flex-shrink: 0;
-      flex-basis: 100%;
-      max-width: 100%;
+    .feed__grid {
+      grid-template-columns: 1fr;
     }
-
-    .feed :global(.work-card__cover) {
-      max-width: calc((70vh - 14rem) * var(--image-ratio, 16 / 9));
-    }
-  }
-
-  /* Рішення 016, закрито для MATERIAL: на реальному рендері (не
-     плейсхолдер — altaco-catalog має справжню обкладинку) рамка
-     --card-border: var(--rule-medium) виявилась зайвою — шов між
-     фасетками фасаду сам відділяє картку від сторінкового фону,
-     рамка нічого не додає. Override тільки в межах .feed (не
-     токен) — компактний перелік на /work і /archive не чіпається.
-     MONOCHROME (agent-workflow) лишається на плейсхолдері —
-     той самий висновок туди поки не переноситься, немає реальних
-     пікселів для перевірки. */
-  .feed :global([data-direction='material']) {
-    border: none;
   }
 
   .feed__view-all {
     display: block;
-    margin: 0 var(--grid-margin) var(--section-gap);
+    width: min(720px, 92vw);
+    margin: 0 auto var(--section-gap);
+    text-align: center;
   }
 </style>
