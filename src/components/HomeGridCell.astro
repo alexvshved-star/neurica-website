@@ -128,18 +128,19 @@ const isLastRow = pairIndex === totalPairs - 1;
 
   /* Підпис — етикетка під експонатом (design-brief крок "пропорції й
      типографіка підписів"), не проза між рядами: margin-top малий
-     (14px, від низу кадру до TYPE), margin-bottom великий (85px,
-     "row-gap" до наступного ряду) — CSS Grid row-gap не може дати
-     різні значення для двох різних меж (фото→підпис і підпис→
-     наступне фото), тому вертикальний ритм керується тут margin'ами,
-     а не властивістю gap на .feed__grid (там лишається лише
-     column-gap, HomeView.astro). Останній ряд — без margin-bottom,
-     той самий принцип, що й у справжнього gap: простір МІЖ рядами,
-     не після останнього. */
+     (14px, від низу кадру до TYPE), margin-bottom великий (55px,
+     "row-gap" до наступного ряду — зменшено з 85px, крок "зменшити
+     row-gap") — CSS Grid row-gap не може дати різні значення для
+     двох різних меж (фото→підпис і підпис→наступне фото), тому
+     вертикальний ритм керується тут margin'ами, а не властивістю
+     gap на .feed__grid (там лишається лише column-gap,
+     HomeView.astro). Останній ряд — без margin-bottom, той самий
+     принцип, що й у справжнього gap: простір МІЖ рядами, не після
+     останнього. */
   .grid-cell__caption {
     text-align: center;
     margin-top: 14px;
-    margin-bottom: 85px;
+    margin-bottom: 55px;
   }
 
   .grid-cell__caption--last-row {
