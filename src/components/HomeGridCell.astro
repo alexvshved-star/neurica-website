@@ -11,14 +11,23 @@ import type { WorkEntry } from '@/content.config';
 // не WorkCard: WorkCard лишається для /archive (compact), його
 // не-компактний режим більше нізвідки не викликається — свідомо
 // не видалений, див. звіт кроку.
+//
+// Крок "композиція сітки": підпис рендериться ЯК ОКРЕМИЙ grid-item,
+// не всередині обгортки зображення — інакше висота підпису
+// потрапляє в розмір grid-рядка з фото (рядки сітки просідають,
+// вертикальний gap візуально розбухає до gap+caption). index задає
+// явні grid-column/grid-row для обох частин (HomeView.astro,
+// .feed__grid: grid-template-columns: repeat(2,1fr), image-рядок і
+// caption-рядок ідуть парами — 1,2 фото / 3,4 підписи / 5,6 фото...).
 
 interface Props {
   entry: WorkEntry;
   locale: Locale;
+  index: number;
   priority?: boolean;
 }
 
-const { entry, locale, priority = false } = Astro.props;
+const { entry, locale, index, priority = false } = Astro.props;
 const translation = entry.translations[locale];
 if (!translation) {
   throw new Error(`HomeGridCell: ${entry.slug} не має перекладу для ${locale} (мало впасти на 5.7 раніше)`);
@@ -42,29 +51,52 @@ const COVER_POSITION: Partial<Record<string, string>> = {
   'what-neurica-is': '50% 25%',
 };
 const cellPosition = COVER_POSITION[entry.slug] ?? '50% 50%';
+
+// column: 1 або 2. imageRow/captionRow: пара рядків на "ряд" сітки
+// (2 клітинки на ряд), фото завжди в непарному, підпис — у
+// наступному парному.
+const column = (index % 2) + 1;
+const pairIndex = Math.floor(index / 2);
+const imageRow = pairIndex * 2 + 1;
+const captionRow = imageRow + 1;
 ---
 
-<a class="grid-cell" href={href} data-direction={entry.art_direction.toLowerCase()}>
+<a
+  class="grid-cell__link"
+  style={`--cell-col:${column}; --cell-row:${imageRow};`}
+  href={href}
+  data-direction={entry.art_direction.toLowerCase()}
+>
   <Picture
     class="grid-cell__cover"
     src={entry.cover}
     alt=""
     formats={['avif', 'webp']}
     widths={[400, 800]}
-    sizes="(min-width: 769px) 360px, 46vw"
+    sizes="(min-width: 769px) 325px, 46vw"
     loading={priority ? 'eager' : 'lazy'}
     style={`--cell-position: ${cellPosition}`}
   />
-  <div class="grid-cell__caption">
-    <p class="meta grid-cell__type">
-      {entry.type.replace('_', ' ')}{status && <span class={`meta ${statusClass}`}> · {status}</span>}
-    </p>
-    <h2 class="grid-cell__title">{translation.title}</h2>
-  </div>
 </a>
+<div class="grid-cell__caption" style={`--cell-col:${column}; --cell-row:${captionRow};`}>
+  <p class="meta grid-cell__type">
+    {entry.type.replace('_', ' ')}{status && <span class={`meta ${statusClass}`}> · {status}</span>}
+  </p>
+  <h2 class="grid-cell__title">{translation.title}</h2>
+</div>
 
 <style>
-  .grid-cell {
+  /* min-width:0 — без цього track 1fr бере свій мінімум від
+     min-content дитини (тут: нерозривний текст заголовка), і дві
+     колонки виходять різної ширини (виявлено реальним виміром:
+     360px проти 358px). Той самий клас багів, що text-overflow у
+     flex-дитині (WorkIndexRow.astro) — тут grid-версія. */
+  .grid-cell__link,
+  .grid-cell__caption {
+    min-width: 0;
+  }
+
+  .grid-cell__link {
     display: block;
     color: var(--color-text);
     text-decoration: none;
@@ -73,7 +105,7 @@ const cellPosition = COVER_POSITION[entry.slug] ?? '50% 50%';
   /* aspect-ratio:1/1 фіксовано (design-brief п.4) — --image-ratio
      свідомо не застосований тут, на відміну від сторінки об'єкта
      (WorkDetailView.astro) і раніше стрічки (тепер /work). */
-  .grid-cell :global(.grid-cell__cover) {
+  .grid-cell__link :global(.grid-cell__cover) {
     display: block;
     width: 100%;
     height: auto;
@@ -84,7 +116,6 @@ const cellPosition = COVER_POSITION[entry.slug] ?? '50% 50%';
   }
 
   .grid-cell__caption {
-    margin-top: var(--space-3);
     text-align: center;
   }
 
@@ -92,10 +123,18 @@ const cellPosition = COVER_POSITION[entry.slug] ?? '50% 50%';
     margin-bottom: var(--space-1);
   }
 
+  /* min-height — резерв рівно під два рядки, незалежно від того,
+     скільки насправді займає конкретний заголовок: без цього
+     висота підпису рівна лише В МЕЖАХ ОДНОГО ряду сітки (CSS Grid
+     сам вирівнює висоту клітинок ОДНОГО ряду), а не між рядом 1 і
+     рядом 2 — «Динамічний каталог ALTACO» (325px колонка) ламається
+     на два рядки, «Що таке Neurica» (з ним у парі) — ні; без
+     резерву це давало б різну висоту підпису в різних рядах сітки. */
   .grid-cell__title {
     font-family: var(--font-display);
     font-weight: var(--weight-h2);
     font-size: var(--type-lead);
     line-height: var(--leading-heading);
+    min-height: calc(var(--type-lead) * var(--leading-heading) * 2);
   }
 </style>

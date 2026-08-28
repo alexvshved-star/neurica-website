@@ -22,55 +22,49 @@ const workHref = locale === 'uk' ? '/work' : '/en/work';
 <Base locale={locale} title="NEURICA" description={brandDescriptor}>
   <Nav locale={locale} />
   <main>
-    <header class="hero">
-      <div class="hero__content">
+    <div class="page-column">
+      <header class="hero">
         <h1 class="type-display hero__wordmark">NEURICA</h1>
         <p class="hero__eyebrow">experiments</p>
         <p class="hero__descriptor">{brandDescriptor}</p>
-      </div>
-    </header>
-    <section class="feed">
-      <div class="feed__grid">
-        {items.map((entry, i) => <HomeGridCell entry={entry} locale={locale} priority={i === 0} />)}
-      </div>
-    </section>
+      </header>
+      <section class="feed__grid">
+        {items.map((entry, i) => <HomeGridCell entry={entry} locale={locale} index={i} priority={i === 0} />)}
+      </section>
+    </div>
     <a class="feed__view-all mono" href={workHref}>{t(locale, 'work.viewAll')} →</a>
   </main>
   <Footer locale={locale} />
 </Base>
 
 <style>
-  /* Hero — третя ітерація (design-brief "hero+grid"): тільки текст,
-     без фото/градієнтів/оверлею тексту на кадр. Неоновий коридор
-     (рішення 033/034) прибрано разом із зображенням —
-     src/assets/hero/entry.png видалено з репозиторію, entry.png
-     більше не імпортується. Локап однаковий на mobile і desktop
-     (це й було цілю — попередній варіант ховав/показував фон за
-     брейкпойнтом, тепер брейкпойнту для hero взагалі нема).
-     --type-display повертається до дефолтного токена (tokens.css) —
-     вузький clamp під 45%-колонку зображення (рішення попереднього
-     проходу) більше не потрібен, зображення нема. */
-  .hero {
-    padding: var(--section-gap) var(--grid-margin);
+  /* Крок "композиція сітки": один спільний контейнер фіксованої
+     ширини для hero і сітки (design-brief п.4-5) — раніше кожен мав
+     власний max-width (900px / 720px) і власний margin-inline:auto,
+     що математично центрувалось навколо того самого середника
+     сторінки, але читалось як дві різні колонки. Тепер обидва —
+     прямі діти ЦЬОГО контейнера, без власної ширини. 660px —
+     design-brief п.5: дві клітинки по 325px + gap 10px. */
+  .page-column {
+    width: min(660px, 92vw);
+    margin-inline: auto;
+    padding: var(--section-gap) 0;
     text-align: center;
   }
 
-  .hero__content {
-    max-width: 900px;
-    margin-inline: auto;
-  }
-
-  /* --type-display локально звужено під нову фіксовану колонку
-     900px (без зображення дефолтна шкала токена, до 11rem=176px,
-     переносить NEURICA на два рядки — виміряно реальним рендером,
-     Range.getClientRects() на текстовому вузлі: перенос настає вже
-     на 168px при 900px доступної ширини). 9.5rem=152px — стеля з
-     запасом ≈40px; 9vw на 1680px дає 151.2px (менше стелі — vw
-     керує), на 1440px — 129.6px. Мобільна шкала (≤768px, tokens.css
-     :root) не чіпається — дефолт там уже вужчий за замовчуванням. */
+  /* --type-display — фіксоване значення, не clamp зі шкалою vw
+     (крок "композиція сітки"): контейнер (.page-column) сам більше
+     не росте з viewport понад 660px (min(660px, 92vw) — на 768px
+     92vw уже 706px, стеля 660px спрацьовує вже тут), тому й розміру
+     рости нема з чого — той самий 660px для 768/1440/1680.
+     7rem=112px виміряно реальним рендером (Range.getClientRects()
+     на текстовому вузлі, Playwright): NEURICA — 605px в 1 рядок,
+     запас ≈55px до 660px колонки; перенос на два рядки настає вже
+     на 124px. Мобільна шкала (≤768px, tokens.css :root) не
+     чіпається. */
   @media (min-width: 768px) {
     .hero {
-      --type-display: clamp(2.75rem, 9vw, 9.5rem);
+      --type-display: 7rem;
     }
   }
 
@@ -97,38 +91,50 @@ const workHref = locale === 'uk' ? '/work' : '/en/work';
     color: var(--color-muted);
   }
 
-  /* Сітка 2×2 (design-brief п.2) — фіксований блок, не розтягується
-     на всю ширину сторінки: min(720px, 92vw) — стеля 720px на
-     широких viewport, пропорційне звуження на вузьких, той самий
-     центр, що й hero__content (margin-inline:auto відносно того
-     самого батька). На 1440/1680 це і є перевірка "сітка не
-     розтягується": ширина лишається 720px, не 100% контейнера. */
-  .feed {
-    padding-bottom: var(--section-gap);
-  }
-
+  /* Сітка 2×2 (design-brief п.1-2) — gap однаковий по обох осях
+     (10px, design-brief п.2: раніше 4px між колонками проти 68px
+     між рядками — різниця йшла від підпису всередині grid-item,
+     виправлено в HomeGridCell.astro: підпис — окремий grid-item у
+     власному рядку). grid-column/grid-row — з --cell-col/--cell-row
+     (custom properties, встановлені інлайново в HomeGridCell.astro
+     за index), не задані напряму інлайн-стилем: так медіа-запит
+     нижче може перевизначити їх для мобільного без !important
+     (inline style мав би вищий пріоритет за звичайне правило). */
   .feed__grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-2);
-    width: min(720px, 92vw);
-    margin-inline: auto;
+    gap: 10px;
+    margin-top: var(--section-gap);
+  }
+
+  .feed__grid :global(.grid-cell__link),
+  .feed__grid :global(.grid-cell__caption) {
+    grid-column: var(--cell-col, 1);
+    grid-row: var(--cell-row, auto);
   }
 
   /* Мобільний: один стовпчик (design-brief п.3), клітинки лишаються
-     КВАДРАТНИМИ — aspect-ratio:1/1 заданий прямо на .grid-cell__cover
-     (HomeGridCell.astro), не залежить від кількості колонок, тому
-     той самий кроп кадру на телефоні й на десктопі. Той самий поріг
-     768px, що й скрізь на сайті (tokens.css, тут — раніше .feed). */
+     КВАДРАТНИМИ — aspect-ratio:1/1 на .grid-cell__cover
+     (HomeGridCell.astro) не залежить від кількості колонок. Явне
+     розміщення знято (grid-column:1, grid-row:auto) — при одній
+     колонці природний порядок DOM (фото1, підпис1, фото2, підпис2…)
+     сам дає правильну вертикальну послідовність. Той самий поріг
+     768px, що й скрізь на сайті. */
   @media (max-width: 768px) {
     .feed__grid {
       grid-template-columns: 1fr;
+    }
+
+    .feed__grid :global(.grid-cell__link),
+    .feed__grid :global(.grid-cell__caption) {
+      grid-column: 1;
+      grid-row: auto;
     }
   }
 
   .feed__view-all {
     display: block;
-    width: min(720px, 92vw);
+    width: min(660px, 92vw);
     margin: 0 auto var(--section-gap);
     text-align: center;
   }
