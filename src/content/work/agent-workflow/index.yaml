@@ -2,6 +2,6 @@ type: PROTOTYPE
 status: STATIC
 art_direction: MONOCHROME
 published: 2026-07-20
-cover: ./cover.placeholder.jpg
+cover: ./cover.jpg
 context: EONYX
 data_mode: NONE
