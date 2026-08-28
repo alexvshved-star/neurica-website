@@ -29,7 +29,9 @@ const workHref = locale === 'uk' ? '/work' : '/en/work';
         <p class="hero__descriptor">{brandDescriptor}</p>
       </header>
       <section class="feed__grid">
-        {items.map((entry, i) => <HomeGridCell entry={entry} locale={locale} index={i} priority={i === 0} />)}
+        {items.map((entry, i) => (
+          <HomeGridCell entry={entry} locale={locale} index={i} total={items.length} priority={i === 0} />
+        ))}
       </section>
     </div>
     <a class="feed__view-all mono" href={workHref}>{t(locale, 'work.viewAll')} →</a>
@@ -38,13 +40,15 @@ const workHref = locale === 'uk' ? '/work' : '/en/work';
 </Base>
 
 <style>
-  /* Крок "композиція сітки": один спільний контейнер фіксованої
-     ширини для hero і сітки (design-brief п.4-5) — раніше кожен мав
-     власний max-width (900px / 720px) і власний margin-inline:auto,
-     що математично центрувалось навколо того самого середника
-     сторінки, але читалось як дві різні колонки. Тепер обидва —
-     прямі діти ЦЬОГО контейнера, без власної ширини. 660px —
-     design-brief п.5: дві клітинки по 325px + gap 10px. */
+  /* Спільний контейнер hero (крок "композиція сітки", попередній
+     прохід) — hero тут НЕ чіпається цим кроком ("тільки сітка"),
+     лишається 660px. Сітка нижче звужена до власної, меншої ширини
+     (.feed__grid, 590px) із власним margin-inline:auto ВСЕРЕДИНІ
+     цього контейнера — той самий прийом, що вже є на сторінці
+     об'єкта (WorkDetailView.astro: header 560px, cover на всю
+     ширину, обидва центровані відносно того самого батька): різна
+     ширина, та сама вісь, без потреби виносити сітку з .page-column
+     у розмітці. */
   .page-column {
     width: min(660px, 92vw);
     margin-inline: auto;
@@ -91,20 +95,25 @@ const workHref = locale === 'uk' ? '/work' : '/en/work';
     color: var(--color-muted);
   }
 
-  /* Сітка 2×2 (design-brief п.1-2) — gap однаковий по обох осях
-     (10px, design-brief п.2: раніше 4px між колонками проти 68px
-     між рядками — різниця йшла від підпису всередині grid-item,
-     виправлено в HomeGridCell.astro: підпис — окремий grid-item у
-     власному рядку). grid-column/grid-row — з --cell-col/--cell-row
-     (custom properties, встановлені інлайново в HomeGridCell.astro
-     за index), не задані напряму інлайн-стилем: так медіа-запит
-     нижче може перевизначити їх для мобільного без !important
-     (inline style мав би вищий пріоритет за звичайне правило). */
+  /* Сітка 2×2 — крок "пропорції й типографіка підписів": клітинка
+     ≈19,5% ширини viewport на 1440 (≈280px, референс), не 22,6%
+     (325px). Ширина блоку — 2 клітинки + column-gap, порахована
+     сама через grid (repeat(2,1fr) + column-gap), не захардкожена:
+     590px = min(590px, 92vw) на .feed__grid, менше за 660px
+     .page-column — власне центрування всередині (margin-inline:auto),
+     не розтягується на всю ширину батька.
+
+     row-gap НЕ заданий тут навмисно: вертикальний ритм (14px
+     фото→підпис, 85px підпис→наступне фото) асиметричний — CSS Grid
+     row-gap дає лише ОДНЕ значення для всіх меж рядків, тому керується
+     margin'ами в HomeGridCell.astro (.grid-cell__caption). Тут —
+     тільки column-gap (симетричний, одне значення підходить). */
   .feed__grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin-top: var(--section-gap);
+    column-gap: 30px;
+    width: min(590px, 92vw);
+    margin: var(--section-gap) auto 0;
   }
 
   .feed__grid :global(.grid-cell__link),
