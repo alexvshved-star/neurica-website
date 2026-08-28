@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import Base from '@/layouts/Base.astro';
 import Nav from '@/components/Nav.astro';
 import Footer from '@/components/Footer.astro';
-import WorkCard from '@/components/WorkCard.astro';
+import WorkIndexRow from '@/components/WorkIndexRow.astro';
 import { t, type Locale } from '@/i18n';
 import { excludeArchive, sortByPublishedDesc, warnArtDirectionRepeats } from '@/lib/validate';
 
@@ -30,7 +30,7 @@ warnArtDirectionRepeats(items, `work/${locale}`);
     <h1>{t(locale, 'work.title')}</h1>
     <section class="work-index">
       {items.length > 0
-        ? items.map((entry) => <WorkCard entry={entry} locale={locale} compact />)
+        ? items.map((entry) => <WorkIndexRow entry={entry} locale={locale} />)
         : <p class="mono">{t(locale, 'work.empty')}</p>}
     </section>
   </main>
@@ -42,12 +42,21 @@ warnArtDirectionRepeats(items, `work/${locale}`);
     padding: var(--section-gap) var(--grid-margin) 0;
   }
 
-  /* Компактно, однорідно (розділ 2 IA-брифу): одна колонка, без
-     масштабної варіації карток — тут повнота важливіша за акцент. */
+  /* Вузький список (design-brief §1): один рядок метаданих на
+     об'єкт, не картка. Колонка ~880px, центрована — та сама вісь
+     margin-inline:auto, що й решта центрованих сторінок сайту
+     (docs/02-design-system.md, «Центрування»), тільки своя міра, не
+     560px прозової колонки: список потребує місця під мініатюру +
+     текст + рік в один рядок. h1 отримує ту саму міру, щоб не
+     виникало двох осей на одній сторінці. */
+  h1 {
+    max-width: 880px;
+    margin-inline: auto;
+  }
+
   .work-index {
-    display: flex;
-    flex-direction: column;
-    gap: var(--rule-hairline);
+    max-width: 880px;
+    margin-inline: auto;
     padding: var(--space-8) 0 var(--section-gap);
   }
 </style>

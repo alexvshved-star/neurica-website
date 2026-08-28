@@ -188,10 +188,19 @@ const slugHref = (slug: string) => (locale === 'uk' ? `/work/${slug}` : `/en/wor
     color: var(--color-muted);
   }
 
+  /* Плита на всю ширину контейнера (крок design-brief §2.2) — раніше
+     max-width: var(--width-content) (1200px) лишало порожній navy
+     праворуч, коли main ширший (без width:100% картинка трималась
+     власної натуральної ширини). aspect-ratio + object-fit:cover —
+     той самий рецепт, що й у WorkCard.astro для карток стрічки:
+     кроп без літербоксингу, порожньої поверхні всередині рамки
+     кадру нема. */
   main :global(.work-detail__cover) {
     display: block;
-    max-width: var(--width-content);
+    width: 100%;
     height: auto;
+    aspect-ratio: var(--image-ratio, 16 / 9);
+    object-fit: cover;
   }
 
   .work-detail__pager {

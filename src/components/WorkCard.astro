@@ -88,6 +88,17 @@ const scale = cardScale(entry);
     filter: var(--image-filter, none);
   }
 
+  /* Свідомий object-position для портретних обкладинок (design-
+     brief §2.1) — ORGANIC, єдиний портретний напрям (3:4). Сьогодні
+     кроп what-neurica-is (1800×2400) точно збігається з
+     --image-ratio, тож ефекту не видно (нема що кропити) — це
+     страховка на майбутнє, якщо наступна ORGANIC-обкладинка не буде
+     кадрована так само точно: композиція жанру (докладніше —
+     docs/07-content-spec.md) розташовує сюжет праворуч у кадрі. */
+  .work-card[data-direction='organic'] :global(.work-card__cover) {
+    object-position: right center;
+  }
+
   .work-card__body {
     padding: var(--card-density, var(--space-8));
   }
