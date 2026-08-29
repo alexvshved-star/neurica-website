@@ -30,7 +30,17 @@ const switchHref = getAlternate(pathname, otherLocale);
 </nav>
 
 <style>
+  /* position:relative — опора для .site-nav__links, яке центрується
+     ПОЗИЦІЮВАННЯМ відносно вікна (крок "адаптив головної"), не через
+     space-between: логотип зліва і EN справа різної ширини за
+     визначенням, тому центр "залишку" між ними зсунутий від
+     справжнього центру вікна (виміряно: +30px на 1280/1600px,
+     однаково на обох — space-between ніколи не дає точний центр,
+     коли бічні елементи асиметричні). Padding симетричний
+     (--grid-margin з обох боків), тому власна ширина .site-nav
+     дорівнює ширині вікна — центр .site-nav = центр вікна. */
   .site-nav {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -77,7 +87,16 @@ const switchHref = getAlternate(pathname, otherLocale);
     width: auto;
   }
 
+  /* Абсолютне позиціювання відносно .site-nav (не space-between) —
+     центр блоку завжди дорівнює центру вікна, незалежно від ширини
+     логотипу зліва чи EN справа. Перевірено на 375/768 — не
+     перекриває сусідні елементи (найтісніший запас ≈10px від
+     логотипу на 375px, uk, найдовший варіант тексту). */
   .site-nav__links {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
     gap: var(--space-6);
   }
