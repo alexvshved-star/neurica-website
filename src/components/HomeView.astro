@@ -28,30 +28,39 @@ const workHref = locale === 'uk' ? '/work' : '/en/work';
         <p class="hero__eyebrow">experiments</p>
         <p class="hero__descriptor">{brandDescriptor}</p>
       </header>
-      <section class="feed__grid">
-        {items.map((entry, i) => (
-          <HomeGridCell entry={entry} locale={locale} index={i} total={items.length} priority={i === 0} />
-        ))}
-      </section>
     </div>
+    <section class="feed__grid">
+      {items.map((entry, i) => (
+        <HomeGridCell entry={entry} locale={locale} index={i} total={items.length} priority={i === 0} />
+      ))}
+    </section>
     <a class="feed__view-all mono-label" href={workHref}>{t(locale, 'work.viewAll')} →</a>
   </main>
   <Footer locale={locale} />
 </Base>
 
 <style>
-  /* Спільний контейнер hero — лишається 660px. Сітка нижче звужена
-     до власної, меншої ширини (.feed__grid, 600px, фіксовано — крок
-     "адаптив головної") із власним margin-inline:auto ВСЕРЕДИНІ
-     цього контейнера — той самий прийом, що вже є на сторінці
-     об'єкта (WorkDetailView.astro: header 560px, cover на всю
-     ширину, обидва центровані відносно того самого батька): різна
-     ширина, та сама вісь, без потреби виносити сітку з .page-column
-     у розмітці. */
+  /* Контейнер hero, 660px. Сітка тепер СИБЛІНГ .page-column (крок
+     "сітка має масштабуватися"), не дитина — той самий прийом, що
+     вже є на сторінці об'єкта (WorkDetailView.astro: header 560px,
+     cover на всю ширину, обидва центровані відносно того самого
+     батька, кожен зі своїм margin-inline:auto). Раніше .feed__grid
+     була ВСЕРЕДИНІ .page-column, і це працювало, ДОКИ сітка була
+     вузчою за 660px; крок "сітка має масштабуватися" ввів
+     clamp(600px,42vw,900px), і на 1680/1920 сітка (705–806px) стала
+     ШИРШОЮ за 660px-контейнер — margin:auto для елемента, ширшого за
+     батька, вироджується в 0 (CSS-специфікація), сітка "прилипала"
+     до лівого краю page-column і втрачала центрування (виявлено
+     виміром: зсув від центру viewport +22.8px на 1680, +73.2px на
+     1920). Винесення сітки в сиблінги знімає обмеження зверху.
+     padding-bottom тут прибраний (був 0 у shorthand) — див. окремий
+     коментар на .feed__view-all, куди перенесено grid→view-all
+     проміжок, щоб вертикальний ритм лишився тим самим, що виміряно
+     раніше (docs/05-decisions.md). */
   .page-column {
     width: min(660px, 92vw);
     margin-inline: auto;
-    padding: var(--section-gap) 0;
+    padding: var(--section-gap) 0 0;
     text-align: center;
   }
 
@@ -112,22 +121,26 @@ const workHref = locale === 'uk' ? '/work' : '/en/work';
     margin: var(--section-gap) auto 0;
   }
 
-  /* Крок "адаптив головної, широкі екрани": ширина блоку сітки —
-     ФІКСОВАНА 600px (дві клітинки по 295px + gap 10px), а не
-     обчислена від viewport — попередня формула на практиці давала
-     клітинку, що росла з шириною монітора замість лишатись сталою.
-     600px — стеля; на екранах вужчих за ~652px (600/0.92) блок
-     звужується до 92vw (та все одно лишається в межах цього
-     min-width:769px блоку, доки ширина ≥769px). margin-top —
-     фіксовані 60px (НЕ --section-gap, 128px на десктопі): той токен
-     спільний з іншими сторінками (AboutView, WorkDetailView тощо),
-     тут навмисно окреме, вужче значення — на широких екранах 128px
-     читались як розрив між hero й сіткою, ніби непов'язані блоки
-     (докладніше — docs/05-decisions.md). */
+  /* Крок "сітка має масштабуватися": попередня фіксована 600px
+     (рішення 050) тримала частку від viewport, що падала з 58,59%
+     на 1024 до 31,25% на 1920 — виміряно, не на око (docs/05-
+     decisions.md). clamp(600px, 42vw, 900px): 42vw — цільова частка,
+     визнана вдалою на 1440 (там і раніше було ≈41,67% при
+     фіксованих 600px, тепер точно 42%); 600px — нижня межа (спрацьовує
+     на 1024/1280, де 42vw ще не дотягує до 600); 900px — верхня межа
+     (не спрацьовує в діапазоні 1024–1920, резерв на ширші монітори).
+     gap:10px лишається фіксованим по обох осях — клітинка залишається
+     квадратною автоматично (repeat(2,1fr) + однаковий gap, висота
+     керується aspect-ratio на самому зображенні), тому окремо
+     клітинку не рахували. margin-top — фіксовані 60px (не змінювались
+     цим кроком). Той самий поріг min-width:769px, що й раніше —
+     769–1920 повністю в зоні, де clamp активний (42vw там завжди між
+     600 і 900), розриву на межі з mobile нема (на 769px 92vw-формула
+     й так завжди давала рівно 600, той самий floor, що в clamp). */
   @media (min-width: 769px) {
     .feed__grid {
       gap: 10px;
-      width: min(600px, 92vw);
+      width: clamp(600px, 42vw, 900px);
       margin-top: 60px;
     }
   }
@@ -162,10 +175,16 @@ const workHref = locale === 'uk' ? '/work' : '/en/work';
     }
   }
 
+  /* margin-top: var(--section-gap) — компенсує padding-bottom,
+     прибраний з .page-column (сітка→"Усі роботи" раніше йшов звідти,
+     коли .feed__grid ще була дитиною .page-column); значення те
+     саме, тому проміжок сітка→"Усі роботи" лишається тим самим, що
+     виміряно раніше (128px desktop / 64px mobile). margin-bottom не
+     чіпався. */
   .feed__view-all {
     display: block;
     width: min(660px, 92vw);
-    margin: 0 auto var(--section-gap);
+    margin: var(--section-gap) auto var(--section-gap);
     text-align: center;
   }
 </style>
