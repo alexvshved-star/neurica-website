@@ -1,5 +1,5 @@
 ---
-title: Synthetic Structures 01
+title: Synthetic Structures
 summary: generative form study
 tags:
   - visual study

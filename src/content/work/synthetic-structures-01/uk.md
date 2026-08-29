@@ -1,5 +1,5 @@
 ---
-title: Синтетичні структури 01
+title: Синтетичні структури
 summary: generative form study
 tags:
   - візуальне дослідження

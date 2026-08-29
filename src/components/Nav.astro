@@ -22,11 +22,11 @@ const switchHref = getAlternate(pathname, otherLocale);
       >{byLabel} <BrandMark name="wordmark" class="site-nav__by-mark" /><span class="sr-only">{eonyxLabel}</span></a
     >
   </div>
-  <ul class="site-nav__links mono">
+  <ul class="site-nav__links mono-label">
     <li><a href={workHref}>{t(locale, 'nav.work')}</a></li>
     <li><a href={aboutHref}>{t(locale, 'nav.about')}</a></li>
   </ul>
-  <a class="site-nav__lang mono" href={switchHref} hreflang={otherLocale}>{otherLocale.toUpperCase()}</a>
+  <a class="site-nav__lang mono-label" href={switchHref} hreflang={otherLocale}>{otherLocale.toUpperCase()}</a>
 </nav>
 
 <style>
@@ -80,8 +80,6 @@ const switchHref = getAlternate(pathname, otherLocale);
   .site-nav__links {
     display: flex;
     gap: var(--space-6);
-    font-size: var(--type-mono);
-    letter-spacing: var(--tracking-mono);
   }
 
   .site-nav__links a,

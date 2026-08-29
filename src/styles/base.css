@@ -101,6 +101,22 @@ code, pre, .mono {
   font-weight: var(--weight-mono);
 }
 
+/* .mono-label — той самий вигляд, що заголовок картки сітки
+   (HomeGridCell.astro, .grid-cell__title): bold, uppercase,
+   --tracking-mono-label. Поширює виняток "два регістри"
+   (docs/02-design-system.md), раніше записаний тільки для підписів
+   сітки, на nav і службові посилання (крок "проміжки в сітці" п.3):
+   Nav.astro (.site-nav__links, .site-nav__lang), HomeView.astro
+   (.feed__view-all). Підвал лишається поза цим — уже в mono, але без
+   uppercase/розрядки, свідомо не займали. */
+.mono-label {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-bold);
+  font-size: var(--type-mono);
+  letter-spacing: var(--tracking-mono-label);
+  text-transform: uppercase;
+}
+
 /* --type-small — рівень для другорядних людських підписів (теги,
    caption), відмінний від .meta: не технічна мова, без uppercase
    і розрядки. */
