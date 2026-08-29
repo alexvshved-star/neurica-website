@@ -95,25 +95,21 @@ const workHref = locale === 'uk' ? '/work' : '/en/work';
     color: var(--color-muted);
   }
 
-  /* Сітка 2×2 — крок "пропорції й типографіка підписів": клітинка
-     ≈19,5% ширини viewport на 1440 (≈280px, референс), не 22,6%
-     (325px). Ширина блоку — 2 клітинки + column-gap, порахована
-     сама через grid (repeat(2,1fr) + column-gap), не захардкожена:
-     590px = min(590px, 92vw) на .feed__grid, менше за 660px
-     .page-column — власне центрування всередині (margin-inline:auto),
-     не розтягується на всю ширину батька.
-
-     row-gap НЕ заданий тут навмисно: вертикальний ритм (14px
-     фото→підпис, 30px підпис→наступне фото — крок "проміжки в
-     сітці", виміряно реальним рендером) асиметричний — CSS Grid
-     row-gap дає лише ОДНЕ значення для всіх меж рядків, тому керується
-     margin'ами в HomeGridCell.astro (.grid-cell__caption). Тут —
-     тільки column-gap (симетричний, одне значення підходить). */
+  /* Крок "підпис поверх кадру": клітинка лишається 280px (розмір не
+     чіпали) — ширина блоку = 2×280px + gap, через calc, а не
+     захардкоджена (590px рахувався саме під колишній column-gap:30px;
+     з іншим gap ця сума мала б плисти, якби лишилась хардкодженою —
+     клітинка стала б ширшою/вужчою за 280px разом із gap). Gap —
+     ОДНЕ значення на обидві осі (`gap`, не окремо column/row-gap):
+     тепер, коли підпис не окремий рядок під фото, а стековано на
+     фото (HomeGridCell.astro, captionRow=imageRow), row-gap і
+     column-gap рівнозначні — симетрична щільна сітка. 20px — обраний
+     варіант після порівняння з 8px (докладніше — docs/05-decisions.md). */
   .feed__grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    column-gap: 30px;
-    width: min(590px, 92vw);
+    gap: 20px;
+    width: min(calc(280px * 2 + 20px), 92vw);
     margin: var(--section-gap) auto 0;
   }
 
@@ -125,11 +121,16 @@ const workHref = locale === 'uk' ? '/work' : '/en/work';
 
   /* Мобільний: один стовпчик (design-brief п.3), клітинки лишаються
      КВАДРАТНИМИ — aspect-ratio:1/1 на .grid-cell__cover
-     (HomeGridCell.astro) не залежить від кількості колонок. Явне
-     розміщення знято (grid-column:1, grid-row:auto) — при одній
-     колонці природний порядок DOM (фото1, підпис1, фото2, підпис2…)
-     сам дає правильну вертикальну послідовність. Той самий поріг
-     768px, що й скрізь на сайті. */
+     (HomeGridCell.astro) не залежить від кількості колонок.
+     --cell-row-mobile (не auto!) — кожен елемент отримує свій
+     власний рядок (index+1), а не пару desktop-рядка: якби тут
+     лишався grid-row:auto, природний порядок DOM (фото1, підпис1,
+     фото2, підпис2…) і так дав би правильну послідовність за
+     СТАРОЮ схемою (підпис окремим рядком під фото), але зараз
+     підпис і фото мають ОДНАКОВИЙ --cell-row (стек, не послідовність)
+     — двом сусіднім desktop-парним елементам (col1/col2 одного
+     pairIndex) auto дав би різні авто-рядки, ламаючи стек. Той
+     самий поріг 768px, що й скрізь на сайті. */
   @media (max-width: 768px) {
     .feed__grid {
       grid-template-columns: 1fr;
@@ -138,7 +139,7 @@ const workHref = locale === 'uk' ? '/work' : '/en/work';
     .feed__grid :global(.grid-cell__link),
     .feed__grid :global(.grid-cell__caption) {
       grid-column: 1;
-      grid-row: auto;
+      grid-row: var(--cell-row-mobile, auto);
     }
   }
 
