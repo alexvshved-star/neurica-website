@@ -60,7 +60,7 @@ const workHref = locale === 'uk' ? '/work' : '/en/work';
   .page-column {
     width: min(660px, 92vw);
     margin-inline: auto;
-    padding: var(--section-gap) 0 0;
+    padding: calc(var(--section-gap) * 0.5) 0 0;
     text-align: center;
   }
 
@@ -76,7 +76,18 @@ const workHref = locale === 'uk' ? '/work' : '/en/work';
      чіпається. */
   @media (min-width: 768px) {
     .hero {
-      --type-display: 7rem;
+      --type-display: 3.5rem;
+    }
+  }
+
+  /* Мобільний ловок-ап зменшений так само вдвічі, локально до .hero:
+     глобальний mobile-override --type-display (tokens.css :root,
+     clamp(2.75rem,16vw,5rem)) — спільний токен, чіпати його зверху
+     не можна (той самий принцип, що вже застосований до
+     --section-gap/--type-lead нижче). */
+  @media (max-width: 767px) {
+    .hero {
+      --type-display: clamp(1.375rem, 8vw, 2.5rem);
     }
   }
 
@@ -99,7 +110,7 @@ const workHref = locale === 'uk' ? '/work' : '/en/work';
   .hero__descriptor {
     margin-top: var(--space-4);
     font-weight: var(--weight-lead);
-    font-size: var(--type-lead);
+    font-size: calc(var(--type-lead) * 0.5);
     color: var(--color-muted);
   }
 
@@ -118,7 +129,7 @@ const workHref = locale === 'uk' ? '/work' : '/en/work';
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     width: min(calc(280px * 2 + 20px), 92vw);
-    margin: var(--section-gap) auto 0;
+    margin: calc(var(--section-gap) * 0.5) auto 0;
   }
 
   /* Крок "сітка має масштабуватися": попередня фіксована 600px
@@ -141,7 +152,7 @@ const workHref = locale === 'uk' ? '/work' : '/en/work';
     .feed__grid {
       gap: 10px;
       width: clamp(600px, 42vw, 900px);
-      margin-top: 60px;
+      margin-top: 30px;
     }
   }
 

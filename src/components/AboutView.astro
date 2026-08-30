@@ -15,21 +15,21 @@ const { locale } = Astro.props;
   <Nav locale={locale} />
   <main>
     <div class="about-content">
-      <h1>{t(locale, 'about.title')}</h1>
-
       <section class="about-block">
-        <h2>{t(locale, 'about.block1Title')}</h2>
-        <p>{t(locale, 'about.block1Body')}</p>
+        <h1>{t(locale, 'about.title')}</h1>
+        <p><a href={`mailto:${t(locale, 'about.email')}`}>{t(locale, 'about.email')}</a></p>
       </section>
 
       <section class="about-block">
-        <h2>{t(locale, 'about.block2Title')}</h2>
-        <p>{t(locale, 'about.block2Body')}</p>
+        <h2>{t(locale, 'about.officeTitle')}</h2>
+        <p>{t(locale, 'about.officeValue')}</p>
       </section>
 
       <section class="about-block">
-        <h2>{t(locale, 'about.block3Title')}</h2>
-        <p>{t(locale, 'about.block3Body')}</p>
+        <h2>{t(locale, 'about.legalTitle')}</h2>
+        <p>{t(locale, 'about.legalEntity')}</p>
+        <p>{t(locale, 'about.legalEdrpou')}</p>
+        <p>{t(locale, 'about.legalResident')}</p>
       </section>
     </div>
   </main>
@@ -63,7 +63,25 @@ const { locale } = Astro.props;
     margin-top: var(--space-3);
   }
 
-  .about-block p {
+  /* Заголовки блоків ("Контакти", "Офіс", "Реквізити") — той самий
+     вигляд, що TYPE на картках сітки (.meta, tokens.css): mono,
+     uppercase, --tracking-label, --color-muted. Свідомий виняток із
+     правила "Два регістри" (docs/02-design-system.md) — сторінка
+     контактів читається як картка з метаданими (label: value), не
+     як проза зі своїм H1-голосом; той самий тест "стан, не голос",
+     що вже застосований до підпису картки сітки (рішення 046) і
+     nav (рішення 047). Значення (email, адреса, реквізити) —
+     Montserrat, --color-text (успадковано з body, без override) —
+     основний текст сторінки, не другорядна проза, тому не muted,
+     на відміну від старого прозового варіанту цього блоку. */
+  .about-block h1,
+  .about-block h2 {
+    font-family: var(--font-mono);
+    font-size: var(--type-metadata);
+    font-weight: var(--weight-mono);
+    letter-spacing: var(--tracking-label);
+    line-height: var(--leading-mono);
+    text-transform: uppercase;
     color: var(--color-muted);
   }
 </style>
