@@ -107,10 +107,20 @@ const workHref = locale === 'uk' ? '/work' : '/en/work';
     text-transform: lowercase;
   }
 
+  /* Дескриптор переведено на mono-регістр TYPE (.meta, tokens.css) —
+     та сама гарнітура/вага/розрядка/uppercase, що на картках сітки
+     (EDITORIAL/CASE/...) і в nav (рішення 047/048). Третє розширення
+     винятку з "Два регістри" (docs/02-design-system.md), задокументоване
+     окремо. Кегль і колір НЕ від .meta — лишаються тими, що вже були
+     тут (--type-lead*0.5, --color-muted), .meta для них не чіпається,
+     звідси властивості продубльовані вручну, не через клас. */
   .hero__descriptor {
     margin-top: var(--space-4);
-    font-weight: var(--weight-lead);
+    font-family: var(--font-mono);
+    font-weight: var(--weight-mono);
     font-size: calc(var(--type-lead) * 0.5);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
     color: var(--color-muted);
   }
 
