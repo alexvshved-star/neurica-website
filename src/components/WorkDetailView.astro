@@ -222,11 +222,18 @@ const slugHref = (slug: string) => (locale === 'uk' ? `/work/${slug}` : `/en/wor
   .work-detail__summary--formula {
     text-align: left;
   }
-  /* Agent workflow: user-requested navigation typography, with the
-     existing heading size retained. Its formula is centred as an
-     explicit exception to the default left-aligned formula style. */
+  /* Agent workflow: compact navigation typography, centred on the
+     page axis. Scale down on phones and never hyphenate the title. */
   .work-detail__header--agent-workflow h1 {
-    font-size: var(--type-h1);
+    font-size: clamp(1.125rem, 5vw, 2rem);
+    line-height: 1.3;
+    width: 100%;
+    margin-inline: auto;
+    text-align: center;
+    hyphens: none;
+    -webkit-hyphens: none;
+    overflow-wrap: normal;
+    word-break: normal;
   }
 
   .work-detail__header--agent-workflow .work-detail__summary {
