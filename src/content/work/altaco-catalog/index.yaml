@@ -16,3 +16,8 @@ data_fields:
   - photo
   - availability
 feature: true
+media:
+  - id: catalog
+    src: ./catalog-static.jpg
+  - id: material
+    src: ./material-static.jpg

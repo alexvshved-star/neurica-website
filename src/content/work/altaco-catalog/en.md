@@ -4,12 +4,17 @@ summary: inventory → catalog → select → PDF
 tags:
   - catalog
   - altaco
+media:
+  catalog:
+    alt: "Static ALTACO materials catalog mockup with filters and stone cards"
+    caption: "Materials catalog · static mockup · click to open full size"
+  material:
+    alt: "Static Azul Macauba product page mockup with specifications, slab photo and application example"
+    caption: "Azul Macauba product page · static mockup · click to open full size"
 ---
 
-A working case: how ALTACO's internal inventory becomes a public catalog
-for a client — item selection and PDF spec generation.
+Static mockups of the future ALTACO catalog: material selection by specifications and a product page with a slab photo and an application example.
 
-Data is sanitized (`data_mode: SANITIZED`): only name, manufacturer,
-collection, format, finish, photo, and an availability flag stay public.
-Stock depth, purchase prices, and inventory movement never reach the
-public build.
+This stage presents the design. Filters, price calculations and ordering shown in the images are inactive; prices and availability are part of the mockup.
+
+Planned workflow: inventory data → catalog → material selection → PDF specification.

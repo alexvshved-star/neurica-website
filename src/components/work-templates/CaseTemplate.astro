@@ -23,6 +23,23 @@ const { entry, locale, body } = Astro.props;
 
 <div class="case-template">
   <RuntimeNotice entry={entry} locale={locale} />
+  {entry.media && entry.media.length > 0 && (
+    <div class="case-template__gallery">
+      {entry.media.map((media) => {
+        const label = entry.translations[locale]?.media?.[media.id];
+        return (
+          <figure>
+            <a href={media.src.src} target="_blank" rel="noopener noreferrer"
+              aria-label={`${label?.alt ?? ''} — ${locale === 'uk' ? 'відкрити повний розмір' : 'open full size'}`}>
+              <img src={media.src.src} width={media.src.width} height={media.src.height}
+                alt={label?.alt ?? ''} loading="lazy" decoding="async" />
+            </a>
+            {label?.caption && <figcaption class="small">{label.caption}</figcaption>}
+          </figure>
+        );
+      })}
+    </div>
+  )}
   <article class="case-template__prose">
     {body.map((p) => <p>{p}</p>)}
   </article>
@@ -30,11 +47,32 @@ const { entry, locale, body } = Astro.props;
 
 <style>
   .case-template {
-    max-width: 560px;
+    max-width: 900px;
     margin-inline: auto;
   }
 
+  .case-template__gallery {
+    display: grid;
+    gap: var(--space-8);
+    margin-top: var(--space-6);
+  }
+
+  .case-template__gallery figure { margin: 0; }
+  .case-template__gallery a { display: block; }
+  .case-template__gallery img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .case-template__gallery figcaption {
+    margin-top: var(--space-3);
+    text-align: center;
+    color: var(--color-muted);
+  }
+
   .case-template__prose {
+    max-width: 560px;
+    margin-inline: auto;
     margin-top: var(--space-6);
     text-align: center;
     overflow-wrap: break-word;
