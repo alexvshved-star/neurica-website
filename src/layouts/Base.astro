@@ -1,0 +1,68 @@
+---
+import { getImage, type ImageMetadata } from 'astro:assets';
+import { getAlternate, type Locale } from '@/i18n';
+import '@/styles/tokens.css';
+import '@/styles/base.css';
+
+interface Props {
+  locale: Locale;
+  title: string;
+  description?: string;
+  /** Обкладинка об'єкта (entry.cover) — кропиться під OG на збірці
+   * (§2.4 content-prep брифу), не вимагає окремого файлу. Публічний
+   * шлях-рядок — для сторінок-індексів без per-object обкладинки. */
+  image?: string | ImageMetadata;
+  ogType?: 'website' | 'article';
+}
+
+const { locale, title, description, image = '/og-default.jpg', ogType = 'website' } = Astro.props;
+
+const pathname = Astro.url.pathname;
+const ukPath = getAlternate(pathname, 'uk');
+const enPath = getAlternate(pathname, 'en');
+const canonicalOrigin = 'https://neurica.net';
+
+// og:image вимагає ~1.91:1 — обкладинки за напрямками мають різні
+// пропорції (§2.2). Кропимо по центру під конкретний розмір на
+// збірці замість вимоги окремого og-файлу на об'єкт (§2.4).
+const ogImagePath =
+  typeof image === 'string'
+    ? image
+    : (await getImage({ src: image, width: 1200, height: 630, format: 'jpg', fit: 'cover' })).src;
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <link rel="canonical" href={`${canonicalOrigin}${pathname}`} />
+    <link rel="alternate" hreflang="uk" href={`${canonicalOrigin}${ukPath}`} />
+    <link rel="alternate" hreflang="en" href={`${canonicalOrigin}${enPath}`} />
+    <link rel="alternate" hreflang="x-default" href={`${canonicalOrigin}${ukPath}`} />
+
+    <meta property="og:locale" content={locale === 'uk' ? 'uk_UA' : 'en_US'} />
+    <meta property="og:locale:alternate" content={locale === 'uk' ? 'en_US' : 'uk_UA'} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:image" content={`${canonicalOrigin}${ogImagePath}`} />
+    <meta property="og:url" content={`${canonicalOrigin}${pathname}`} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Montserrat:wght@300;400;600;700;900&subset=cyrillic,cyrillic-ext,latin&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

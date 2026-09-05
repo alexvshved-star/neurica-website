@@ -1,0 +1,65 @@
+---
+// EDITORIAL — тільки проза, центрована: маніфест, заявний текст, не
+// довідка (docs/02-design-system.md, «Центрування»). Без cover у
+// тілі, обкладинка вже відпрацювала як картка (розділ 3.5 IA-брифу)
+// — придушення cover для цього типу відбувається в WorkDetailView.
+// Міра тут локальна ≈560px, не --width-reading (680px, той токен
+// не чіпається) — CaseTemplate/PrototypeTemplate лишаються на ньому,
+// ліворуч. WorkDetailView центрує заголовок/pager навколо цього ж
+// шаблону через data-align="center" — одна вісь на всю сторінку,
+// не тільки цей блок.
+interface Props {
+  body: string[];
+}
+
+const { body } = Astro.props;
+
+// Рендер body — плоский текст (WorkDetailView просто ділить на
+// абзаци), markdown-парсера в каркасі немає. LIVE у прозі — термін
+// таксономії, не звичайне слово (правило двох регістрів,
+// docs/02-design-system.md): виділяємо тільки цей літерал у mono,
+// не переписуючи весь конвеєр рендеру.
+const LIVE = /\bLIVE\b/g;
+function splitLive(text: string) {
+  return text.split(LIVE);
+}
+---
+
+<article class="editorial-template">
+  {body.map((p) => {
+    const parts = splitLive(p);
+    return (
+      <p>
+        {parts.map((part, i) => (
+          <>
+            {part}
+            {i < parts.length - 1 && <span class="meta editorial-template__live">LIVE</span>}
+          </>
+        ))}
+      </p>
+    );
+  })}
+</article>
+
+<style>
+  .editorial-template {
+    max-width: 560px;
+    margin-inline: auto;
+    text-align: center;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  .editorial-template > * + * {
+    margin-top: var(--space-4);
+  }
+
+  /* .meta несе --type-metadata (0.6875rem) — розмір карткових
+     метаданих, не body-прози (1rem); інлайн усередині речення це
+     виглядало помітно дрібнішим за сусідній текст (перевірено
+     рендером). Гарнітура/регістр/розрядка лишаються з .meta,
+     кегль — власний, ближче до body. */
+  .editorial-template__live {
+    font-size: 0.85em;
+  }
+</style>

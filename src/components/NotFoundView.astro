@@ -1,0 +1,58 @@
+---
+import Base from '@/layouts/Base.astro';
+import Nav from '@/components/Nav.astro';
+import Footer from '@/components/Footer.astro';
+import { t, type Locale } from '@/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const home = locale === 'uk' ? '/' : '/en/';
+const workHref = locale === 'uk' ? '/work' : '/en/work';
+---
+
+<Base locale={locale} title={t(locale, 'notFound.title')}>
+  <Nav locale={locale} />
+  <main>
+    <div class="not-found-content">
+      <h1>{t(locale, 'notFound.title')}</h1>
+      <p>{t(locale, 'notFound.body')}</p>
+      <p class="not-found__links mono">
+        <a href={home}>{t(locale, 'notFound.backHome')}</a>
+        <a href={workHref}>{t(locale, 'work.backToWork')}</a>
+      </p>
+    </div>
+  </main>
+  <Footer locale={locale} />
+</Base>
+
+<style>
+  main {
+    padding: var(--section-gap) var(--grid-margin);
+  }
+
+  /* Центрування — наскрізне для всієї прози сайту
+     (docs/02-design-system.md, «Центрування»): міра локальна 560px,
+     не --width-reading. Окремий внутрішній блок, не `main` сам —
+     інакше horizontal padding `main` віднімається ще раз усередині
+     вже звуженої 560px колонки. */
+  .not-found-content {
+    max-width: 560px;
+    margin-inline: auto;
+    text-align: center;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  .not-found-content > * + * {
+    margin-top: var(--space-4);
+  }
+
+  .not-found__links {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-6);
+  }
+</style>

@@ -1,23 +1,31 @@
-name: Validate HTML
+name: Validate build
 
 on:
   push:
-    branches: [main]
+    branches: [claude/neurica-eonyx-relaunch-5e3glx]
   pull_request:
-    branches: [main]
+    branches: [claude/neurica-eonyx-relaunch-5e3glx]
 
 jobs:
-  validate:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version-file: '.nvmrc'
+          cache: 'npm'
 
-      - name: Install HTMLHint
-        run: npm install -g htmlhint
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Lint HTML files
-        run: htmlhint --config .htmlhintrc "*.html"
+      - name: Build
+        run: npm run build
+
+      # §1.3 content-prep брифу, рішення 023 — окремий, не блокуючий крок.
+      # Зовнішній збій ендпоінта не повинен зупиняти збірку сайту, але
+      # має лишатись видимим у прогоні CI.
+      - name: Check LIVE/DEMO endpoint availability (non-blocking)
+        run: node scripts/check-endpoints.mjs
+        continue-on-error: true

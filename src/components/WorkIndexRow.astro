@@ -1,0 +1,119 @@
+---
+import { Picture } from 'astro:assets';
+import { type Locale } from '@/i18n';
+import { renderableStatus } from '@/lib/validate';
+import type { WorkEntry } from '@/content.config';
+
+// Рядок /work (design-brief §1) — окремий компонент, не WorkCard
+// compact: /archive лишається на WorkCard `compact` без змін цим
+// кроком, тож спільна CSS-зміна тут нічим не ризикує там.
+
+interface Props {
+  entry: WorkEntry;
+  locale: Locale;
+}
+
+const { entry, locale } = Astro.props;
+const translation = entry.translations[locale];
+if (!translation) {
+  throw new Error(`WorkIndexRow: ${entry.slug} не має перекладу для ${locale} (мало впасти на 5.7 раніше)`);
+}
+
+const href = locale === 'uk' ? `/work/${entry.slug}` : `/en/work/${entry.slug}`;
+const status = renderableStatus(entry.status);
+const statusClass = entry.status === 'LIVE'
+  ? 'meta--live'
+  : entry.status === 'FROZEN' || entry.status === 'ARCHIVE'
+    ? 'meta--frozen'
+    : 'meta--status';
+---
+
+<a class="work-row" href={href} data-direction={entry.art_direction.toLowerCase()}>
+  <Picture
+    class="work-row__thumb"
+    src={entry.cover}
+    alt=""
+    formats={['avif', 'webp']}
+    widths={[88, 176]}
+    sizes="88px"
+    loading="lazy"
+  />
+  <div class="work-row__body">
+    <p class="meta work-row__type">
+      {entry.type.replace('_', ' ')}{status && <span class={`meta ${statusClass}`}> · {status}</span>}
+    </p>
+    <h2 class="work-row__title">{translation.title}</h2>
+    <p class="work-row__summary mono">{translation.summary}</p>
+  </div>
+  <p class="meta work-row__year">{entry.year}</p>
+</a>
+
+<style>
+  /* Вузький список (design-brief §1) — рядок метаданих, не картка:
+     мініатюра, тонка лінія-розділювач, без повноширинних navy-смуг.
+     object-fit:cover на маленькому боксі — навмисно не той самий
+     --image-ratio, що на картках стрічки: тут однорідний технічний
+     розмір для всіх напрямків (72×54/88×64), не варіація пропорції
+     (та лишається виключно карткам стрічки й обкладинці об'єкта). */
+  .work-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-3) 0;
+    border-bottom: var(--rule-hairline) solid var(--color-rule);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .work-row:first-child {
+    border-top: var(--rule-hairline) solid var(--color-rule);
+  }
+
+  .work-row :global(.work-row__thumb) {
+    flex-shrink: 0;
+    display: block;
+    width: 72px;
+    height: 54px;
+    object-fit: cover;
+    filter: var(--image-filter, none);
+  }
+
+  @media (min-width: 768px) {
+    .work-row :global(.work-row__thumb) {
+      width: 88px;
+      height: 64px;
+    }
+  }
+
+  /* min-width:0 — без цього flex-дитина не звужується нижче
+     контенту, text-overflow на summary нижче не спрацював би. */
+  .work-row__body {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .work-row__type {
+    margin-bottom: var(--space-1);
+  }
+
+  .work-row__title {
+    font-family: var(--font-display);
+    font-weight: var(--weight-h2);
+    font-size: var(--type-lead);
+    line-height: var(--leading-heading);
+  }
+
+  /* Один рядок, обрізати — не переносити (design-brief §1). */
+  .work-row__summary {
+    margin-top: var(--space-1);
+    font-size: var(--type-mono);
+    color: var(--color-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .work-row__year {
+    flex-shrink: 0;
+  }
+</style>

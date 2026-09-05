@@ -1,0 +1,23 @@
+type: CASE
+status: STATIC
+art_direction: MATERIAL
+published: 2026-08-12
+cover: ./cover.jpg
+context: ALTACO
+data_mode: SANITIZED
+data_snapshot_date: 2026-08-12
+source_repo: altaco-platform
+data_fields:
+  - name
+  - manufacturer
+  - collection
+  - format
+  - finish
+  - photo
+  - availability
+feature: true
+media:
+  - id: catalog
+    src: ./catalog-static.jpg
+  - id: material
+    src: ./material-static.jpg

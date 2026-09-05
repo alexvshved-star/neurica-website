@@ -1,0 +1,237 @@
+---
+import { Picture } from 'astro:assets';
+import Base from '@/layouts/Base.astro';
+import Nav from '@/components/Nav.astro';
+import Footer from '@/components/Footer.astro';
+import BrandMark, { type BrandMarkName } from '@/components/BrandMark.astro';
+import CaseTemplate from '@/components/work-templates/CaseTemplate.astro';
+import PrototypeTemplate from '@/components/work-templates/PrototypeTemplate.astro';
+import VisualStudyTemplate from '@/components/work-templates/VisualStudyTemplate.astro';
+import EditorialTemplate from '@/components/work-templates/EditorialTemplate.astro';
+import { t, type Locale } from '@/i18n';
+import { renderableStatus } from '@/lib/validate';
+import type { WorkEntry } from '@/content.config';
+
+interface Props {
+  entry: WorkEntry;
+  locale: Locale;
+  prevEntry: WorkEntry | null;
+  nextEntry: WorkEntry | null;
+}
+
+const { entry, locale, prevEntry, nextEntry } = Astro.props;
+const translation = entry.translations[locale];
+if (!translation) {
+  throw new Error(`WorkDetailView: ${entry.slug} не має перекладу для ${locale}`);
+}
+
+const status = renderableStatus(entry.status);
+const metaLine = [entry.type.replace('_', ' '), status, String(entry.year)].filter(Boolean);
+
+// Мінімальний рендер body: абзаци, розділені порожнім рядком.
+// Повноцінний markdown-рендеринг — поза межами каркасу.
+const body = translation.body ? translation.body.split(/\n\s*\n/) : [];
+
+// EDITORIAL не показує cover у тілі — обкладинка вже відпрацювала
+// як картка в стрічці й у og:image (розділ 3.5 IA-брифу).
+// Каталог ALTACO починається з макетів без декоративної обкладинки.
+const showCover = entry.type !== 'EDITORIAL' && entry.slug !== 'altaco-catalog';
+
+// Центрування — наскрізне для всієї прози сайту (docs/02-design-system.md,
+// «Центрування»): усі типи об'єкта центруються однаково, /work і
+// /archive (переліки карток, не проза) не зачіпаються. Header і
+// pager центруються тут, кожен шаблон центрує власний вміст сам.
+
+// Усі summary центруються; формули зі стрілками зберігають mono.
+const isFormulaSummary = translation.summary.includes('→');
+
+// Знак контексту — мапа context → BrandMark, не хардком під ALTACO:
+// додати EONYX пізніше означає додати рядок сюди, не правити шаблон.
+// EXTERNAL/INTERNAL без знака — чужого бренду для показу нема
+// (docs/02-design-system.md, «Чужі знаки»).
+const CONTEXT_MARKS: Partial<Record<NonNullable<WorkEntry['context']>, BrandMarkName>> = {
+  ALTACO: 'altaco-wordmark',
+};
+const contextMark = entry.context ? CONTEXT_MARKS[entry.context] : undefined;
+
+const workHref = locale === 'uk' ? '/work' : '/en/work';
+const slugHref = (slug: string) => (locale === 'uk' ? `/work/${slug}` : `/en/work/${slug}`);
+---
+
+<Base
+  locale={locale}
+  title={translation.title}
+  description={translation.summary}
+  image={entry.cover}
+  ogType="article"
+>
+  <Nav locale={locale} />
+  <main data-direction={entry.art_direction.toLowerCase()}>
+    <header class="work-detail__header">
+      <p class="meta">
+        {metaLine[0]}
+        {metaLine.slice(1).map((part) => <span class="meta meta--status"> · {part}</span>)}
+      </p>
+      {contextMark && (
+        <p class="work-detail__context">
+          <BrandMark name={contextMark} class="work-detail__context-mark" />
+          <span class="sr-only">{entry.context}</span>
+        </p>
+      )}
+      <h1>{translation.title}</h1>
+      <p class={`work-detail__summary${isFormulaSummary ? ' mono' : ''}`}>
+        {translation.summary}
+      </p>
+      {translation.tags && translation.tags.length > 0 && (
+        <ul class="work-detail__tags mono">
+          {translation.tags.map((tag) => <li>{tag}</li>)}
+        </ul>
+      )}
+    </header>
+
+    {showCover && (
+      <Picture
+        class="work-detail__cover"
+        src={entry.cover}
+        alt=""
+        formats={['avif', 'webp']}
+        widths={[600, 1200, 1800]}
+        sizes="(min-width: 1200px) 1200px, 100vw"
+        loading="eager"
+      />
+    )}
+
+    <div class="work-detail__body">
+      {entry.type === 'CASE' && <CaseTemplate entry={entry} locale={locale} body={body} />}
+      {(entry.type === 'PROTOTYPE' || entry.type === 'TOOL' || entry.type === 'EXPERIMENT') && (
+        <PrototypeTemplate entry={entry} locale={locale} body={body} />
+      )}
+      {entry.type === 'VISUAL_STUDY' && <VisualStudyTemplate entry={entry} locale={locale} body={body} />}
+      {entry.type === 'EDITORIAL' && <EditorialTemplate body={body} />}
+    </div>
+
+    <nav class="work-detail__pager mono" aria-label="pagination">
+      {prevEntry && (
+        <a href={slugHref(prevEntry.slug)}>
+          ← {t(locale, 'work.prev')}: {prevEntry.translations[locale]?.title}
+        </a>
+      )}
+      {nextEntry && (
+        <a href={slugHref(nextEntry.slug)}>
+          {t(locale, 'work.next')}: {nextEntry.translations[locale]?.title} →
+        </a>
+      )}
+      <a href={workHref}>{t(locale, 'work.backToWork')}</a>
+    </nav>
+  </main>
+  <Footer locale={locale} />
+</Base>
+
+<style>
+  main {
+    padding: var(--section-gap) var(--grid-margin);
+  }
+
+  main > * + * {
+    margin-top: var(--space-6);
+  }
+
+  /* Центрування — наскрізне для всієї прози сайту, одна вісь на всю
+     сторінку: header звужується до тієї самої міри, що й центрований
+     блок контенту (560px, локальне значення шаблонів, не
+     --width-reading — той токен лишається джерелом істини, просто
+     без активних споживачів на цьому кроці), і отримує
+     margin-inline: auto — інакше текст центрується всередині лівого
+     стовпця, а не сторінки. Cover не чіпається — розкладка зображень
+     поза межами правила центрування. */
+  .work-detail__header {
+    max-width: 560px;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .work-detail__header > * + * {
+    margin-top: var(--space-3);
+  }
+
+  .work-detail__summary {
+    color: var(--color-muted);
+    text-align: center;
+  }
+
+  /* Знак контексту — позначка, не заголовок: висота = висота рядка
+     метаданих (--type-metadata), а не окремий вибраний розмір. При
+     10.87:1 це дає ширину ≈120px на десктопі (виміряно: 0.6875rem
+     × 10.87 ≈ 119.6px). currentColor — успадковує --color-muted,
+     контраст проти всіх чотирьох art_direction — той самий токен,
+     що вже використовує .work-detail__summary/.work-detail__tags
+     на цих самих фонах. */
+  .work-detail__context {
+    font-size: var(--type-metadata);
+    color: var(--color-muted);
+  }
+
+  /* :global — BrandMark інлайнить <svg> через set:html в іншому
+     компоненті, скоуп-атрибут Astro на нього не потрапляє. */
+  .work-detail__context :global(.work-detail__context-mark) {
+    display: inline-block;
+    height: 1em;
+    width: auto;
+    vertical-align: middle;
+  }
+
+  .work-detail__tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3);
+    color: var(--color-muted);
+  }
+
+  /* Обкладинка обмежена до тієї самої сторони, що й сітка 2×2 на
+     головній, узятої як одне ціле (два блоки + проміжок), по обох
+     осях — квадрат, не плита на всю ширину контейнера (крок
+     design-brief §2.2 залишається щодо object-fit:cover/без
+     літербоксингу, але max-width і aspect-ratio 1/1 замінили
+     попередні width:100%/var(--image-ratio)). Спільне для всіх
+     чотирьох сторінок об'єктів — узагальнено з кроку, де це саме
+     правило перевірили тільки на agent-workflow (тимчасовий
+     :has(.work-detail__header--agent-workflow)-варіант прибрано,
+     жодного слаг-специфічного if для розміру обкладинки нема).
+     Спільного токена для цього розміру нема (HomeView.astro
+     .feed__grid задає його літералом), тому літерали `clamp(600px,
+     42vw, 900px)` / `min(calc(280px * 2 + 20px), 92vw)` узяті
+     буквально звідти, не введені заново. aspect-ratio:1/1 замінює
+     var(--image-ratio, 16/9): усі чотири вихідні обкладинки — точні
+     квадрати 2400×2400 (перевірено перед правкою), тому 1/1 нічого
+     не кропить понад те, що кропило б попереднє per-напрямкове
+     значення (4/3 MONOCHROME, 3/4 ORGANIC) — навпаки, прибирає кроп
+     скрізь. margin-inline:auto центрує звужену плиту на тій самій
+     осі, що й header (560px). */
+  main :global(.work-detail__cover) {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: clamp(600px, 42vw, 900px);
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    margin-inline: auto;
+  }
+
+  @media (max-width: 768px) {
+    main :global(.work-detail__cover) {
+      max-width: min(calc(280px * 2 + 20px), 92vw);
+    }
+  }
+
+  .work-detail__pager {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-6);
+    padding-top: var(--space-6);
+    border-top: var(--rule-hairline) solid var(--color-rule);
+    text-align: center;
+  }
+
+</style>

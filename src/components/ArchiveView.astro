@@ -1,0 +1,44 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '@/layouts/Base.astro';
+import Nav from '@/components/Nav.astro';
+import Footer from '@/components/Footer.astro';
+import WorkCard from '@/components/WorkCard.astro';
+import { t, type Locale } from '@/i18n';
+import { archiveOnly, sortByPublishedDesc } from '@/lib/validate';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const all = (await getCollection('work')).map((e) => e.data);
+// Тільки ARCHIVE (рішення 018) — FROZEN лишається в /work.
+const items = sortByPublishedDesc(archiveOnly(all));
+---
+
+<Base locale={locale} title={t(locale, 'archive.title')}>
+  <Nav locale={locale} />
+  <main>
+    <h1>{t(locale, 'archive.title')}</h1>
+    <section class="work-index">
+      {items.length > 0
+        ? items.map((entry) => <WorkCard entry={entry} locale={locale} compact />)
+        : <p class="mono">{t(locale, 'archive.empty')}</p>}
+    </section>
+  </main>
+  <Footer locale={locale} />
+</Base>
+
+<style>
+  main {
+    padding: var(--section-gap) var(--grid-margin) 0;
+  }
+
+  .work-index {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rule-hairline);
+    padding: var(--space-8) 0 var(--section-gap);
+  }
+</style>

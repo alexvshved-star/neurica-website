@@ -1,0 +1,144 @@
+---
+import { Picture } from 'astro:assets';
+import { type Locale } from '@/i18n';
+import { renderableStatus, cardScale } from '@/lib/validate';
+import type { WorkEntry } from '@/content.config';
+
+interface Props {
+  entry: WorkEntry;
+  locale: Locale;
+  /** /work, /archive — компактний однорідний рядок, без cover і без
+   * масштабної варіації (розділ 2 IA-брифу: повнота важливіша за акцент). */
+  compact?: boolean;
+  /** Перший екран — без lazy (§2.1 content-prep брифу). */
+  priority?: boolean;
+}
+
+const { entry, locale, compact = false, priority = false } = Astro.props;
+const translation = entry.translations[locale];
+if (!translation) {
+  throw new Error(`WorkCard: ${entry.slug} не має перекладу для ${locale} (мало впасти на 5.7 раніше)`);
+}
+
+const href = locale === 'uk' ? `/work/${entry.slug}` : `/en/work/${entry.slug}`;
+const status = renderableStatus(entry.status);
+const statusClass = entry.status === 'LIVE'
+  ? 'meta--live'
+  : entry.status === 'FROZEN' || entry.status === 'ARCHIVE'
+    ? 'meta--frozen'
+    : 'meta--status';
+
+const scale = cardScale(entry);
+---
+
+<a
+  class="work-card"
+  class:list={{ 'work-card--compact': compact }}
+  href={href}
+  data-direction={entry.art_direction.toLowerCase()}
+  data-scale={compact ? undefined : scale}
+>
+  {!compact && (
+    <Picture
+      class="work-card__cover"
+      src={entry.cover}
+      alt=""
+      formats={['avif', 'webp']}
+      widths={[400, 800, 1200]}
+      sizes="(min-width: 768px) 50vw, 100vw"
+      loading={priority ? 'eager' : 'lazy'}
+    />
+  )}
+  <div class="work-card__body">
+    <p class="meta work-card__type">
+      {entry.type.replace('_', ' ')}{status && <span class={`meta ${statusClass}`}> · {status}</span>}
+    </p>
+    <h2 class="work-card__title">{translation.title}</h2>
+    <p class="work-card__summary mono">{translation.summary}</p>
+  </div>
+</a>
+
+<style>
+  /* Картка — це зображення, а не зображення в оправі (крок 05b):
+     border лишається на самій `.work-card` (тонка лінія на межі
+     кадру, не товста рамка), але padding (--card-density) переїхав
+     на `.work-card__body` — так `--color-surface` лишається видимою
+     тільки під підписом (TYPE/заголовок/summary), а не навколо
+     фото. Компактний список (/work, /archive) не рендерить cover
+     узагалі — там `.work-card--compact` зберігає точний попередній
+     padding через окремий override на body, нижче. */
+  .work-card {
+    display: block;
+    border: var(--card-border, var(--rule-hairline) solid var(--color-rule));
+    background: var(--color-surface);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .work-card--compact {
+    padding: var(--space-4);
+  }
+
+  .work-card :global(.work-card__cover) {
+    display: block;
+    aspect-ratio: var(--image-ratio, 16 / 9);
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    filter: var(--image-filter, none);
+  }
+
+  /* Свідомий object-position для портретних обкладинок (design-
+     brief §2.1) — ORGANIC, єдиний портретний напрям (3:4). Сьогодні
+     кроп what-neurica-is (1800×2400) точно збігається з
+     --image-ratio, тож ефекту не видно (нема що кропити) — це
+     страховка на майбутнє, якщо наступна ORGANIC-обкладинка не буде
+     кадрована так само точно: композиція жанру (докладніше —
+     docs/07-content-spec.md) розташовує сюжет праворуч у кадрі. */
+  .work-card[data-direction='organic'] :global(.work-card__cover) {
+    object-position: right center;
+  }
+
+  .work-card__body {
+    padding: var(--card-density, var(--space-8));
+  }
+
+  /* Компакт: padding уже є на `.work-card--compact` (вище, той самий
+     var(--space-4), що й до цього кроку) — тут обнуляється, щоб не
+     подвоїтись. */
+  .work-card--compact .work-card__body {
+    padding: 0;
+  }
+
+  .work-card__type {
+    margin-bottom: var(--space-2);
+  }
+
+  .work-card--compact .work-card__type {
+    margin-bottom: var(--space-1);
+  }
+
+  .work-card__title {
+    font-family: var(--font-display);
+    font-weight: var(--weight-h2);
+    font-size: var(--type-h2);
+    line-height: var(--leading-heading);
+    margin-bottom: var(--space-3);
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  .work-card--compact .work-card__title {
+    font-size: var(--type-lead);
+    margin-bottom: 0;
+  }
+
+  .work-card__summary {
+    font-size: var(--type-mono);
+    color: var(--color-muted);
+  }
+
+  .work-card--compact .work-card__summary {
+    display: none;
+  }
+</style>

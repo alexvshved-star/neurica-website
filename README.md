@@ -1,34 +1,49 @@
-# Neurica
+# neurica.net
 
-AI чат-бот психологічної підтримки при ПТСР
+Публічна експериментальна поверхня EONYX: прототипи, live demo,
+візуальні дослідження, кейси. Жива лабораторія, не другий
+production-контур — деталі в [`docs/00-what-neurica-is.md`](./docs/00-what-neurica-is.md).
 
-## Про проєкт
+## Як запустити
 
-Neurica — це інноваційний AI чат-бот, розроблений для надання психологічної підтримки людям, які страждають від посттравматичного стресового розладу (ПТСР). Проєкт поєднує передові технології штучного інтелекту з психологічними методиками для забезпечення доступної та конфіденційної підтримки.
+```bash
+npm install
+npm run dev       # локальний сервер розробки
+npm run build     # статична збірка в dist/
+npm run preview   # переглянути dist/ локально
+```
 
-## Особливості
+Потрібен Node з `.nvmrc` (LTS).
 
-- Цілодобова доступність підтримки
-- Конфіденційність розмов
-- Спеціалізована допомога при ПТСР
-- Зрозумілий та емпатичний інтерфейс
+## Як додати об'єкт
 
-## Технології
+Коротко: `src/content/work/<slug>/` з `index.yaml` (структурні поля)
+і обов'язковими `uk.md` + `en.md` (переклади). Збірка падає з
+поясненням, якщо порушено одне з правил моделі контенту.
 
-Статичний вебсайт на базі HTML/CSS/JavaScript
+Повна інструкція — [`docs/03-publishing.md`](./docs/03-publishing.md),
+локалізація — [`docs/03a-localisation.md`](./docs/03a-localisation.md).
 
-## Розгортання
+## Документація
 
-Сайт можна розгорнути на будь-якому хостингу для статичних сайтів:
-- GitHub Pages
-- Netlify
-- Vercel
-- Cloudflare Pages
+- [`docs/00-what-neurica-is.md`](./docs/00-what-neurica-is.md) —
+  функція, три поверхні EONYX, жорстка межа
+- [`docs/01-content-model.md`](./docs/01-content-model.md) — модель
+  контенту v0.1 (джерело істини)
+- [`docs/02-design-system.md`](./docs/02-design-system.md) —
+  дизайн-токени, invariant/directional
+- [`docs/03-publishing.md`](./docs/03-publishing.md) — публікація
+  об'єкта
+- [`docs/03a-localisation.md`](./docs/03a-localisation.md) —
+  локалізація
+- [`docs/04-architecture.md`](./docs/04-architecture.md) — стек,
+  збірка, Netlify
+- [`docs/05-decisions.md`](./docs/05-decisions.md) — журнал рішень
+- [`docs/06-information-architecture.md`](./docs/06-information-architecture.md) —
+  ролі сторінок, шаблони об'єкта, масштаб картки
+- [`docs/07-content-spec.md`](./docs/07-content-spec.md) —
+  специфікація для автора: файли, розміри зображень, межі довжини
 
 ## Ліцензія
 
-Всі права захищені © 2026 Neurica
-
-## Контакти
-
-Вебсайт: https://neurica.net
+Всі права захищені © 2026 EONYX
