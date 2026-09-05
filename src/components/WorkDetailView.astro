@@ -45,6 +45,7 @@ const showCover = entry.type !== 'EDITORIAL';
 // моноширинний рядок читається як зламаний код (розділ 3 брифу
 // центрування). Звичайне речення в summary йде за правилом шаблону.
 const isFormulaSummary = translation.summary.includes('→');
+const isAgentWorkflow = entry.slug === 'agent-workflow';
 
 // Знак контексту — мапа context → BrandMark, не хардком під ALTACO:
 // додати EONYX пізніше означає додати рядок сюди, не правити шаблон.
@@ -68,7 +69,7 @@ const slugHref = (slug: string) => (locale === 'uk' ? `/work/${slug}` : `/en/wor
 >
   <Nav locale={locale} />
   <main data-direction={entry.art_direction.toLowerCase()}>
-    <header class="work-detail__header">
+    <header class:list={["work-detail__header", { "work-detail__header--agent-workflow": isAgentWorkflow }]}>
       <p class="meta">
         {metaLine[0]}
         {metaLine.slice(1).map((part) => <span class="meta meta--status"> · {part}</span>)}
@@ -79,7 +80,7 @@ const slugHref = (slug: string) => (locale === 'uk' ? `/work/${slug}` : `/en/wor
           <span class="sr-only">{entry.context}</span>
         </p>
       )}
-      <h1>{translation.title}</h1>
+      <h1 class:list={{ "mono-label": isAgentWorkflow }}>{translation.title}</h1>
       <p class={`work-detail__summary${isFormulaSummary ? ' mono work-detail__summary--formula' : ''}`}>
         {translation.summary}
       </p>
@@ -220,5 +221,15 @@ const slugHref = (slug: string) => (locale === 'uk' ? `/work/${slug}` : `/en/wor
      ні .mono, ні цього класу — йде за правилом шаблону. */
   .work-detail__summary--formula {
     text-align: left;
+  }
+  /* Agent workflow: user-requested navigation typography, with the
+     existing heading size retained. Its formula is centred as an
+     explicit exception to the default left-aligned formula style. */
+  .work-detail__header--agent-workflow h1 {
+    font-size: var(--type-h1);
+  }
+
+  .work-detail__header--agent-workflow .work-detail__summary {
+    text-align: center;
   }
 </style>
