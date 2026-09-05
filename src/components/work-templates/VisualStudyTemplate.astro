@@ -30,7 +30,7 @@ const localizedMedia = entry.translations[locale]?.media ?? {};
               alt={meta?.alt ?? ''}
               formats={['avif', 'webp']}
               widths={[600, 1200, 1800]}
-              sizes="100vw"
+              sizes="(max-width: 768px) 92vw, (min-width: 2143px) 900px, (min-width: 1429px) 42vw, 600px"
               loading={i === 0 ? 'eager' : 'lazy'}
             />
             {meta?.caption && <figcaption class="small">{meta.caption}</figcaption>}
@@ -51,15 +51,29 @@ const localizedMedia = entry.translations[locale]?.media ?? {};
     gap: var(--space-6);
   }
 
+  /* Match the first cover on desktop and mobile. */
+  .visual-study-template__sequence figure {
+    width: 100%;
+    max-width: clamp(600px, 42vw, 900px);
+    margin-inline: auto;
+  }
+
+  @media (max-width: 768px) {
+    .visual-study-template__sequence figure {
+      max-width: min(calc(280px * 2 + 20px), 92vw);
+    }
+  }
+
   .visual-study-template__sequence :global(img) {
     display: block;
     width: 100%;
     height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center;
   }
 
-  /* Підпис центрований — VISUAL_STUDY завжди центрований шаблон
-     (розділ 2 брифу центрування); саме зображення над підписом
-     лишається на всю ширину, розкладку не чіпаємо. */
+  /* Підпис центрується на тій самій осі, що й зображення. */
   .visual-study-template__sequence figcaption {
     margin-top: var(--space-2);
     color: var(--color-muted);

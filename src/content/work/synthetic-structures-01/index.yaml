@@ -6,6 +6,6 @@ cover: ./cover.jpg
 data_mode: NONE
 media:
   - id: m1
-    src: ./01.placeholder.jpg
+    src: ./pexels-paolo-tognoni-14028027.jpg
   - id: m2
-    src: ./02.placeholder.jpg
+    src: ./alex-quezada-QuM-p-z4ARk-unsplash.jpg

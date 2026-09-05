@@ -4,6 +4,6 @@ summary: generative form study
 tags:
   - visual study
 media:
-  m1: { alt: "Placeholder — image 1" }
-  m2: { alt: "Placeholder — image 2" }
+  m1: { alt: "Marble female sculptures against a black background" }
+  m2: { alt: "Close-up of a bronze sculpture face with green patina" }
 ---
