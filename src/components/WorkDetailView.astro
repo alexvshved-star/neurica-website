@@ -34,7 +34,8 @@ const body = translation.body ? translation.body.split(/\n\s*\n/) : [];
 
 // EDITORIAL не показує cover у тілі — обкладинка вже відпрацювала
 // як картка в стрічці й у og:image (розділ 3.5 IA-брифу).
-const showCover = entry.type !== 'EDITORIAL';
+// Каталог ALTACO починається з макетів без декоративної обкладинки.
+const showCover = entry.type !== 'EDITORIAL' && entry.slug !== 'altaco-catalog';
 
 // Центрування — наскрізне для всієї прози сайту (docs/02-design-system.md,
 // «Центрування»): усі типи об'єкта центруються однаково, /work і
