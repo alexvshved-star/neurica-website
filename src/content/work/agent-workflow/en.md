@@ -1,5 +1,5 @@
 ---
-title: "Consulting across two catalogs — verified-source answer or refusal"
+title: Agent Workflow
 summary: task → agent chain → review → output
 tags:
   - agents
