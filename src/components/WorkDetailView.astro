@@ -189,42 +189,38 @@ const slugHref = (slug: string) => (locale === 'uk' ? `/work/${slug}` : `/en/wor
     color: var(--color-muted);
   }
 
-  /* Плита на всю ширину контейнера (крок design-brief §2.2) — раніше
-     max-width: var(--width-content) (1200px) лишало порожній navy
-     праворуч, коли main ширший (без width:100% картинка трималась
-     власної натуральної ширини). aspect-ratio + object-fit:cover —
-     той самий рецепт, що й у WorkCard.astro для карток стрічки:
-     кроп без літербоксингу, порожньої поверхні всередині рамки
-     кадру нема. */
+  /* Обкладинка обмежена до тієї самої сторони, що й сітка 2×2 на
+     головній, узятої як одне ціле (два блоки + проміжок), по обох
+     осях — квадрат, не плита на всю ширину контейнера (крок
+     design-brief §2.2 залишається щодо object-fit:cover/без
+     літербоксингу, але max-width і aspect-ratio 1/1 замінили
+     попередні width:100%/var(--image-ratio)). Спільне для всіх
+     чотирьох сторінок об'єктів — узагальнено з кроку, де це саме
+     правило перевірили тільки на agent-workflow (тимчасовий
+     :has(.work-detail__header--agent-workflow)-варіант прибрано,
+     жодного слаг-специфічного if для розміру обкладинки нема).
+     Спільного токена для цього розміру нема (HomeView.astro
+     .feed__grid задає його літералом), тому літерали `clamp(600px,
+     42vw, 900px)` / `min(calc(280px * 2 + 20px), 92vw)` узяті
+     буквально звідти, не введені заново. aspect-ratio:1/1 замінює
+     var(--image-ratio, 16/9): усі чотири вихідні обкладинки — точні
+     квадрати 2400×2400 (перевірено перед правкою), тому 1/1 нічого
+     не кропить понад те, що кропило б попереднє per-напрямкове
+     значення (4/3 MONOCHROME, 3/4 ORGANIC) — навпаки, прибирає кроп
+     скрізь. margin-inline:auto центрує звужену плиту на тій самій
+     осі, що й header (560px). */
   main :global(.work-detail__cover) {
     display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: var(--image-ratio, 16 / 9);
-    object-fit: cover;
-  }
-
-  /* agent-workflow: обкладинка обмежена до тієї самої сторони, що
-     й сітка 2×2 на головній, узятої як одне ціле (два блоки +
-     проміжок), по обох осях — квадрат замість плити на всю
-     ширину. Спільного токена для цього розміру нема (HomeView.astro
-     .feed__grid задає його літералом), тому літерали `clamp(600px,
-     42vw, 900px)` / `min(calc(280px * 2 + 20px), 92vw)` узяті
-     буквально звідти, не введені заново. `:has()` посилається на
-     вже наявний клас .work-detail__header--agent-workflow (isAgentWorkflow
-     вище) — другого `if` за слагом не додано. Обкладинка agent-workflow
-     — 2400×2400, точний квадрат, тому aspect-ratio:1/1 не кропить
-     нічого понад те, що й так кропить спільне правило (MONOCHROME
-     4:3) — навпаки, прибирає кроп. margin-inline:auto центрує
-     звужену плиту на тій самій осі, що й header. */
-  main:has(.work-detail__header--agent-workflow) :global(.work-detail__cover) {
     max-width: clamp(600px, 42vw, 900px);
     aspect-ratio: 1 / 1;
+    object-fit: cover;
     margin-inline: auto;
   }
 
   @media (max-width: 768px) {
-    main:has(.work-detail__header--agent-workflow) :global(.work-detail__cover) {
+    main :global(.work-detail__cover) {
       max-width: min(calc(280px * 2 + 20px), 92vw);
     }
   }
