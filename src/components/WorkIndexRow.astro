@@ -42,7 +42,7 @@ const statusClass = entry.status === 'LIVE'
     <p class="meta work-row__type">
       {entry.type.replace('_', ' ')}{status && <span class={`meta ${statusClass}`}> · {status}</span>}
     </p>
-    <h2 class="work-row__title">{translation.title}</h2>
+    <h2 class="work-row__title mono-label">{translation.title}</h2>
     <p class="work-row__summary mono">{translation.summary}</p>
   </div>
   <p class="meta work-row__year">{entry.year}</p>
@@ -96,11 +96,13 @@ const statusClass = entry.status === 'LIVE'
     margin-bottom: var(--space-1);
   }
 
+  /* Titles share navigation typography through .mono-label. */
   .work-row__title {
-    font-family: var(--font-display);
-    font-weight: var(--weight-h2);
-    font-size: var(--type-lead);
     line-height: var(--leading-heading);
+    hyphens: none;
+    -webkit-hyphens: none;
+    overflow-wrap: normal;
+    word-break: normal;
   }
 
   /* Один рядок, обрізати — не переносити (design-brief §1). */
