@@ -1,8 +1,9 @@
 # neurica.net
 
-Публічна експериментальна поверхня EONYX: прототипи, live demo,
-візуальні дослідження, кейси. Жива лабораторія, не другий
-production-контур — деталі в [`docs/00-what-neurica-is.md`](./docs/00-what-neurica-is.md).
+Експериментальна поверхня EONYX: прототипи, візуальні дослідження,
+кейси та пілотні інструменти для реальної роботи бізнесу.
+Перший погоджений пілот — каталог ALTACO, КП і прайси.
+Поточна версія каталогу ще статична. Деталі в [`docs/00-what-neurica-is.md`](./docs/00-what-neurica-is.md).
 
 ## Як запустити
 
@@ -27,7 +28,7 @@ npm run preview   # переглянути dist/ локально
 ## Документація
 
 - [`docs/00-what-neurica-is.md`](./docs/00-what-neurica-is.md) —
-  функція, три поверхні EONYX, жорстка межа
+  функція, три поверхні EONYX, правила пілотів
 - [`docs/01-content-model.md`](./docs/01-content-model.md) — модель
   контенту v0.1 (джерело істини)
 - [`docs/02-design-system.md`](./docs/02-design-system.md) —
@@ -43,6 +44,8 @@ npm run preview   # переглянути dist/ локально
   ролі сторінок, шаблони об'єкта, масштаб картки
 - [`docs/07-content-spec.md`](./docs/07-content-spec.md) —
   специфікація для автора: файли, розміри зображень, межі довжини
+
+- [`docs/08-altaco-pilot.md`](./docs/08-altaco-pilot.md) — робочий пілот ALTACO та план реалізації
 
 ## Ліцензія
 
