@@ -128,6 +128,11 @@ function buildWorkSchema({ image }: SchemaContext) {
     // Єдине ручне поле масштабу картки (розділ 4 IA-брифу, рішення 021).
     // Решта масштабу виводиться з type/status — див. lib/validate.ts.
     feature: z.boolean().optional(),
+    // Явний прапорець показу обкладинки в тілі сторінки об'єкта —
+    // замінює слаг-умову (WorkDetailView.astro, докладніше — docs/
+    // 01-content-model.md). Відсутність поля = поточна поведінка:
+    // обкладинка показується для всіх типів, крім EDITORIAL.
+    show_cover: z.boolean().optional(),
   });
 
   const rawWorkSchema = structuralSchema.extend({

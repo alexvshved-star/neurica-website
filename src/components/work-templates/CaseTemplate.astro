@@ -8,6 +8,7 @@
 // центрується як блок (позиція на осі), не як текст усередині —
 // статус/опис/посилання лишаються по лівому краю в межах own box,
 // так природніше читається notice-панель.
+import { Picture } from 'astro:assets';
 import RuntimeNotice from '@/components/RuntimeNotice.astro';
 import type { Locale } from '@/i18n';
 import type { WorkEntry } from '@/content.config';
@@ -31,8 +32,14 @@ const { entry, locale, body } = Astro.props;
           <figure>
             <a href={media.src.src} target="_blank" rel="noopener noreferrer"
               aria-label={`${label?.alt ?? ''} — ${locale === 'uk' ? 'відкрити повний розмір' : 'open full size'}`}>
-              <img src={media.src.src} width={media.src.width} height={media.src.height}
-                alt={label?.alt ?? ''} loading="lazy" decoding="async" />
+              <Picture
+                src={media.src}
+                alt={label?.alt ?? ''}
+                formats={['avif', 'webp']}
+                widths={[600, 1200, 1800]}
+                sizes="(min-width: 964px) 900px, (min-width: 769px) calc(100vw - 64px), calc(100vw - 32px)"
+                loading="lazy"
+              />
             </a>
             {label?.caption && <figcaption class="small">{label.caption}</figcaption>}
           </figure>
@@ -59,7 +66,7 @@ const { entry, locale, body } = Astro.props;
 
   .case-template__gallery figure { margin: 0; }
   .case-template__gallery a { display: block; }
-  .case-template__gallery img {
+  .case-template__gallery :global(img) {
     display: block;
     width: 100%;
     height: auto;

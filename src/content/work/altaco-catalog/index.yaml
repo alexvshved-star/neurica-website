@@ -16,6 +16,7 @@ data_fields:
   - photo
   - availability
 feature: true
+show_cover: false
 media:
   - id: catalog
     src: ./catalog-static.jpg

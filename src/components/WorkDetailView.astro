@@ -33,9 +33,13 @@ const metaLine = [entry.type.replace('_', ' '), status, String(entry.year)].filt
 const body = translation.body ? translation.body.split(/\n\s*\n/) : [];
 
 // EDITORIAL не показує cover у тілі — обкладинка вже відпрацювала
-// як картка в стрічці й у og:image (розділ 3.5 IA-брифу).
-// Каталог ALTACO починається з макетів без декоративної обкладинки.
-const showCover = entry.type !== 'EDITORIAL' && entry.slug !== 'altaco-catalog';
+// як картка в стрічці й у og:image (розділ 3.5 IA-брифу) — це
+// правило безумовне, show_cover його не перекриває. Поза EDITORIAL
+// поле show_cover:false ховає обкладинку явно (index.yaml), замість
+// колишньої умови за slug — не data-driven через media[]: наявність
+// галереї сама собою обкладинку не ховає, це окреме рішення автора
+// об'єкта.
+const showCover = entry.type !== 'EDITORIAL' && entry.show_cover !== false;
 
 // Центрування — наскрізне для всієї прози сайту (docs/02-design-system.md,
 // «Центрування»): усі типи об'єкта центруються однаково, /work і
