@@ -29,6 +29,7 @@ const statusClass = entry.status === 'LIVE'
 ---
 
 <a class="work-row" href={href} data-direction={entry.art_direction.toLowerCase()}>
+  <span class="work-row__image">
   <Picture
     class="work-row__thumb"
     src={entry.cover}
@@ -38,6 +39,7 @@ const statusClass = entry.status === 'LIVE'
     sizes="88px"
     loading="lazy"
   />
+  </span>
   <div class="work-row__body">
     <p class="meta work-row__type">
       {entry.type.replace('_', ' ')}{status && <span class={`meta ${statusClass}`}> · {status}</span>}
@@ -69,17 +71,30 @@ const statusClass = entry.status === 'LIVE'
     border-top: var(--rule-hairline) solid var(--color-rule);
   }
 
-  .work-row :global(.work-row__thumb) {
-    flex-shrink: 0;
-    display: block;
+  /* Fix the flex item's size: Picture wraps img in a picture element. */
+  .work-row__image {
+    flex: 0 0 72px;
     width: 72px;
     height: 54px;
+  }
+
+  .work-row__image :global(picture) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .work-row :global(.work-row__thumb) {
+    display: block;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     filter: var(--image-filter, none);
   }
 
   @media (min-width: 768px) {
-    .work-row :global(.work-row__thumb) {
+    .work-row__image {
+      flex-basis: 88px;
       width: 88px;
       height: 64px;
     }
