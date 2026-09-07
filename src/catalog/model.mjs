@@ -47,7 +47,7 @@ export function normalizeStock(rows, manifest, importedAt, dataAsOf = null) {
       finish,finishPending:m.finishPending===true,lengthMm:dimensions[0],widthMm:dimensions[1],thicknessMm:dimensions[2],inStock:row[13]>0,
       priceM2Cents:pending?null:cents(row[16]),priceSlabCents:pending?null:cents(row[18]),pricePending:pending,photo:m.photo??null,reference:m.reference??null});
   }
-  return validateSnapshot({schemaVersion:1,importedAt,dataAsOf,sourceLabel:'ALTACO / Наявність',vat:'unconfirmed',products});
+  return validateSnapshot({schemaVersion:1,importedAt,dataAsOf,sourceLabel:'ALTACO / Наявність',vat:'included',products});
 }
 export function selectProducts(products, filters = {}) {
   const query = (filters.q || '').normalize('NFKC').toLocaleLowerCase().trim();

@@ -6,7 +6,7 @@ const {locale}=Astro.props;const uk=locale==='uk';
 ---
 <section class="selection" data-selection hidden aria-labelledby="selection-title">
  <h2 id="selection-title" class="mono-label">{uk?'Мій підбір матеріалів':'My material selection'}</h2>
- <p>{uk?'Попередній розрахунок за роздрібною ціною цілого слеба. ПДВ, доступну кількість і умови продажу потрібно підтвердити з ALTACO.':'Preliminary estimate at the retail price per whole slab. Confirm VAT, available quantities and sale terms with ALTACO.'}</p>
+ <p>{uk?'Попередній розрахунок за роздрібною ціною цілого слеба. Ціни з ПДВ. Доступну кількість і умови продажу потрібно підтвердити з ALTACO.':'Preliminary estimate at the retail price per whole slab. Prices include VAT. Confirm available quantities and sale terms with ALTACO.'}</p>
  <p class="selection-note">{uk?'Підбір діє на цій сторінці й очищується після її перезавантаження або переходу. Це ще не комерційна пропозиція.':'This selection stays on this page and clears on reload or navigation. It is not a commercial offer.'}</p>
  <ul data-selection-list>
  {products.filter(p=>p.kind!=='sample-slab').map(p=><li data-selection-id={p.id} hidden>
