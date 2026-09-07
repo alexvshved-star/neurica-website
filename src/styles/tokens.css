@@ -351,8 +351,7 @@
 
 .meta--status  { color: var(--color-text); }
 .meta--live    { color: var(--color-accent); }
-.meta--frozen,
-.meta--archive { color: var(--color-muted); }
+.meta--frozen  { color: var(--color-muted); }
 
 /* STATIC не має класу: за правилом 5.5 content model він
    не рендериться взагалі. */
