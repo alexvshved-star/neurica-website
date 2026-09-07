@@ -22,8 +22,8 @@ const {product:p,locale,index}=Astro.props;const l=labels(locale);const photo=ph
 </li>
 <style>
 .catalog-card{min-width:0}.catalog-card a{display:block;text-decoration:none;height:100%}.catalog-card a:focus-visible{outline:2px solid var(--brand-cyan);outline-offset:5px}
-.catalog-card__photo{aspect-ratio:1;overflow:hidden;background:rgba(255,255,255,.035);display:grid;place-items:center;color:var(--color-muted);text-align:center}
-.catalog-card__photo :global(picture){display:contents}.catalog-card__photo :global(img){width:100%;height:100%;object-fit:cover;transition:transform .2s}.catalog-card a:hover :global(img){transform:scale(1.025)}
+.catalog-card__photo{position:relative;aspect-ratio:1;overflow:hidden;background:rgba(255,255,255,.035);display:grid;place-items:center;color:var(--color-muted);text-align:center}
+.catalog-card__photo :global(picture){position:absolute;inset:0;display:block}.catalog-card__photo :global(source){display:none}.catalog-card__photo :global(img){width:100%;height:100%;object-fit:cover;transition:transform .2s}.catalog-card a:hover :global(img){transform:scale(1.025)}
 .catalog-card__type{color:var(--color-muted);font-size:11px;margin-top:16px}.catalog-card h2{color:var(--color-text);font-size:14px;line-height:1.5;letter-spacing:.04em;margin:4px 0;hyphens:none;overflow-wrap:anywhere}
 .catalog-card__variant,.catalog-card__format,.catalog-card__stock,.catalog-card__kind{font-size:11px;color:var(--color-muted)}
 .catalog-card__price{border-top:1px solid var(--color-rule);margin-top:12px;padding-top:12px;display:flex;justify-content:space-between;gap:8px;font-size:16px;font-weight:600}.catalog-card__price small{font-weight:400;color:var(--color-muted);font-size:11px}
