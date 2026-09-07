@@ -25,7 +25,7 @@ test('unconfirmed price excluded; dimensions and finish distinguish variants',()
  const r=makeRow('Fusion Black');const result=normalizeStock([['НАЯВНІСТЬ | SM Quartz'],headers,r],manifestFor(r,{...record,pricePending:true}),'2026-09-06T12:00:00Z');
  assert.equal(result.products[0].priceM2Cents,null);assert.equal(result.products[0].priceSlabCents,null);
  assert.notEqual(variantKey('sm-quartz','City Beige','Silk',[3200,1550,20]),variantKey('sm-quartz','City Beige','Polished',[3200,1550,20]));
- const fusion=snapshot.products.find(p=>p.name==='Fusion Black');assert.equal(fusion.priceSlabCents,null);
+ const fusion=snapshot.products.find(p=>p.name==='Fusion Black');assert.equal(fusion.priceSlabCents,180000);assert.equal(fusion.priceM2Cents,36290);assert.equal(fusion.pricePending,false);
  assert.equal(snapshot.products.filter(p=>p.name==='Vittoria White').length,2);
 });
 test('invalid import fails instead of silently overwriting a good snapshot',()=>{
@@ -35,7 +35,8 @@ test('invalid import fails instead of silently overwriting a good snapshot',()=>
 test('filters compose; unknown prices sort last both ways; no results is valid',()=>{
  const r=selectProducts(snapshot.products,{family:'sm-quartz',q:'  CITY beige ',finish:'Silk',stock:'yes'});assert.equal(r.length,1);
  assert.equal(selectProducts(snapshot.products,{q:'no-such-product-xx'}).length,0);
- for(const sort of ['price-asc','price-desc'])assert.equal(selectProducts(snapshot.products,{sort}).at(-1).priceM2Cents,null);
+ const withPending=snapshot.products.map((p,i)=>i===0?{...p,priceM2Cents:null,priceSlabCents:null,pricePending:true}:p);
+ for(const sort of ['price-asc','price-desc'])assert.equal(selectProducts(withPending,{sort}).at(-1).priceM2Cents,null);
 });
 test('snapshot valid; photos exist and IDs unique',()=>{
  validateSnapshot(snapshot);

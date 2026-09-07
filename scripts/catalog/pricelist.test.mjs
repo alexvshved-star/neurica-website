@@ -14,7 +14,7 @@ test('price lists include every available family variant once and exclude sample
  }
 });
 test('pending prices and finishes remain visible, with no values inferred from reference prices',()=>{
- const products=priceListProducts(snapshot,'sm-quartz');
+ const products=priceListProducts({...snapshot,products:snapshot.products.map(p=>p.name==='Fusion Black'?{...p,pricePending:true,priceSlabCents:null,priceM2Cents:null}:p.name==='Metropolis Oyster'?{...p,finishPending:true}:p)},'sm-quartz');
  const fusion=products.find(p=>p.name.toLowerCase().includes('fusion black'));
  assert.equal(fusion.priceSlabCents,null);assert.equal(fusion.pricePending,true);
  assert.ok(products.some(p=>p.finishPending));

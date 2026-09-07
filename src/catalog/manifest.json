@@ -648,8 +648,7 @@
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "C14",
-    "finishPending": true
+    "code": "C14"
   },
   "sm-quartz|Vittoria White|Silk|3200,1550,20": {
     "id": "sm-d102dd75fc54",
@@ -704,8 +703,7 @@
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "T5R4",
-    "pricePending": true
+    "code": "T5R4"
   },
   "sm-quartz|Vega|Silk|3300,1650,20": {
     "id": "sm-faefabfbdf99"
