@@ -1225,7 +1225,7 @@
     },
     {
       "id": "sm-1c4b7ac8220c",
-      "name": "Nero",
+      "name": "Nero Silk",
       "family": "sm-quartz",
       "kind": "slab",
       "materialType": "quartz-agglomerate",
@@ -1249,7 +1249,7 @@
     },
     {
       "id": "sm-87a8b8fb77ae",
-      "name": "Caledonia",
+      "name": "Caledonia Silk",
       "family": "sm-quartz",
       "kind": "slab",
       "materialType": "quartz-agglomerate",
@@ -1273,7 +1273,7 @@
     },
     {
       "id": "sm-71ab63240b2e",
-      "name": "Oregon",
+      "name": "Oregon Silk",
       "family": "sm-quartz",
       "kind": "slab",
       "materialType": "quartz-agglomerate",
@@ -1297,7 +1297,7 @@
     },
     {
       "id": "sm-baf858aaf32b",
-      "name": "Carnia",
+      "name": "Carnia Silk",
       "family": "sm-quartz",
       "kind": "slab",
       "materialType": "quartz-agglomerate",
@@ -1318,7 +1318,7 @@
     },
     {
       "id": "sm-9a2586c8ebd7",
-      "name": "Istria",
+      "name": "Istria Silk",
       "family": "sm-quartz",
       "kind": "slab",
       "materialType": "quartz-agglomerate",
@@ -1339,7 +1339,7 @@
     },
     {
       "id": "sm-633dd7b99a4d",
-      "name": "City Dark",
+      "name": "City Dark Silk",
       "family": "sm-quartz",
       "kind": "slab",
       "materialType": "quartz-agglomerate",
@@ -1387,7 +1387,7 @@
     },
     {
       "id": "sm-fa4b9d436faf",
-      "name": "City Beige",
+      "name": "City Beige Silk",
       "family": "sm-quartz",
       "kind": "slab",
       "materialType": "quartz-agglomerate",
@@ -1435,7 +1435,7 @@
     },
     {
       "id": "sm-a8fe82781c00",
-      "name": "City White",
+      "name": "City White Silk",
       "family": "sm-quartz",
       "kind": "slab",
       "materialType": "quartz-agglomerate",
@@ -1483,7 +1483,7 @@
     },
     {
       "id": "sm-a59910c9290f",
-      "name": "Ardenne",
+      "name": "Ardenne Silk",
       "family": "sm-quartz",
       "kind": "slab",
       "materialType": "quartz-agglomerate",
@@ -1621,7 +1621,7 @@
     },
     {
       "id": "sm-d102dd75fc54",
-      "name": "Vittoria White",
+      "name": "Vittoria White Silk",
       "family": "sm-quartz",
       "kind": "slab",
       "materialType": "quartz-agglomerate",
@@ -1645,7 +1645,7 @@
     },
     {
       "id": "sm-ed32578a171b",
-      "name": "Vittoria White",
+      "name": "Vittoria White Silk",
       "family": "sm-quartz",
       "kind": "slab",
       "materialType": "quartz-agglomerate",
@@ -1669,7 +1669,7 @@
     },
     {
       "id": "sm-aba8bb629cab",
-      "name": "Fusion Taupe",
+      "name": "Fusion Taupe Silk",
       "family": "sm-quartz",
       "kind": "slab",
       "materialType": "quartz-agglomerate",
@@ -1693,7 +1693,7 @@
     },
     {
       "id": "sm-2fa657668cc9",
-      "name": "Fusion Grey",
+      "name": "Fusion Grey Silk",
       "family": "sm-quartz",
       "kind": "slab",
       "materialType": "quartz-agglomerate",
@@ -1717,7 +1717,7 @@
     },
     {
       "id": "sm-9817c44dde0c",
-      "name": "Fusion Black",
+      "name": "Fusion Black Silk",
       "family": "sm-quartz",
       "kind": "slab",
       "materialType": "quartz-agglomerate",
@@ -1741,7 +1741,7 @@
     },
     {
       "id": "sm-faefabfbdf99",
-      "name": "Vega",
+      "name": "Vega Silk",
       "family": "sm-quartz",
       "kind": "slab",
       "materialType": "quartz-agglomerate",
@@ -1783,7 +1783,7 @@
     },
     {
       "id": "sm-47d0613150d7",
-      "name": "Vermont",
+      "name": "Vermont Silk",
       "family": "sm-quartz",
       "kind": "slab",
       "materialType": "quartz-agglomerate",
@@ -1927,7 +1927,7 @@
     },
     {
       "id": "sm-cce0cb72f93e",
-      "name": "Trevi",
+      "name": "Trevi Silk",
       "family": "sm-quartz",
       "kind": "slab",
       "materialType": "quartz-agglomerate",
@@ -1999,7 +1999,7 @@
     },
     {
       "id": "sm-2cebf6c35b51",
-      "name": "Light Wafer",
+      "name": "Light Wafer Silk",
       "family": "sm-quartz",
       "kind": "slab",
       "materialType": "quartz-agglomerate",

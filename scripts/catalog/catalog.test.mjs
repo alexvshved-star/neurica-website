@@ -25,8 +25,8 @@ test('unconfirmed price excluded; dimensions and finish distinguish variants',()
  const r=makeRow('Fusion Black');const result=normalizeStock([['НАЯВНІСТЬ | SM Quartz'],headers,r],manifestFor(r,{...record,pricePending:true}),'2026-09-06T12:00:00Z');
  assert.equal(result.products[0].priceM2Cents,null);assert.equal(result.products[0].priceSlabCents,null);
  assert.notEqual(variantKey('sm-quartz','City Beige','Silk',[3200,1550,20]),variantKey('sm-quartz','City Beige','Polished',[3200,1550,20]));
- const fusion=snapshot.products.find(p=>p.name==='Fusion Black');assert.equal(fusion.priceSlabCents,180000);assert.equal(fusion.priceM2Cents,36290);assert.equal(fusion.pricePending,false);
- assert.equal(snapshot.products.filter(p=>p.name==='Vittoria White').length,2);
+ const fusion=snapshot.products.find(p=>p.id==='sm-9817c44dde0c');assert.equal(fusion.priceSlabCents,180000);assert.equal(fusion.priceM2Cents,36290);assert.equal(fusion.pricePending,false);
+ assert.equal(snapshot.products.filter(p=>p.name==='Vittoria White Silk').length,2);
 });
 test('invalid import fails instead of silently overwriting a good snapshot',()=>{
  const r=makeRow('Example');assert.throws(()=>normalizeStock([['НАЯВНІСТЬ | SM Quartz'],headers,r],{},'2026-09-06T12:00:00Z'),/Unmapped/);
@@ -44,3 +44,11 @@ test('snapshot valid; photos exist and IDs unique',()=>{
 });
 
 test('column reorder cannot turn wholesale into public retail',()=>{const r=makeRow('Example');const swapped=[...headers];swapped[16]='Опт, €/м²';assert.throws(()=>normalizeStock([['НАЯВНІСТЬ | SM Quartz'],swapped,r],manifestFor(r),'2026-09-06T12:00:00Z'),/columns changed/);});
+
+test('Silk naming survives stock import without changing source keys or IDs',()=>{
+ for(const [name,finish,expected] of [['City Beige','Silk','City Beige Silk'],['City Beige Silk','Silk','City Beige Silk'],['City Beige','Polished','City Beige'],['Metropolis Oyster','Metropolis','Metropolis Oyster']]){
+  const r=makeRow(name,finish);
+  const [p]=normalizeStock([['НАЯВНІСТЬ | SM Quartz'],headers,r],manifestFor(r),'2026-09-07T12:00:00Z').products;
+  assert.equal(p.name,expected);assert.equal(p.id,record.id);
+ }
+});

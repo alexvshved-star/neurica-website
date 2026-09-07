@@ -10,7 +10,7 @@ import SnapshotNotice from './SnapshotNotice.astro';
 interface Props {product:Product;locale:Locale}
 const {product:p,locale}=Astro.props;const l=labels(locale);const photo=photoFor(p.photo);
 const format=`${p.lengthMm} × ${p.widthMm} × ${p.thicknessMm} ${l.mm}`;
-const related=products.filter(other=>other.id!==p.id&&other.name===p.name&&other.family===p.family);
+const related=products.filter(other=>other.id!==p.id&&other.name.replace(/ Silk$/,'')===p.name.replace(/ Silk$/,'')&&other.family===p.family);
 const specs=[[l.type,materialLabel(p.materialType,locale)],[l.manufacturer,p.manufacturer],[l.collection,p.collection],[l.code,p.code],[l.finish,p.finishPending?l.surfacePending:p.finish],[l.format,format]];
 const mail=`mailto:altacostone@gmail.com?subject=${encodeURIComponent(`${l.contactSubject}: ${p.name}`)}&body=${encodeURIComponent(`${p.name}\n${format}\n${p.finishPending?l.surfacePending:p.finish}\nID: ${p.id}`)}`;
 ---
