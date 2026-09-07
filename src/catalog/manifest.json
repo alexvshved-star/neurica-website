@@ -817,14 +817,19 @@
   },
   "sm-quartz|Fusion Black|Silk|3200,1550,20": {
     "id": "sm-9817c44dde0c",
-    "photo": "sm-16.jpeg",
+    "photo": "sm-fusion-black.jpg",
     "reference": {
       "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
       "page": 4
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "T5R4"
+    "code": "T5R4",
+    "photoSource": {
+      "file": "Fusion_Black.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|Vega|Silk|3300,1650,20": {
     "id": "sm-faefabfbdf99",
