@@ -17,7 +17,7 @@ export function validateSnapshot(snapshot) {
     for (const k of ['priceM2Cents','priceSlabCents']) if (p[k] !== null && (!Number.isSafeInteger(p[k]) || p[k] <= 0)) throw new Error(`Invalid retail price ${p.id}`);
     if (p.pricePending && (p.priceM2Cents !== null || p.priceSlabCents !== null)) throw new Error('Unconfirmed prices must not be published');
     if (p.reference && (Object.keys(p.reference).some(k=>!['file','page'].includes(k)) || !Number.isInteger(p.reference.page))) throw new Error('Invalid reference');
-    if (p.photo !== null && !/^[a-z0-9-]+\.(jpeg|jpg|png)$/.test(p.photo)) throw new Error('Invalid local photo');
+    if (p.photo !== null && !/^[a-z0-9-]+\.(jpeg|jpg|png|webp)$/.test(p.photo)) throw new Error('Invalid local photo');
   }
   return snapshot;
 }

@@ -1,4 +1,4 @@
-const photoUrls=import.meta.glob<string>('../assets/catalog/*.{jpg,jpeg,png}',{query:'?url',import:'default',eager:true});
+const photoUrls=import.meta.glob<string>('../assets/catalog/*.{jpg,jpeg,png,webp}',{query:'?url',import:'default',eager:true});
 export async function loadPhoto(filename:string,width=1400,height=640):Promise<string>{
  const url=photoUrls[`../assets/catalog/${filename}`];if(!url)throw new Error('Photo missing');
  const img=new Image();img.src=url;await img.decode();

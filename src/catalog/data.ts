@@ -4,7 +4,7 @@ import {validateSnapshot} from './model.mjs';
 import type {Locale} from './types';
 export const snapshot = validateSnapshot(raw);
 export const products = snapshot.products;
-const assets = import.meta.glob<{default:ImageMetadata}>('../assets/catalog/*.{jpg,jpeg,png}',{eager:true});
+const assets = import.meta.glob<{default:ImageMetadata}>('../assets/catalog/*.{jpg,jpeg,png,webp}',{eager:true});
 export function photoFor(filename:string|null) {
   if (!filename) return undefined;
   const image = assets[`../assets/catalog/${filename}`]?.default;

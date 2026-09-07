@@ -340,7 +340,13 @@
     "collection": "Bagnara / Kitchen Selection"
   },
   "natural|Vittoria Regia 2025|Polished|3150,2000,20": {
-    "id": "nat-51e554ee43b9"
+    "id": "nat-51e554ee43b9",
+    "photo": "natural-vittoria-regia.webp",
+    "photoSource": {
+      "file": "Vittoria Regia.webp",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "natural|Botticino Fiorito 2025|Satinato|3150,2000,20": {
     "id": "nat-44bdad45ecef",
@@ -423,7 +429,13 @@
     "collection": "Monohrom / Marmo di Carrara"
   },
   "natural|Travertino Tipo Classico|Honed|3050,1350,20": {
-    "id": "nat-9d25810e5056"
+    "id": "nat-9d25810e5056",
+    "photo": "natural-travertino-tipo-classico.jpg",
+    "photoSource": {
+      "file": "Travertino_Classico_02.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "natural|Black Tempest / 2026|Satinato|3300,1950,20": {
     "id": "nat-346630f20f40",
