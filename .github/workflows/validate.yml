@@ -20,6 +20,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Validate catalogue import and public projection
+        run: node --test scripts/catalog/catalog.test.mjs
+
       - name: Build
         run: npm run build
 

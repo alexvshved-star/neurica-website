@@ -1,12 +1,12 @@
 type: CASE
-status: STATIC
+status: DEMO
 art_direction: MATERIAL
 published: 2026-08-12
 cover: ./cover.jpg
 context: ALTACO
 data_mode: SANITIZED
-data_snapshot_date: 2026-08-12
-source_repo: altaco-platform
+data_snapshot_date: 2026-09-06
+source_repo: neurica-website
 data_fields:
   - name
   - manufacturer
@@ -15,10 +15,8 @@ data_fields:
   - finish
   - photo
   - availability
+  - retail_price_m2_eur
+  - retail_price_slab_eur
+  - variant_id
 feature: true
 show_cover: false
-media:
-  - id: catalog
-    src: ./catalog-static.jpg
-  - id: material
-    src: ./material-static.jpg

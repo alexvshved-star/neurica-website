@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import Catalog from '@/components/catalog/Catalog.astro';
 import WorkDetailView from '@/components/WorkDetailView.astro';
 import { sortByPublishedDesc } from '@/lib/validate';
 
@@ -18,4 +19,10 @@ export async function getStaticPaths() {
 const { entry, prevEntry, nextEntry } = Astro.props;
 ---
 
-<WorkDetailView entry={entry} locale="en" prevEntry={prevEntry} nextEntry={nextEntry} />
+{entry.slug === 'altaco-catalog' ? (
+  <WorkDetailView entry={entry} locale="en" prevEntry={prevEntry} nextEntry={nextEntry}>
+    <Catalog slot="content" locale="en" />
+  </WorkDetailView>
+) : (
+  <WorkDetailView entry={entry} locale="en" prevEntry={prevEntry} nextEntry={nextEntry} />
+)}

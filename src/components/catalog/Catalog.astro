@@ -1,0 +1,70 @@
+---
+import {products} from '@/catalog/data';
+import {selectProducts} from '@/catalog/model.mjs';
+import {labels,materialLabel} from '@/catalog/labels';
+import type {Locale} from '@/catalog/types';
+import ProductCard from './ProductCard.astro';
+import SnapshotNotice from './SnapshotNotice.astro';
+interface Props {locale:Locale}
+const {locale}=Astro.props;const l=labels(locale);
+const values=(key:'materialType'|'finish'|'thicknessMm')=>[...new Set(products.map(p=>String(p[key])))].sort();
+const collections=[...new Set(products.map(p=>p.collection??p.manufacturer).filter((x):x is string=>!!x))].sort();
+// All items remain readable without JS, including sample slabs with explicit labels.
+const initial=selectProducts(products,{samples:'yes'});
+---
+<section class="catalog" data-catalog data-locale={locale}>
+ <SnapshotNotice locale={locale}/>
+ <form class="catalog-filters" data-filters role="search" aria-label={l.search}>
+  <label class="catalog-search"><span class="mono-label">{l.search}</span><input type="search" name="q" placeholder={l.placeholder} autocomplete="off" /></label>
+  <label><span class="mono-label">{l.family}</span><select name="family"><option value="">{l.all}</option><option value="natural">{l.natural}</option><option value="sm-quartz">{l.sm}</option></select></label>
+  <label><span class="mono-label">{l.type}</span><select name="type"><option value="">{l.all}</option>{values('materialType').map(v=><option value={v}>{materialLabel(v,locale)}</option>)}</select></label>
+  <label><span class="mono-label">{l.collection}</span><select name="collection"><option value="">{l.all}</option>{collections.map(v=><option value={v}>{v}</option>)}</select></label>
+  <label><span class="mono-label">{l.finish}</span><select name="finish"><option value="">{l.all}</option>{values('finish').filter(v=>products.some(p=>p.finish===v&&!p.finishPending)).map(v=><option value={v}>{v}</option>)}</select></label>
+  <label><span class="mono-label">{l.thickness}</span><select name="thickness"><option value="">{l.all}</option>{values('thicknessMm').map(v=><option value={v}>{v} {l.mm}</option>)}</select></label>
+  <label><span class="mono-label">{l.availability}</span><select name="stock"><option value="">{l.all}</option><option value="yes">{l.inStock}</option><option value="no">{l.outOfStock}</option></select></label>
+  <label><span class="mono-label">{l.sort}</span><select name="sort"><option value="">{l.recommended}</option><option value="name">{l.name}</option><option value="price-asc">{l.priceAsc}</option><option value="price-desc">{l.priceDesc}</option></select></label>
+  <div class="catalog-filter-actions"><label class="catalog-checkbox"><input type="checkbox" name="samples" value="yes" />{l.samples}</label><button type="reset" class="mono-label">{l.reset}</button></div>
+ </form>
+ <noscript><p>{l.noJs}</p></noscript>
+ <p class="catalog-count mono" role="status" aria-live="polite" aria-atomic="true">{l.count}: <span data-count>{initial.length}</span></p>
+ <p class="catalog-empty" data-empty hidden>{l.empty}</p>
+ <ul class="catalog-grid" data-products>{initial.map((p,index)=><ProductCard product={p} locale={locale} index={index}/>)}</ul>
+</section>
+<script>
+ import {selectProducts} from '@/catalog/model.mjs';
+ import raw from '@/catalog/snapshot.json';
+ import type {Product,Filters} from '@/catalog/types';
+ const root=document.querySelector<HTMLElement>('[data-catalog]');
+ if(root){
+  const form=root.querySelector<HTMLFormElement>('[data-filters]')!;
+  const grid=root.querySelector<HTMLUListElement>('[data-products]')!;
+  const cards=new Map(Array.from(grid.querySelectorAll<HTMLElement>('[data-product-id]')).map(el=>[el.dataset.productId!,el]));
+  const keys=['q','family','type','collection','finish','thickness','stock','sort','samples'] as const;
+  const readUrl=()=>{const params=new URLSearchParams(location.search);for(const key of keys){const el=form.elements.namedItem(key) as HTMLInputElement|HTMLSelectElement;if(el instanceof HTMLInputElement&&el.type==='checkbox')el.checked=params.get(key)==='yes';else el.value=params.get(key)??'';}};
+  function update(writeUrl:boolean){
+   const fd=new FormData(form);const filters=Object.fromEntries(keys.map(k=>[k,String(fd.get(k)??'')])) as Filters;
+   const selected=selectProducts(raw.products as Product[],filters);const ids=new Set(selected.map(p=>p.id));
+   for(const [id,card] of cards)card.hidden=!ids.has(id);
+   for(const p of selected)grid.append(cards.get(p.id)!);
+   root!.querySelector('[data-count]')!.textContent=String(selected.length);
+   (root!.querySelector('[data-empty]') as HTMLElement).hidden=selected.length!==0;
+   if(writeUrl){const url=new URL(location.href);for(const k of keys){url.searchParams.delete(k);if(filters[k])url.searchParams.set(k,filters[k]!);}history.replaceState(null,'',url);}
+  }
+  form.addEventListener('submit',e=>e.preventDefault());
+  form.addEventListener('input',()=>update(true));
+  form.addEventListener('change',()=>update(true));
+  form.addEventListener('reset',()=>setTimeout(()=>update(true),0));
+  window.addEventListener('popstate',()=>{readUrl();update(false);});
+  readUrl();update(false);
+ }
+</script>
+<style>
+.catalog{max-width:var(--width-content);margin-inline:auto;text-align:left}.catalog-filters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 24px;padding:0 0 24px;border-bottom:1px solid var(--color-rule)}
+.catalog-filters label{display:flex;flex-direction:column;gap:8px;min-width:0}.catalog-filters label>span{font-size:11px;color:var(--color-muted)}.catalog-search{grid-column:span 2}
+.catalog-filters input[type=search],.catalog-filters select{border:1px solid var(--color-rule);border-radius:0;background:var(--color-bg);color:var(--color-text);font:inherit;font-size:14px;width:100%;min-height:46px;padding:10px 12px;min-width:0}
+.catalog-filter-actions{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:16px}.catalog-filters .catalog-checkbox{flex-direction:row;align-items:center;font-size:12px;color:var(--color-muted);min-height:44px}.catalog-checkbox input{width:18px;height:18px;accent-color:var(--brand-cyan);flex-shrink:0}
+.catalog-filter-actions button{border:1px solid var(--color-rule);background:transparent;color:var(--color-text);padding:12px;cursor:pointer;min-height:44px;font-size:11px}.catalog-filters :focus-visible{outline:2px solid var(--brand-cyan);outline-offset:3px}
+.catalog-count{text-align:right;color:var(--color-muted);font-size:12px;margin:24px 0}.catalog-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 24px}.catalog-grid :global([hidden]){display:none!important}.catalog-empty{padding:48px 16px;text-align:center}
+@media(max-width:899px){.catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 16px}.catalog-filters{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.catalog-search{grid-column:1/-1}}
+@media(max-width:480px){.catalog-filter-actions{align-items:flex-start;flex-direction:column}.catalog-filters select,.catalog-filters input[type=search]{font-size:16px}.catalog-filters label>span{font-size:10px}}
+</style>
