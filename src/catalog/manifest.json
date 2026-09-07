@@ -497,180 +497,273 @@
   },
   "sm-quartz|Nero|Silk|3200,1550,20": {
     "id": "sm-1c4b7ac8220c",
-    "photo": "sm-9.jpeg",
+    "photo": "sm-nero.jpg",
     "reference": {
       "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
       "page": 3
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "T590"
+    "code": "T590",
+    "photoSource": {
+      "file": "Nero.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|Caledonia|Silk|3200,1550,20": {
     "id": "sm-87a8b8fb77ae",
-    "photo": "sm-8.jpeg",
+    "photo": "sm-caledonia.jpg",
     "reference": {
       "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
       "page": 3
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "T5L6"
+    "code": "T5L6",
+    "photoSource": {
+      "file": "Caledonia.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|Oregon|Silk|3200,1550,20": {
     "id": "sm-71ab63240b2e",
-    "photo": "sm-22.jpeg",
+    "photo": "sm-oregon.jpg",
     "reference": {
       "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
       "page": 5
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "T5Q0"
+    "code": "T5Q0",
+    "photoSource": {
+      "file": "oregon-sm.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|Carnia|Silk|3200,1550,20": {
-    "id": "sm-baf858aaf32b"
+    "id": "sm-baf858aaf32b",
+    "photo": "sm-carnia.jpg",
+    "photoSource": {
+      "file": "Carnia.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|Istria|Silk|3300,1650,20": {
     "id": "sm-9a2586c8ebd7"
   },
   "sm-quartz|City Dark|Silk|3200,1550,20": {
     "id": "sm-633dd7b99a4d",
-    "photo": "sm-12.jpeg",
+    "photo": "sm-city-dark.jpg",
     "reference": {
       "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
       "page": 3
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "T5Q5"
+    "code": "T5Q5",
+    "photoSource": {
+      "file": "City_Dark.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|City Beige|Polished|3200,1550,20": {
     "id": "sm-8ba81fb43142",
-    "photo": "sm-11.jpeg",
+    "photo": "sm-city-beige.jpg",
     "reference": {
       "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
       "page": 3
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "T5Q2"
+    "code": "T5Q2",
+    "photoSource": {
+      "file": "City_Beige.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|City Beige|Silk|3200,1550,20": {
     "id": "sm-fa4b9d436faf",
-    "photo": "sm-11.jpeg",
+    "photo": "sm-city-beige.jpg",
     "reference": {
       "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
       "page": 3
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "T5Q2"
+    "code": "T5Q2",
+    "photoSource": {
+      "file": "City_Beige.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|City White|Polished|3300,1650,20": {
     "id": "sm-1bbc094b494e",
-    "photo": "sm-23.jpeg",
+    "photo": "sm-city-white.jpg",
     "reference": {
       "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
       "page": 5
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "T5Q6"
+    "code": "T5Q6",
+    "photoSource": {
+      "file": "City_White-1.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|City White|Silk|3300,1650,20": {
     "id": "sm-a8fe82781c00",
-    "photo": "sm-23.jpeg",
+    "photo": "sm-city-white.jpg",
     "reference": {
       "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
       "page": 5
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "T5Q6"
+    "code": "T5Q6",
+    "photoSource": {
+      "file": "City_White-1.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|Zenith|Polished|3300,1650,20": {
     "id": "sm-3c7d421b349e",
-    "photo": "sm-35.jpeg",
+    "photo": "sm-zenith.jpg",
     "reference": {
       "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
       "page": 7
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "T560"
+    "code": "T560",
+    "photoSource": {
+      "file": "Zenith.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|Ardenne|Silk|3200,1550,20": {
     "id": "sm-a59910c9290f",
-    "photo": "sm-10.jpeg",
+    "photo": "sm-ardenne.jpg",
     "reference": {
       "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
       "page": 3
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "T5J0"
+    "code": "T5J0",
+    "photoSource": {
+      "file": "Ardenne.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|Sabia Beige|Polished|3200,1550,20": {
     "id": "sm-fdb798e6b5c7",
-    "photo": "sm-14.jpeg",
+    "photo": "sm-sabia-beige.jpg",
     "reference": {
       "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
       "page": 4
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "T5N9"
+    "code": "T5N9",
+    "photoSource": {
+      "file": "Sabbia_Beige.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|Liskamm|Polished|3200,1550,20": {
-    "id": "sm-babde32e37d0"
+    "id": "sm-babde32e37d0",
+    "photo": "sm-liskamm.jpg",
+    "photoSource": {
+      "file": "Lyskamm.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|Grigio Nube|Polished|3200,1550,20": {
     "id": "sm-f46c1943b7ea",
-    "photo": "sm-21.jpeg",
+    "photo": "sm-grigio-nube.jpg",
     "reference": {
       "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
       "page": 5
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "T5P0"
+    "code": "T5P0",
+    "photoSource": {
+      "file": "Grigio Nube.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|Metropolis Galaxy|Metropolis|3200,1550,20": {
-    "id": "sm-a85046c2a75e"
+    "id": "sm-a85046c2a75e",
+    "photo": "sm-metropolis-galaxy.jpg",
+    "photoSource": {
+      "file": "Metropolis-galaxy.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|Metropolis Oyster|Metropolis|3200,1550,20": {
     "id": "sm-f15eadc0f288",
-    "photo": "sm-19.jpeg",
+    "photo": "sm-metropolis-oyster.jpg",
     "reference": {
       "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
       "page": 4
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "C14"
+    "code": "C14",
+    "photoSource": {
+      "file": "Metropolis-oyster.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|Vittoria White|Silk|3200,1550,20": {
     "id": "sm-d102dd75fc54",
-    "photo": "sm-15.jpeg",
+    "photo": "sm-vittoria-white.jpg",
     "reference": {
       "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
       "page": 4
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "T5P3"
+    "code": "T5P3",
+    "photoSource": {
+      "file": "Vittoria White.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|Vittoria White|Silk|3300,1650,20": {
     "id": "sm-ed32578a171b",
-    "photo": "sm-15.jpeg",
+    "photo": "sm-vittoria-white.jpg",
     "reference": {
       "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
       "page": 5
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "T5P3"
+    "code": "T5P3",
+    "photoSource": {
+      "file": "Vittoria White.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|Fusion Taupe|Silk|3200,1550,20": {
     "id": "sm-aba8bb629cab",
@@ -685,14 +778,19 @@
   },
   "sm-quartz|Fusion Grey|Silk|3200,1550,20": {
     "id": "sm-2fa657668cc9",
-    "photo": "sm-17.jpeg",
+    "photo": "sm-fusion-grey.jpg",
     "reference": {
       "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
       "page": 4
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "T5R3"
+    "code": "T5R3",
+    "photoSource": {
+      "file": "Fusion_Grey.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|Fusion Black|Silk|3200,1550,20": {
     "id": "sm-9817c44dde0c",
@@ -706,87 +804,134 @@
     "code": "T5R4"
   },
   "sm-quartz|Vega|Silk|3300,1650,20": {
-    "id": "sm-faefabfbdf99"
+    "id": "sm-faefabfbdf99",
+    "photo": "sm-vega.jpg",
+    "photoSource": {
+      "file": "Vega.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|Vega|Polished|3300,1650,20": {
-    "id": "sm-b43c2a9ee7b6"
+    "id": "sm-b43c2a9ee7b6",
+    "photo": "sm-vega.jpg",
+    "photoSource": {
+      "file": "Vega.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|Vermont|Silk|3300,1650,20": {
     "id": "sm-47d0613150d7",
-    "photo": "sm-27.jpeg",
+    "photo": "sm-vermont.jpg",
     "reference": {
       "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
       "page": 6
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "T5Q8"
+    "code": "T5Q8",
+    "photoSource": {
+      "file": "Vermont.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|Levante|Polished|3300,1650,20": {
     "id": "sm-5dd440c78d9c",
-    "photo": "sm-32.jpeg",
+    "photo": "sm-levante.jpg",
     "reference": {
       "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
       "page": 7
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "T5T1"
+    "code": "T5T1",
+    "photoSource": {
+      "file": "Levante-sm.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|Libeccio|Polished|3300,1650,20": {
     "id": "sm-e50a6670b6b8",
-    "photo": "sm-29.jpeg",
+    "photo": "sm-libeccio.jpg",
     "reference": {
       "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
       "page": 6
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "T5T0"
+    "code": "T5T0",
+    "photoSource": {
+      "file": "Libeccio-sm-270x169.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|Etesia|Polished|3300,1650,20": {
     "id": "sm-28cbd9fbdc2f",
-    "photo": "sm-28.jpeg",
+    "photo": "sm-etesia.jpg",
     "reference": {
       "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
       "page": 6
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "T5U5"
+    "code": "T5U5",
+    "photoSource": {
+      "file": "Etesia.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|Monti|Polished|3300,1650,20": {
     "id": "sm-60bf646e4a37",
-    "photo": "sm-33.jpeg",
+    "photo": "sm-monti.jpg",
     "reference": {
       "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
       "page": 7
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "T5U1"
+    "code": "T5U1",
+    "photoSource": {
+      "file": "Monti.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|Trevi|Polished|3300,1650,20": {
     "id": "sm-ec2178c995da",
-    "photo": "sm-34.jpeg",
+    "photo": "sm-trevi.jpg",
     "reference": {
       "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
       "page": 7
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "T5U2"
+    "code": "T5U2",
+    "photoSource": {
+      "file": "Trevi.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|Trevi|Silk|3300,1650,20": {
     "id": "sm-cce0cb72f93e",
-    "photo": "sm-34.jpeg",
+    "photo": "sm-trevi.jpg",
     "reference": {
       "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
       "page": 7
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "T5U2"
+    "code": "T5U2",
+    "photoSource": {
+      "file": "Trevi.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|Grey Feather|Polished|3300,1650,20": {
     "id": "sm-afb4fb0d5021",
