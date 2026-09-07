@@ -1,9 +1,9 @@
 ---
 title: Agent Workflow
-summary: task → agent chain → review → output
+summary: "AI consultant for Bagnara/Santa Margherita stone: a source — or a refusal"
 tags:
-  - agents
-  - workflow
+  - Bagnara
+  - consultations
 ---
 
 ALTACO is testing an AI agent that helps staff and partners with questions about Bagnara and Santa Margherita products. It uses a vector database of verified supplier materials. The goal is to find stone specifications faster, explain them clearly and distinguish confirmed facts from questions requiring further checks.
