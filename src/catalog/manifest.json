@@ -553,7 +553,13 @@
     }
   },
   "sm-quartz|Istria|Silk|3300,1650,20": {
-    "id": "sm-9a2586c8ebd7"
+    "id": "sm-9a2586c8ebd7",
+    "photo": "sm-istria.jpg",
+    "photoSource": {
+      "file": "Istria.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|City Dark|Silk|3200,1550,20": {
     "id": "sm-633dd7b99a4d",
@@ -767,14 +773,19 @@
   },
   "sm-quartz|Fusion Taupe|Silk|3200,1550,20": {
     "id": "sm-aba8bb629cab",
-    "photo": "sm-18.jpeg",
+    "photo": "sm-fusion-taupe.jpg",
     "reference": {
       "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
       "page": 4
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "T5R2"
+    "code": "T5R2",
+    "photoSource": {
+      "file": "FusionTaupe_02.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
   },
   "sm-quartz|Fusion Grey|Silk|3200,1550,20": {
     "id": "sm-2fa657668cc9",
@@ -864,7 +875,7 @@
     "manufacturer": "Santa Margherita",
     "code": "T5T0",
     "photoSource": {
-      "file": "Libeccio-sm-270x169.jpg",
+      "file": "Libecio_02.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
     }

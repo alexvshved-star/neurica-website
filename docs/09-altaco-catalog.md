@@ -187,3 +187,7 @@ City Brown і City Grey збережено як `sm-city-brown.jpg` та `sm-cit
 позицій у знімку немає, тому товари та ціни не створено.
 Libeccio має 270×169 px, Grigio Nube — 300×188 px, решта — 800×500 px.
 Для якісного великого друку першим двом потрібні більші оригінали.
+
+Наступне оновлення: Fusion Taupe — `FusionTaupe_02.jpg` (2048×1568),
+Libeccio — `Libecio_02.jpg` (2048×1365), Istria — `Istria.jpg` (800×500).
+Низьку роздільність Libeccio усунуто; Istria отримала відсутнє фото.
