@@ -4,7 +4,6 @@ import {selectProducts} from '@/catalog/model.mjs';
 import {labels,materialLabel} from '@/catalog/labels';
 import type {Locale} from '@/catalog/types';
 import ProductCard from './ProductCard.astro';
-import SnapshotNotice from './SnapshotNotice.astro';
 import Selection from './Selection.astro';
 import PriceLists from './PriceLists.astro';
 interface Props {locale:Locale}
@@ -15,7 +14,6 @@ const collections=[...new Set(products.map(p=>p.collection??p.manufacturer).filt
 const initial=selectProducts(products,{samples:'yes'});
 ---
 <section class="catalog" data-catalog data-locale={locale}>
- <SnapshotNotice locale={locale}/>
  <PriceLists locale={locale}/>
  <form class="catalog-filters" data-filters role="search" aria-label={l.search}>
   <label class="catalog-search"><span class="mono-label">{l.search}</span><input type="search" name="q" placeholder={l.placeholder} autocomplete="off" /></label>
