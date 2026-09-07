@@ -1,0 +1,51 @@
+---
+import type {Locale} from '@/catalog/types';
+interface Props {locale:Locale}
+const {locale}=Astro.props;const uk=locale==='uk';
+---
+<section class="price-lists" data-price-lists data-locale={locale} hidden aria-labelledby="price-lists-title">
+ <h2 id="price-lists-title" class="mono-label">{uk?'Прайс-листи PDF':'PDF price lists'}</h2>
+ <p>{uk?'Усі наявні позиції відповідної групи зі знімка каталогу. Роздрібні ціни з ПДВ, без знижок. Пошук і фільтри не впливають на склад прайсу.':'All available materials in each family from the catalogue snapshot. Retail prices including VAT, no discounts. Search and filters do not change the price list.'}</p>
+ <div class="price-lists__actions">
+  <button type="button" data-price-list="natural">{uk?'Натуральний камінь / PDF':'Natural stone / PDF'}</button>
+  <button type="button" data-price-list="sm-quartz">SM Quartz / PDF</button>
+ </div>
+ <p data-price-list-status role="status" aria-live="polite" aria-atomic="true"></p>
+ <div class="price-lists__actions">
+  <a data-price-list-download="natural" hidden>{uk?'Завантажити прайс натурального каменю':'Download natural stone price list'}</a>
+  <a data-price-list-download="sm-quartz" hidden>{uk?'Завантажити прайс SM Quartz':'Download SM Quartz price list'}</a>
+ </div>
+</section>
+<script>
+ import raw from '@/catalog/snapshot.json';
+ import type {Snapshot} from '@/catalog/types';
+ import type {PriceListFamily} from '@/catalog/pricelist.mjs';
+ const root=document.querySelector<HTMLElement>('[data-price-lists]');
+ if(root){
+  root.hidden=false;const uk=root.dataset.locale==='uk';
+  const buttons=Array.from(root.querySelectorAll<HTMLButtonElement>('[data-price-list]'));
+  const status=root.querySelector<HTMLElement>('[data-price-list-status]')!;
+  const urls=new Map<string,string>();
+  for(const button of buttons)button.addEventListener('click',async()=>{
+   const family=button.dataset.priceList as PriceListFamily;
+   const link=root.querySelector<HTMLAnchorElement>(`[data-price-list-download="${family}"]`)!;
+   link.hidden=true;link.removeAttribute('href');
+   if(urls.has(family)){URL.revokeObjectURL(urls.get(family)!);urls.delete(family);}
+   for(const b of buttons)b.disabled=true;
+   root.setAttribute('aria-busy','true');status.textContent=uk?'Готуємо прайс…':'Preparing price list…';
+   try{
+    const {priceListBlob}=await import('@/catalog/pricelist-download');
+    const blob=await priceListBlob(raw as Snapshot,family,uk?'uk':'en',(done,total)=>{
+     status.textContent=`${uk?'Готуємо фото':'Preparing photos'}: ${done} / ${total}`;
+    });
+    const url=URL.createObjectURL(blob);urls.set(family,url);link.href=url;
+    link.download=`ALTACO_${family==='natural'?'Natural_Stone':'SM_Quartz'}_Kyiv_Stock_${new Date().toISOString().slice(0,10)}.pdf`;
+    link.hidden=false;status.textContent=uk?'Прайс готовий. Натисніть посилання для завантаження.':'Price list ready. Use the link to download.';link.focus();
+   }catch{status.textContent=uk?'Не вдалося сформувати прайс. Перевірте з’єднання та спробуйте ще раз.':'Could not create the price list. Check your connection and retry.';}
+   finally{for(const b of buttons)b.disabled=false;root.removeAttribute('aria-busy');}
+  });
+ }
+</script>
+<style>
+.price-lists{border:1px solid var(--color-rule);padding:24px;margin-bottom:32px;text-align:left}.price-lists[hidden],.price-lists [hidden]{display:none!important}.price-lists h2{font-size:16px}.price-lists p{font-size:13px;color:var(--color-muted);margin:12px 0}.price-lists__actions{display:flex;gap:12px;flex-wrap:wrap}.price-lists button,.price-lists a{min-height:44px;padding:12px 16px;border:1px solid var(--color-rule);background:transparent;color:var(--color-text);font:inherit;font-size:13px;cursor:pointer}.price-lists button:disabled{opacity:.5;cursor:wait}.price-lists a{border-color:var(--brand-cyan)}.price-lists :focus-visible{outline:2px solid var(--brand-cyan);outline-offset:3px}@media(max-width:480px){.price-lists{padding:16px}.price-lists button,.price-lists a{width:100%;text-align:center}}
+</style>

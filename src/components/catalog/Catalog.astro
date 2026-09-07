@@ -6,6 +6,7 @@ import type {Locale} from '@/catalog/types';
 import ProductCard from './ProductCard.astro';
 import SnapshotNotice from './SnapshotNotice.astro';
 import Selection from './Selection.astro';
+import PriceLists from './PriceLists.astro';
 interface Props {locale:Locale}
 const {locale}=Astro.props;const l=labels(locale);
 const values=(key:'materialType'|'finish'|'thicknessMm')=>[...new Set(products.map(p=>String(p[key])))].sort();
@@ -15,6 +16,7 @@ const initial=selectProducts(products,{samples:'yes'});
 ---
 <section class="catalog" data-catalog data-locale={locale}>
  <SnapshotNotice locale={locale}/>
+ <PriceLists locale={locale}/>
  <form class="catalog-filters" data-filters role="search" aria-label={l.search}>
   <label class="catalog-search"><span class="mono-label">{l.search}</span><input type="search" name="q" placeholder={l.placeholder} autocomplete="off" /></label>
   <label><span class="mono-label">{l.family}</span><select name="family"><option value="">{l.all}</option><option value="natural">{l.natural}</option><option value="sm-quartz">{l.sm}</option></select></label>

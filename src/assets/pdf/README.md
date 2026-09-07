@@ -13,3 +13,9 @@
 Material photos use the existing catalogue's attributed source images.
 The browser crops the photo to 1400 × 640 JPEG for bounded PDF size.
 The same crop and renderer are used by `scripts/catalog/preview-offer.mjs`.
+
+`sm-logo.json`: логотип SANTAMARGHERITA відрендерено з наданого
+ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf, сторінка 3, прямокутник
+(394, 22, 552, 50) PDF points, 4x. Макети прайсів також звірено з
+ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf. Обидва оригінали лишаються
+поза публічним репозиторієм. Фото прайсів: 1200 × 377 JPEG.
