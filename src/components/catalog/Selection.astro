@@ -7,7 +7,7 @@ const {locale}=Astro.props;const uk=locale==='uk';
 <section class="selection" data-selection hidden aria-labelledby="selection-title">
  <h2 id="selection-title" class="mono-label">{uk?'Мій підбір матеріалів':'My material selection'}</h2>
  <p>{uk?'Попередній розрахунок за роздрібною ціною цілого слеба. Ціни з ПДВ. Доступну кількість і умови продажу потрібно підтвердити з ALTACO.':'Preliminary estimate at the retail price per whole slab. Prices include VAT. Confirm available quantities and sale terms with ALTACO.'}</p>
- <p class="selection-note">{uk?'Підбір діє на цій сторінці й очищується після її перезавантаження або переходу. Це ще не комерційна пропозиція.':'This selection stays on this page and clears on reload or navigation. It is not a commercial offer.'}</p>
+ <p class="selection-note">{uk?'Підбір діє на цій сторінці й очищується після її перезавантаження або переходу. PDF формується за знімком каталогу; умови підтверджує менеджер.':'This selection stays on this page and clears on reload or navigation. The PDF uses the catalogue snapshot; a manager confirms the terms.'}</p>
  <ul data-selection-list>
  {products.filter(p=>p.kind!=='sample-slab').map(p=><li data-selection-id={p.id} hidden>
   <div><strong>{p.name}</strong><p>{p.lengthMm} × {p.widthMm} × {p.thicknessMm} mm · {p.finishPending?(uk?'Обробку уточнюємо':'Finish pending'):p.finish}</p><p>{p.kind==='fragment'?(uk?'Фрагмент: розрахунок за запитом':'Fragment: estimate on request'):`${money(p.priceSlabCents,locale)} / ${uk?'слеб':'slab'}`}{!p.inStock&&` · ${uk?'Немає в наявності':'Out of stock'}`}</p></div>
@@ -17,21 +17,31 @@ const {locale}=Astro.props;const uk=locale==='uk';
  </li>)}
  </ul>
  <p data-selection-total role="status" aria-live="polite" aria-atomic="true"></p>
+ <p>{uk?'PDF-КП: до 20 позицій, лише цілі слеби з наявністю, підтвердженою ціною, обробкою та фото. Ціни роздрібні, з ПДВ, без знижок.':'PDF offer: up to 20 materials, whole slabs with availability, confirmed prices, finish and photos. Retail prices including VAT, no discounts.'}</p>
+ <button type="button" data-create-offer>{uk?'Сформувати PDF-КП':'Create PDF offer'}</button>
+ <p data-offer-status role="status" aria-live="polite"></p>
+ <a data-offer-download hidden download="ALTACO_Commercial_Offer.pdf">{uk?'Завантажити PDF-КП':'Download PDF offer'}</a>
  <button type="button" data-clear-selection>{uk?'Очистити підбір':'Clear selection'}</button>
 </section>
 <script>
  import raw from '@/catalog/snapshot.json';
  import {estimateLine} from '@/catalog/estimate.mjs';
- import type {Product} from '@/catalog/types';
+ import type {Product,Snapshot} from '@/catalog/types';
  const panel=document.querySelector<HTMLElement>('[data-selection]');
  if(panel){
   const uk=document.querySelector('[data-catalog]')?.getAttribute('data-locale')==='uk';
   const selected=new Set<string>();
+  let revision=0,downloadUrl:string|null=null;
+  const download=panel.querySelector<HTMLAnchorElement>('[data-offer-download]')!;
+  const status=panel.querySelector<HTMLElement>('[data-offer-status]')!;
+  const generate=panel.querySelector<HTMLButtonElement>('[data-create-offer]')!;
   const rows=new Map(Array.from(panel.querySelectorAll<HTMLElement>('[data-selection-id]')).map(row=>[row.dataset.selectionId!,row]));
   const buttons=Array.from(document.querySelectorAll<HTMLButtonElement>('[data-add-selection]'));
   const money=(cents:number)=>new Intl.NumberFormat(uk?'uk-UA':'en-IE',{style:'currency',currency:'EUR'}).format(cents/100);
   const pending=uk?'За запитом':'On request';
   function render(){
+   revision++;download.hidden=true;download.removeAttribute('href');status.textContent='';
+   if(downloadUrl){URL.revokeObjectURL(downloadUrl);downloadUrl=null;}
    let total=0,unpriced=0,invalid=false;
    panel!.hidden=selected.size===0;
    for(const p of raw.products as Product[]){
@@ -49,6 +59,23 @@ const {locale}=Astro.props;const uk=locale==='uk';
   }
   for(const button of buttons){button.hidden=false;button.addEventListener('click',()=>{const id=button.dataset.addSelection!;if(selected.has(id))selected.delete(id);else selected.add(id);render();});}
   panel.addEventListener('input',()=>render());
+  generate.addEventListener('click',async()=>{
+   const version=revision;
+   generate.disabled=true;status.textContent=uk?'Формуємо PDF…':'Preparing PDF…';
+   try{
+    const selection=Array.from(selected,id=>({id,quantity:rows.get(id)?.querySelector<HTMLInputElement>('input')?.valueAsNumber??1}));
+    const {offerBlob}=await import('@/catalog/offer-download');
+    const blob=await offerBlob(raw as Snapshot,selection,uk?'uk':'en');
+    if(version!==revision){status.textContent=uk?'Підбір змінився. Сформуйте PDF повторно.':'Selection changed. Generate the PDF again.';return;}
+    if(downloadUrl)URL.revokeObjectURL(downloadUrl);
+    downloadUrl=URL.createObjectURL(blob);download.href=downloadUrl;
+    download.download=`ALTACO_Commercial_Offer_${new Date().toISOString().slice(0,10)}.pdf`;
+    download.hidden=false;download.focus();
+    status.textContent=uk?'PDF готовий. Завантажте й перевірте перед надсиланням.':'PDF ready. Download and review before sending.';
+   }catch{
+    status.textContent=uk?'Не вдалося сформувати PDF. Перевірте кількість (ціле число 1–999), наявність, фото, обробку й підтверджені ціни всіх позицій (до 20). Якщо дані правильні, перевірте з’єднання та повторіть.':'Could not create the PDF. Check quantities (whole numbers 1–999), availability, photos, finish and confirmed prices for all items (up to 20). If valid, check your connection and retry.';
+   }finally{generate.disabled=false;}
+  });
   panel.addEventListener('click',event=>{
    const target=(event.target as Element).closest<HTMLButtonElement>('[data-remove], [data-clear-selection]');if(!target)return;
    const id=target.dataset.remove;
