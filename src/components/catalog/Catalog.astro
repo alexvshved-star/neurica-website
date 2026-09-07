@@ -5,6 +5,7 @@ import {labels,materialLabel} from '@/catalog/labels';
 import type {Locale} from '@/catalog/types';
 import ProductCard from './ProductCard.astro';
 import SnapshotNotice from './SnapshotNotice.astro';
+import Selection from './Selection.astro';
 interface Props {locale:Locale}
 const {locale}=Astro.props;const l=labels(locale);
 const values=(key:'materialType'|'finish'|'thicknessMm')=>[...new Set(products.map(p=>String(p[key])))].sort();
@@ -26,6 +27,7 @@ const initial=selectProducts(products,{samples:'yes'});
   <div class="catalog-filter-actions"><label class="catalog-checkbox"><input type="checkbox" name="samples" value="yes" />{l.samples}</label><button type="reset" class="mono-label">{l.reset}</button></div>
  </form>
  <noscript><p>{l.noJs}</p></noscript>
+ <Selection locale={locale}/>
  <p class="catalog-count mono" role="status" aria-live="polite" aria-atomic="true">{l.count}: <span data-count>{initial.length}</span></p>
  <p class="catalog-empty" data-empty hidden>{l.empty}</p>
  <ul class="catalog-grid" data-products>{initial.map((p,index)=><ProductCard product={p} locale={locale} index={index}/>)}</ul>

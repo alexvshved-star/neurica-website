@@ -21,7 +21,7 @@ jobs:
         run: npm ci
 
       - name: Validate catalogue import and public projection
-        run: node --test scripts/catalog/catalog.test.mjs
+        run: node --test scripts/catalog/*.test.mjs
 
       - name: Build
         run: npm run build

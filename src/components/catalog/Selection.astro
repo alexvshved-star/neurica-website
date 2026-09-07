@@ -1,0 +1,65 @@
+---
+import {products,money} from '@/catalog/data';
+import type {Locale} from '@/catalog/types';
+interface Props {locale:Locale}
+const {locale}=Astro.props;const uk=locale==='uk';
+---
+<section class="selection" data-selection hidden aria-labelledby="selection-title">
+ <h2 id="selection-title" class="mono-label">{uk?'Мій підбір матеріалів':'My material selection'}</h2>
+ <p>{uk?'Попередній розрахунок за роздрібною ціною цілого слеба. ПДВ, доступну кількість і умови продажу потрібно підтвердити з ALTACO.':'Preliminary estimate at the retail price per whole slab. Confirm VAT, available quantities and sale terms with ALTACO.'}</p>
+ <p class="selection-note">{uk?'Підбір діє на цій сторінці й очищується після її перезавантаження або переходу. Це ще не комерційна пропозиція.':'This selection stays on this page and clears on reload or navigation. It is not a commercial offer.'}</p>
+ <ul data-selection-list>
+ {products.filter(p=>p.kind!=='sample-slab').map(p=><li data-selection-id={p.id} hidden>
+  <div><strong>{p.name}</strong><p>{p.lengthMm} × {p.widthMm} × {p.thicknessMm} mm · {p.finishPending?(uk?'Обробку уточнюємо':'Finish pending'):p.finish}</p><p>{p.kind==='fragment'?(uk?'Фрагмент: розрахунок за запитом':'Fragment: estimate on request'):`${money(p.priceSlabCents,locale)} / ${uk?'слеб':'slab'}`}{!p.inStock&&` · ${uk?'Немає в наявності':'Out of stock'}`}</p></div>
+  {p.kind==='slab'&&<label>{uk?'Слебів':'Slabs'}<input data-quantity required type="number" min="1" max="999" step="1" value="1" aria-label={`${uk?'Кількість слебів':'Slab quantity'}: ${p.name}, ${p.lengthMm} × ${p.widthMm}`} /></label>}
+  <span data-line-total></span>
+  <button type="button" data-remove={p.id} aria-label={`${uk?'Прибрати':'Remove'} ${p.name}`}>{uk?'Прибрати':'Remove'}</button>
+ </li>)}
+ </ul>
+ <p data-selection-total role="status" aria-live="polite" aria-atomic="true"></p>
+ <button type="button" data-clear-selection>{uk?'Очистити підбір':'Clear selection'}</button>
+</section>
+<script>
+ import raw from '@/catalog/snapshot.json';
+ import {estimateLine} from '@/catalog/estimate.mjs';
+ import type {Product} from '@/catalog/types';
+ const panel=document.querySelector<HTMLElement>('[data-selection]');
+ if(panel){
+  const uk=document.querySelector('[data-catalog]')?.getAttribute('data-locale')==='uk';
+  const selected=new Set<string>();
+  const rows=new Map(Array.from(panel.querySelectorAll<HTMLElement>('[data-selection-id]')).map(row=>[row.dataset.selectionId!,row]));
+  const buttons=Array.from(document.querySelectorAll<HTMLButtonElement>('[data-add-selection]'));
+  const money=(cents:number)=>new Intl.NumberFormat(uk?'uk-UA':'en-IE',{style:'currency',currency:'EUR'}).format(cents/100);
+  const pending=uk?'За запитом':'On request';
+  function render(){
+   let total=0,unpriced=0,invalid=false;
+   panel!.hidden=selected.size===0;
+   for(const p of raw.products as Product[]){
+    const row=rows.get(p.id);if(!row)continue;
+    row.hidden=!selected.has(p.id);if(row.hidden)continue;
+    const input=row.querySelector<HTMLInputElement>('[data-quantity]');
+    const output=row.querySelector<HTMLElement>('[data-line-total]')!;
+    if(input&&!input.checkValidity()){invalid=true;input.setAttribute('aria-invalid','true');output.textContent=uk?'Введіть ціле число 1–999':'Enter a whole number 1–999';continue;}
+    input?.removeAttribute('aria-invalid');
+    const value=estimateLine(p,input?input.valueAsNumber:1);
+    if(value===null){unpriced++;output.textContent=pending;}else{total+=value;output.textContent=money(value);}
+   }
+   panel!.querySelector('[data-selection-total]')!.textContent=invalid?(uk?'Виправте кількість для розрахунку суми.':'Correct quantities to calculate the amount.'):`${uk?'Позицій':'Items'}: ${selected.size}. ${unpriced?(uk?'Сума лише оцінених позицій':'Priced items subtotal'):(uk?'Попередня сума':'Estimated total')}: ${money(total)}.${unpriced?` ${unpriced} ${uk?'позицій потребують уточнення ціни.':'items require a price confirmation.'}`:''}`;
+   for(const button of buttons){const active=selected.has(button.dataset.addSelection!);button.setAttribute('aria-pressed',String(active));button.textContent=active?(uk?'У підборі ✓':'Selected ✓'):(uk?'Додати до підбору':'Add to selection');}
+  }
+  for(const button of buttons){button.hidden=false;button.addEventListener('click',()=>{const id=button.dataset.addSelection!;if(selected.has(id))selected.delete(id);else selected.add(id);render();});}
+  panel.addEventListener('input',()=>render());
+  panel.addEventListener('click',event=>{
+   const target=(event.target as Element).closest<HTMLButtonElement>('[data-remove], [data-clear-selection]');if(!target)return;
+   const id=target.dataset.remove;
+   if(id){selected.delete(id);const input=rows.get(id)?.querySelector<HTMLInputElement>('input');if(input)input.value='1';}
+   else{selected.clear();for(const input of panel.querySelectorAll<HTMLInputElement>('input'))input.value='1';}
+   render();
+   const next=panel.querySelector<HTMLButtonElement>('li:not([hidden]) button');
+   (next??buttons.find(button=>!button.closest('[data-product-id]')?.hasAttribute('hidden')))?.focus();
+  });
+ }
+</script>
+<style>
+.selection{border:1px solid var(--color-rule);padding:24px;margin:24px 0}.selection[hidden],.selection [hidden]{display:none!important}.selection h2{font-size:16px}.selection p{font-size:13px;margin:8px 0}.selection-note{color:var(--color-muted)}.selection li{display:flex;align-items:center;gap:16px;flex-wrap:wrap;border-top:1px solid var(--color-rule);padding:16px 0}.selection li>div{flex:1;min-width:180px}.selection strong{font-size:14px}.selection label{font-size:12px;display:flex;flex-direction:column;gap:4px}.selection input{width:85px}.selection button,.selection input{background:var(--color-bg);color:var(--color-text);border:1px solid var(--color-rule);padding:10px;min-height:44px;font:inherit;font-size:14px}.selection button{cursor:pointer}.selection :focus-visible{outline:2px solid var(--brand-cyan);outline-offset:3px}.selection [aria-invalid=true]{border-color:#f99}.selection [data-selection-total]{font-weight:600}@media(max-width:480px){.selection{padding:16px}.selection input{font-size:16px}}
+</style>
