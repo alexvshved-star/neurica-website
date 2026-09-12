@@ -9,7 +9,7 @@ const {locale}=Astro.props;const uk=locale==='uk';
  <p>{uk?'Усі наявні позиції відповідної групи зі знімка каталогу. Роздрібні ціни з ПДВ, без знижок. Пошук і фільтри не впливають на склад прайсу.':'All available materials in each family from the catalogue snapshot. Retail prices including VAT, no discounts. Search and filters do not change the price list.'}</p>
  <div class="price-lists__actions">
   <button type="button" data-price-list="natural">{uk?'Натуральний камінь / PDF':'Natural stone / PDF'}</button>
-  <button type="button" data-price-list="sm-quartz">SM Quartz / PDF</button>
+  <button type="button" data-price-list="sm-quartz">Santa Margherita / PDF</button>
  </div>
  <p data-price-list-status role="status" aria-live="polite" aria-atomic="true"></p>
  <div data-price-result="natural"><PdfActions locale={locale} name={uk?'Прайс натурального каменю':'Natural stone price list'}/></div>
