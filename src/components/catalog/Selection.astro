@@ -1,92 +1,53 @@
 ---
-import {products,money} from '@/catalog/data';
+import {Picture} from 'astro:assets';
+import {products,money,photoFor,productHref} from '@/catalog/data';
+import {labels} from '@/catalog/labels';
 import type {Locale} from '@/catalog/types';
 interface Props {locale:Locale}
-const {locale}=Astro.props;const uk=locale==='uk';
+const {locale}=Astro.props;const uk=locale==='uk';const l=labels(locale);
 ---
-<section class="selection" data-selection hidden aria-labelledby="selection-title">
- <h2 id="selection-title" class="mono-label">{uk?'Мій підбір матеріалів':'My material selection'}</h2>
- <p>{uk?'Попередній розрахунок за роздрібною ціною цілого слеба. Ціни з ПДВ. Доступну кількість і умови продажу потрібно підтвердити з ALTACO.':'Preliminary estimate at the retail price per whole slab. Prices include VAT. Confirm available quantities and sale terms with ALTACO.'}</p>
- <p class="selection-note">{uk?'Підбір діє на цій сторінці й очищується після її перезавантаження або переходу. PDF формується за знімком каталогу; умови підтверджує менеджер.':'This selection stays on this page and clears on reload or navigation. The PDF uses the catalogue snapshot; a manager confirms the terms.'}</p>
- <ul data-selection-list>
- {products.filter(p=>p.kind!=='sample-slab').map(p=><li data-selection-id={p.id} hidden>
-  <div><strong>{p.name}</strong><p>{p.lengthMm} × {p.widthMm} × {p.thicknessMm} mm · {p.finishPending?(uk?'Обробку уточнюємо':'Finish pending'):p.finish}</p><p>{p.kind==='fragment'?(uk?'Фрагмент: розрахунок за запитом':'Fragment: estimate on request'):`${money(p.priceSlabCents,locale)} / ${uk?'слеб':'slab'}`}{!p.inStock&&` · ${uk?'Немає в наявності':'Out of stock'}`}</p></div>
-  {p.kind==='slab'&&<label>{uk?'Слебів':'Slabs'}<input data-quantity required type="number" min="1" max="999" step="1" value="1" aria-label={`${uk?'Кількість слебів':'Slab quantity'}: ${p.name}, ${p.lengthMm} × ${p.widthMm}`} /></label>}
-  <span data-line-total></span>
-  <button type="button" data-remove={p.id} aria-label={`${uk?'Прибрати':'Remove'} ${p.name}`}>{uk?'Прибрати':'Remove'}</button>
- </li>)}
- </ul>
- <p data-selection-total role="status" aria-live="polite" aria-atomic="true"></p>
- <p>{uk?'PDF-КП: до 20 позицій, лише цілі слеби з наявністю, підтвердженою ціною, обробкою та фото. Ціни роздрібні, з ПДВ, без знижок.':'PDF offer: up to 20 materials, whole slabs with availability, confirmed prices, finish and photos. Retail prices including VAT, no discounts.'}</p>
- <button type="button" data-create-offer>{uk?'Сформувати PDF-КП':'Create PDF offer'}</button>
- <p data-offer-status role="status" aria-live="polite"></p>
- <a data-offer-download hidden download="ALTACO_Commercial_Offer.pdf">{uk?'Завантажити PDF-КП':'Download PDF offer'}</a>
- <button type="button" data-clear-selection>{uk?'Очистити підбір':'Clear selection'}</button>
-</section>
+<div class="cart-toolbar" data-cart-toolbar hidden>
+ <button type="button" data-open-cart aria-haspopup="dialog" aria-controls="altaco-cart">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 3h3l3 12h11l3-9H6"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+  {uk?'Кошик':'Cart'} <span data-cart-count>0</span>
+ </button>
+ <span class="cart-feedback" data-cart-feedback role="status" aria-live="polite"></span>
+</div>
+<dialog id="altaco-cart" class="cart" data-cart data-locale={locale} aria-labelledby="cart-title">
+ <header class="cart-header"><h2 id="cart-title">{uk?'Кошик':'Cart'}</h2><button type="button" data-close-cart aria-label={uk?'Закрити кошик':'Close cart'} autofocus>✕</button></header>
+ <div class="cart-body">
+  <p class="cart-note" data-cart-storage>{uk?'Кошик зберігається в цьому браузері. Ціни з ПДВ; наявність і умови підтверджує менеджер.':'Your cart is saved in this browser. Prices include VAT; a manager confirms availability and terms.'}</p>
+  <p data-cart-empty>{uk?'Кошик порожній. Додайте матеріали з каталогу.':'Your cart is empty. Add materials from the catalogue.'}</p>
+  <ul data-cart-list>
+  {products.filter(p=>p.kind!=='sample-slab').map(p=>{const photo=photoFor(p.photo);return <li data-cart-id={p.id} hidden>
+   <div class="cart-item-info">
+    {photo&&<Picture src={photo} alt="" widths={[120]} formats={['webp']} sizes="64px" loading="lazy"/>}
+    <div><a href={productHref(locale,p.id)}><strong>{p.name}</strong></a><p>{p.lengthMm} × {p.widthMm} × {p.thicknessMm} {l.mm} · {p.finishPending?l.surfacePending:p.finish}</p><p>{p.inStock?l.inStock:l.outOfStock}</p><p>{p.kind==='fragment'?(uk?'Фрагмент: розрахунок за запитом':'Fragment: estimate on request'):`${money(p.priceSlabCents,locale)} / ${uk?'сляб':'slab'}`}</p><p class="cart-warning" data-cart-warning hidden></p></div>
+   </div>
+   <div class="cart-item-actions">
+    {p.kind==='slab'&&<label>{uk?'Слябів':'Slabs'}<input data-quantity required type="number" min="1" max="999" step="1" value="1" aria-label={`${uk?'Кількість слябів':'Slab quantity'}: ${p.name}, ${p.lengthMm} × ${p.widthMm}`} /></label>}
+    <span data-line-total></span>
+    <button type="button" data-remove={p.id} aria-label={`${uk?'Прибрати':'Remove'} ${p.name}`}>{uk?'Прибрати':'Remove'}</button>
+   </div>
+  </li>})}
+  </ul>
+  <div data-cart-summary hidden>
+   <p class="cart-total" data-cart-total role="status" aria-live="polite" aria-atomic="true"></p>
+   <p class="cart-note">{uk?'PDF-КП: до 20 позицій. Лише цілі сляби в наявності з підтвердженими ціною, обробкою та фото. Без знижок.':'PDF offer: up to 20 items. Whole slabs in stock with confirmed prices, finish and photos. No discounts.'}</p>
+   <p class="cart-warning" data-cart-blocked hidden></p>
+   <button class="cart-primary" type="button" data-create-offer>{uk?'Сформувати КП в PDF':'Create PDF offer'}</button>
+   <p data-offer-status role="status" aria-live="polite"></p>
+   <a class="cart-primary" data-offer-download hidden download="ALTACO_Commercial_Offer.pdf">{uk?'Завантажити PDF-КП':'Download PDF offer'}</a>
+   <button type="button" data-clear-cart>{uk?'Очистити кошик':'Clear cart'}</button>
+  </div>
+ </div>
+ <footer class="cart-footer"><button type="button" data-close-cart>{uk?'Продовжити вибір матеріалів':'Continue browsing'}</button></footer>
+</dialog>
 <script>
- import raw from '@/catalog/snapshot.json';
- import {estimateLine} from '@/catalog/estimate.mjs';
- import type {Product,Snapshot} from '@/catalog/types';
- const panel=document.querySelector<HTMLElement>('[data-selection]');
- if(panel){
-  const uk=document.querySelector('[data-catalog]')?.getAttribute('data-locale')==='uk';
-  const selected=new Set<string>();
-  let revision=0,downloadUrl:string|null=null;
-  const download=panel.querySelector<HTMLAnchorElement>('[data-offer-download]')!;
-  const status=panel.querySelector<HTMLElement>('[data-offer-status]')!;
-  const generate=panel.querySelector<HTMLButtonElement>('[data-create-offer]')!;
-  const rows=new Map(Array.from(panel.querySelectorAll<HTMLElement>('[data-selection-id]')).map(row=>[row.dataset.selectionId!,row]));
-  const buttons=Array.from(document.querySelectorAll<HTMLButtonElement>('[data-add-selection]'));
-  const money=(cents:number)=>new Intl.NumberFormat(uk?'uk-UA':'en-IE',{style:'currency',currency:'EUR'}).format(cents/100);
-  const pending=uk?'За запитом':'On request';
-  function render(){
-   revision++;download.hidden=true;download.removeAttribute('href');status.textContent='';
-   if(downloadUrl){URL.revokeObjectURL(downloadUrl);downloadUrl=null;}
-   let total=0,unpriced=0,invalid=false;
-   panel!.hidden=selected.size===0;
-   for(const p of raw.products as Product[]){
-    const row=rows.get(p.id);if(!row)continue;
-    row.hidden=!selected.has(p.id);if(row.hidden)continue;
-    const input=row.querySelector<HTMLInputElement>('[data-quantity]');
-    const output=row.querySelector<HTMLElement>('[data-line-total]')!;
-    if(input&&!input.checkValidity()){invalid=true;input.setAttribute('aria-invalid','true');output.textContent=uk?'Введіть ціле число 1–999':'Enter a whole number 1–999';continue;}
-    input?.removeAttribute('aria-invalid');
-    const value=estimateLine(p,input?input.valueAsNumber:1);
-    if(value===null){unpriced++;output.textContent=pending;}else{total+=value;output.textContent=money(value);}
-   }
-   panel!.querySelector('[data-selection-total]')!.textContent=invalid?(uk?'Виправте кількість для розрахунку суми.':'Correct quantities to calculate the amount.'):`${uk?'Позицій':'Items'}: ${selected.size}. ${unpriced?(uk?'Сума лише оцінених позицій':'Priced items subtotal'):(uk?'Попередня сума':'Estimated total')}: ${money(total)}.${unpriced?` ${unpriced} ${uk?'позицій потребують уточнення ціни.':'items require a price confirmation.'}`:''}`;
-   for(const button of buttons){const active=selected.has(button.dataset.addSelection!);button.setAttribute('aria-pressed',String(active));button.textContent=active?(uk?'У підборі ✓':'Selected ✓'):(uk?'Додати до підбору':'Add to selection');}
-  }
-  for(const button of buttons){button.hidden=false;button.addEventListener('click',()=>{const id=button.dataset.addSelection!;if(selected.has(id))selected.delete(id);else selected.add(id);render();});}
-  panel.addEventListener('input',()=>render());
-  generate.addEventListener('click',async()=>{
-   const version=revision;
-   generate.disabled=true;status.textContent=uk?'Формуємо PDF…':'Preparing PDF…';
-   try{
-    const selection=Array.from(selected,id=>({id,quantity:rows.get(id)?.querySelector<HTMLInputElement>('input')?.valueAsNumber??1}));
-    const {offerBlob}=await import('@/catalog/offer-download');
-    const blob=await offerBlob(raw as Snapshot,selection,uk?'uk':'en');
-    if(version!==revision){status.textContent=uk?'Підбір змінився. Сформуйте PDF повторно.':'Selection changed. Generate the PDF again.';return;}
-    if(downloadUrl)URL.revokeObjectURL(downloadUrl);
-    downloadUrl=URL.createObjectURL(blob);download.href=downloadUrl;
-    download.download=`ALTACO_Commercial_Offer_${new Date().toISOString().slice(0,10)}.pdf`;
-    download.hidden=false;download.focus();
-    status.textContent=uk?'PDF готовий. Завантажте й перевірте перед надсиланням.':'PDF ready. Download and review before sending.';
-   }catch{
-    status.textContent=uk?'Не вдалося сформувати PDF. Перевірте кількість (ціле число 1–999), наявність, фото, обробку й підтверджені ціни всіх позицій (до 20). Якщо дані правильні, перевірте з’єднання та повторіть.':'Could not create the PDF. Check quantities (whole numbers 1–999), availability, photos, finish and confirmed prices for all items (up to 20). If valid, check your connection and retry.';
-   }finally{generate.disabled=false;}
-  });
-  panel.addEventListener('click',event=>{
-   const target=(event.target as Element).closest<HTMLButtonElement>('[data-remove], [data-clear-selection]');if(!target)return;
-   const id=target.dataset.remove;
-   if(id){selected.delete(id);const input=rows.get(id)?.querySelector<HTMLInputElement>('input');if(input)input.value='1';}
-   else{selected.clear();for(const input of panel.querySelectorAll<HTMLInputElement>('input'))input.value='1';}
-   render();
-   const next=panel.querySelector<HTMLButtonElement>('li:not([hidden]) button');
-   (next??buttons.find(button=>!button.closest('[data-product-id]')?.hasAttribute('hidden')))?.focus();
-  });
- }
+ import '@/catalog/cart-ui';
 </script>
 <style>
-.selection{border:1px solid var(--color-rule);padding:24px;margin:24px 0}.selection[hidden],.selection [hidden]{display:none!important}.selection h2{font-size:16px}.selection p{font-size:13px;margin:8px 0}.selection-note{color:var(--color-muted)}.selection li{display:flex;align-items:center;gap:16px;flex-wrap:wrap;border-top:1px solid var(--color-rule);padding:16px 0}.selection li>div{flex:1;min-width:180px}.selection strong{font-size:14px}.selection label{font-size:12px;display:flex;flex-direction:column;gap:4px}.selection input{width:85px}.selection button,.selection input{background:var(--color-bg);color:var(--color-text);border:1px solid var(--color-rule);padding:10px;min-height:44px;font:inherit;font-size:14px}.selection button{cursor:pointer}.selection :focus-visible{outline:2px solid var(--brand-cyan);outline-offset:3px}.selection [aria-invalid=true]{border-color:#f99}.selection [data-selection-total]{font-weight:600}@media(max-width:480px){.selection{padding:16px}.selection input{font-size:16px}}
+.cart-toolbar{position:sticky;top:12px;z-index:20;display:flex;justify-content:flex-end;align-items:center;gap:12px;margin:16px 0;pointer-events:none}.cart-toolbar button{pointer-events:auto;display:flex;align-items:center;gap:10px;background:var(--color-bg);color:var(--color-text);border:1px solid var(--brand-cyan);padding:12px 18px;font:inherit;min-height:48px;cursor:pointer}.cart-toolbar [data-cart-count]{background:var(--brand-cyan);color:var(--color-bg);border-radius:20px;min-width:24px;padding:2px 6px;text-align:center}.cart-feedback{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.cart{position:fixed;inset:0;margin:auto;width:min(760px,calc(100vw - 24px));max-width:760px;height:auto;max-height:calc(100dvh - 32px);padding:0;border:1px solid var(--color-rule);background:var(--color-bg);color:var(--color-text);text-align:left;overscroll-behavior:contain}.cart[open]{display:flex;flex-direction:column}.cart::backdrop{background:rgba(0,0,0,.72)}.cart [hidden],.cart-toolbar[hidden]{display:none!important}.cart-header,.cart-footer{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;flex-shrink:0}.cart-header{border-bottom:1px solid var(--color-rule)}.cart-header h2{font-size:22px;letter-spacing:0;text-transform:none;margin:0}.cart-body{overflow-y:auto;overscroll-behavior:contain;padding:8px 24px 24px}.cart-footer{border-top:1px solid var(--color-rule)}.cart p{font-size:13px;line-height:1.5;margin:6px 0}.cart .cart-note{color:var(--color-muted);margin:12px 0}.cart ul{list-style:none;padding:0;margin:0}.cart li{padding:20px 0;border-top:1px solid var(--color-rule)}.cart-item-info{display:flex;gap:16px}.cart-item-info>div{min-width:0;flex:1}.cart-item-info a{text-decoration:none}.cart strong{font-size:15px;overflow-wrap:anywhere}.cart-item-info :global(picture){width:64px;min-width:64px;height:64px}.cart-item-info :global(img){width:64px;height:64px;object-fit:cover}.cart-item-actions{display:flex;align-items:center;gap:16px;justify-content:flex-end;margin-top:12px;flex-wrap:wrap}.cart label{display:flex;align-items:center;gap:8px;font-size:12px}.cart input{width:76px}.cart button,.cart input,.cart .cart-primary{background:var(--color-bg);color:var(--color-text);border:1px solid var(--color-rule);padding:10px 14px;min-height:44px;font:inherit;font-size:14px}.cart button{cursor:pointer}.cart button:disabled{opacity:.45;cursor:not-allowed}.cart .cart-primary{display:inline-flex;justify-content:center;background:var(--brand-cyan);border-color:var(--brand-cyan);color:var(--color-bg);text-decoration:none;font-weight:600;margin:8px 8px 8px 0}.cart .cart-total{border-top:1px solid var(--color-rule);padding-top:20px;font-size:18px;font-weight:600}.cart .cart-warning{color:#f0ba81}.cart [aria-invalid=true]{border-color:#f99}.cart :focus-visible,.cart-toolbar :focus-visible{outline:2px solid var(--brand-cyan);outline-offset:3px}
+@media(max-width:480px){.cart-header,.cart-footer{padding:12px 16px}.cart-body{padding:8px 16px 16px}.cart input{font-size:16px}.cart-item-info{gap:12px}.cart-item-actions{gap:10px;justify-content:space-between}.cart-item-actions [data-line-total]{font-size:14px}.cart .cart-primary,.cart-footer button{width:100%;margin-right:0}.cart-item-info :global(picture),.cart-item-info :global(img){width:52px;min-width:52px;height:52px}.cart strong{font-size:14px}}
 </style>

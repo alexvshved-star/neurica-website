@@ -19,7 +19,7 @@ const {product:p,locale,index}=Astro.props;const l=labels(locale);const photo=ph
   <p class:list={['catalog-card__stock','mono',{'is-available':p.inStock}]}>{p.inStock?l.inStock:l.outOfStock}</p>
   {p.kind!=='slab'&&<p class="catalog-card__kind mono">{p.kind==='sample-slab'?l.sample:l.fragment}</p>}
  </a>
- {p.kind!=='sample-slab'&&<button class="catalog-select" type="button" data-add-selection={p.id} hidden aria-pressed="false">{locale==='uk'?'Додати до підбору':'Add to selection'}</button>}
+ {p.kind!=='sample-slab'&&<button class="catalog-select" type="button" data-add-selection={p.id} hidden aria-pressed="false">{locale==='uk'?'Додати в кошик':'Add to cart'}</button>}
 </li>
 <style>
 .catalog-select{width:100%;min-height:44px;margin-top:12px;padding:10px;background:transparent;color:var(--color-text);border:1px solid var(--color-rule);font:inherit;font-size:12px;cursor:pointer}.catalog-select[hidden]{display:none}.catalog-select[aria-pressed=true]{border-color:var(--brand-cyan);color:var(--brand-cyan)}.catalog-select:focus-visible{outline:2px solid var(--brand-cyan);outline-offset:3px}
