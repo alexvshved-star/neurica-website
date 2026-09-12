@@ -41,7 +41,7 @@ export function normalizeStock(rows, manifest, importedAt, dataAsOf = null) {
     if (!m) throw new Error(`Unmapped variant: ${name}; review manifest before importing`);
     const cents = value => num(value) && value>0 ? Math.round(value*100) : null;
     const pending = m.pricePending === true || cents(row[16]) === null || cents(row[18]) === null;
-    products.push({id:m.id,name:group==='sm-quartz' && finish.toLowerCase()==='silk' && !/\bsilk$/i.test(name.trim()) ? `${name.trim()} Silk` : name.trim(),family:group==='sm-quartz'?'sm-quartz':'natural',kind:group==='sample-slab'?'sample-slab':name.includes('кусок')?'fragment':'slab',
+    products.push({id:m.id,name:group==='sm-quartz' && finish.toLowerCase()==='silk' && !/\bsilk$/i.test(name.trim()) ? `${name.trim()} Silk` : name.trim(),family:group==='sm-quartz'?'sm-quartz':'natural',kind:name.includes('кусок')?'fragment':'slab',
       materialType:m.materialType ?? ({Granite:'granite',Marble:'marble',Quarcite:'quartzite',Travertine:'travertine','SM Quartz':'quartz-agglomerate'}[rawType] ?? 'natural-stone'),
       manufacturer:m.manufacturer ?? null,collection:m.collection ?? null,code:m.code ?? null,
       finish,finishPending:m.finishPending===true,lengthMm:dimensions[0],widthMm:dimensions[1],thicknessMm:dimensions[2],inStock:row[13]>0,

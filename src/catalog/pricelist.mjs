@@ -43,7 +43,7 @@ export function createPriceList(snapshot,family,assets,locale='uk',createdAt=new
  text(`${uk?'Імпорт даних':'Data imported'}: ${date(snapshot.importedAt)}`,16,278,8,'#a6adb2');
  pdf.addPage();header();text(uk?'Складська пропозиція / Київ':'Kyiv stock selection',16,44,19);
  const notes=uk?[
-  'У прайсі наведено позиції з позитивною наявністю у знімку каталогу ALTACO. Зразкові слеби не включені.',
+  'У прайсі наведено матеріали з позитивною наявністю у знімку каталогу ALTACO.',
   'Кожна картка відповідає конкретному матеріалу, партії, поверхні, формату й товщині. Фрагменти позначені окремо.',
   'Кількість не публікується - актуальний залишок, можливість продажу цілого слеба та резерв підтверджує менеджер.',
   'Ціни роздрібні, в EUR, з ПДВ, без знижок. Розрахунок у гривні - за погодженим курсом на дату оплати.',
@@ -51,7 +51,7 @@ export function createPriceList(snapshot,family,assets,locale='uk',createdAt=new
   'Макрофото передає характер матеріалу; фактичний малюнок конкретного слеба погоджується окремо.',
   `Дата формування: ${date(createdAt)}. Дата імпорту: ${date(snapshot.importedAt)}. Автоматичного оновлення немає; ціни й наявність перед замовленням підтверджує менеджер.`
  ]:[
-  'This list includes materials with positive availability in the ALTACO catalogue snapshot. Sample slabs are excluded.',
+  'This list includes materials with positive availability in the ALTACO catalogue snapshot.',
   'Each card represents a specific material, lot, finish, format and thickness. Fragments are explicitly labelled.',
   'Quantities are available on request. A manager confirms stock, whole slab availability and reservations.',
   'Retail prices in EUR, including VAT, without discounts. Payment in UAH at the rate agreed on the payment date.',

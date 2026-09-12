@@ -29,12 +29,12 @@ test('import publishes only retail projection, never raw stock fields',()=>{
  assert.throws(()=>validateSnapshot({...result,wholesale:1}),/Non-public/);
  assert.throws(()=>validateSnapshot({...result,products:[{...result.products[0],reserve:1}]}),/Non-public/);
 });
-test('samples are separated and zero stock is unavailable',()=>{
+test('hand samples are excluded and zero stock is unavailable',()=>{
  const r=makeRow('Example','Silk',1550,0);
  const result=normalizeStock([['НАЯВНІСТЬ | SM Quartz'],headers,r,['ЗРАЗКИ | SM Quartz'],makeRow('Small sample')],manifestFor(r),'2026-09-06T12:00:00Z');
  assert.equal(result.products.length,1);assert.equal(result.products[0].inStock,false);
  assert.equal(selectProducts(snapshot.products).filter(p=>p.kind==='sample-slab').length,0);
- assert.equal(selectProducts(snapshot.products,{samples:'yes'}).filter(p=>p.kind==='sample-slab').length,5);
+ assert.equal(selectProducts(snapshot.products).length,snapshot.products.length);
 });
 test('unconfirmed price excluded; dimensions and finish distinguish variants',()=>{
  const r=makeRow('Fusion Black');const result=normalizeStock([['НАЯВНІСТЬ | SM Quartz'],headers,r],manifestFor(r,{...record,pricePending:true}),'2026-09-06T12:00:00Z');
