@@ -4,6 +4,12 @@ import fs from 'node:fs';
 import {offerItems} from '../../src/catalog/offer.mjs';
 const snapshot=JSON.parse(fs.readFileSync(new URL('../../src/catalog/snapshot.json',import.meta.url)));
 const valid=snapshot.products.find(p=>p.inStock&&p.kind==='slab'&&!p.pricePending&&!p.finishPending&&p.photo&&p.priceSlabCents!==null);
+test('PDF offer accepts half an Ardenne Silk slab for EUR 685 including VAT',()=>{
+ const p=snapshot.products.find(p=>p.name==='Ardenne Silk');
+ const [item]=offerItems(snapshot,[{id:p.id,quantity:0.5}]);
+ assert.equal(item.quantity,0.5);assert.equal(item.totalCents,68500);
+ assert.throws(()=>offerItems(snapshot,[{id:p.id,quantity:0.25}]));
+});
 test('offer preserves VAT-inclusive source prices without discounts',()=>{
  const [item]=offerItems(snapshot,[{id:valid.id,quantity:2}]);
  assert.equal(item.totalCents,valid.priceSlabCents*2);

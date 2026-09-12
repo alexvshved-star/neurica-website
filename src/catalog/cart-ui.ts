@@ -1,5 +1,7 @@
 import raw from './snapshot.json';
 import {estimateLine} from './estimate.mjs';
+import {validQuantity,quantityStep} from './quantity.mjs';
+import {bindPdfActions} from './pdf-actions';
 import {CART_KEY,readCart,writeCart} from './cart.mjs';
 import type {Product,Snapshot} from './types';
 
@@ -11,11 +13,11 @@ if(panel){
  const rows=new Map(Array.from(panel.querySelectorAll<HTMLElement>('[data-cart-id]')).map(row=>[row.dataset.cartId!,row]));
  const buttons=Array.from(document.querySelectorAll<HTMLButtonElement>('[data-add-selection]'));
  const opener=document.querySelector<HTMLButtonElement>('[data-open-cart]')!;
- const download=panel.querySelector<HTMLAnchorElement>('[data-offer-download]')!;
+ const pdfActions=bindPdfActions(panel.querySelector<HTMLElement>('[data-pdf-actions]')!,uk);
  const status=panel.querySelector<HTMLElement>('[data-offer-status]')!;
  const generate=panel.querySelector<HTMLButtonElement>('[data-create-offer]')!;
  const storageNote=panel.querySelector<HTMLElement>('[data-cart-storage]')!;
- let revision=0,downloadUrl:string|null=null,busy=false,eligible=false,storageAvailable=true;
+ let revision=0,busy=false,eligible=false,storageAvailable=true;
  let returnFocus:HTMLElement=opener,previousOverflow='';
  const money=(cents:number)=>new Intl.NumberFormat(uk?'uk-UA':'en-IE',{style:'currency',currency:'EUR'}).format(cents/100);
  const selection=()=>Array.from(selected,id=>({id,quantity:rows.get(id)?.querySelector<HTMLInputElement>('input')?.valueAsNumber??1}));
@@ -26,7 +28,7 @@ if(panel){
  function save(){
   try{
    // Invalid input remains visible for correction, but cannot corrupt the saved cart.
-   const valid=selection().map(item=>({...item,quantity:Number.isSafeInteger(item.quantity)&&item.quantity>=1&&item.quantity<=999?item.quantity:1}));
+   const valid=selection().map(item=>({...item,quantity:validQuantity(products.find(p=>p.id===item.id)!,item.quantity)?item.quantity:1}));
    localStorage.setItem(CART_KEY,writeCart(valid));
   }catch{storageFailed();}
  }
@@ -42,8 +44,7 @@ if(panel){
   if(!panel!.open){previousOverflow=document.documentElement.style.overflow;document.documentElement.style.overflow='hidden';panel!.showModal();}
  }
  function render(){
-  revision++;download.hidden=true;download.removeAttribute('href');status.textContent='';
-  if(downloadUrl){URL.revokeObjectURL(downloadUrl);downloadUrl=null;}
+  revision++;pdfActions.clear();status.textContent='';
   let total=0,unpriced=0,invalid=false,blocked=false;
   for(const p of products){
    const row=rows.get(p.id);if(!row)continue;
@@ -59,7 +60,7 @@ if(panel){
    if(!p.photo)reasons.push(uk?'Фото для PDF відсутнє':'PDF photo missing');
    warning.textContent=reasons.join(' · ');warning.hidden=!reasons.length;blocked ||=reasons.length>0;
    if(input&&!input.checkValidity()){
-    invalid=true;input.setAttribute('aria-invalid','true');output.textContent=uk?'Ціле число 1–999':'Whole number 1–999';continue;
+    invalid=true;input.setAttribute('aria-invalid','true');output.textContent=quantityStep(p)===0.5?(uk?'Від 0,5, крок 0,5':'From 0.5, step 0.5'):(uk?'Ціле число 1–999':'Whole number 1–999');continue;
    }
    input?.removeAttribute('aria-invalid');
    const value=estimateLine(p,input?input.valueAsNumber:1);
@@ -73,7 +74,7 @@ if(panel){
   const notice=panel!.querySelector<HTMLElement>('[data-cart-blocked]')!;
   notice.hidden=!(blocked||invalid||selected.size>20);
   notice.textContent=selected.size>20?(uk?'Для однієї PDF-КП залиште до 20 позицій.':'Keep up to 20 items for one PDF offer.'):
-   invalid?(uk?'Вкажіть цілу кількість слябів від 1 до 999.':'Enter a whole slab quantity from 1 to 999.'):
+   invalid?(uk?'Натуральний камінь: 1–999 цілих слябів. SM Quartz: 0,5–999 із кроком 0,5.':'Natural stone: 1–999 whole slabs. SM Quartz: 0.5–999 in steps of 0.5.'):
    (uk?'Для формування PDF приберіть позиції з попередженнями або уточніть їх у менеджера.':'To generate a PDF, remove flagged items or confirm them with a manager.');
   eligible=selected.size>0&&selected.size<=20&&!blocked&&!invalid;
   generate.disabled=busy||!eligible;
@@ -111,10 +112,8 @@ if(panel){
    const {offerBlob}=await import('./offer-download');
    const blob=await offerBlob(raw as Snapshot,items,uk?'uk':'en');
    if(version!==revision){status.textContent=uk?'Кошик змінився. Сформуйте PDF повторно.':'Cart changed. Generate the PDF again.';return;}
-   downloadUrl=URL.createObjectURL(blob);download.href=downloadUrl;
-   download.download='ALTACO_Commercial_Offer_'+new Date().toISOString().slice(0,10)+'.pdf';
-   download.hidden=false;if(panel.open)download.focus();
-   status.textContent=uk?'PDF готовий. Завантажте й перевірте перед надсиланням.':'PDF ready. Download and review before sending.';
+   pdfActions.set(blob,'ALTACO_Commercial_Offer_'+new Date().toISOString().slice(0,10)+'.pdf');
+   status.textContent=uk?'PDF готовий. Перегляньте, завантажте або поділіться файлом.':'PDF ready. Preview, download or share the file.';
   }catch{status.textContent=uk?'Не вдалося сформувати PDF. Перевірте з’єднання та повторіть.':'Could not generate the PDF. Check your connection and retry.';}
   finally{busy=false;generate.disabled=!eligible;}
  });

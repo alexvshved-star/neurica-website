@@ -1,4 +1,5 @@
 // Persist IDs and quantities only; prices always come from the current catalogue.
+import {validQuantity} from './quantity.mjs';
 export const CART_KEY = 'altaco-cart-v1';
 export function readCart(value, products) {
   try {
@@ -7,7 +8,7 @@ export function readCart(value, products) {
     const allowed = new Map(products.filter(p => p.kind !== 'sample-slab').map(p => [p.id, p]));
     const seen = new Set();
     return data.items.filter(item => {
-      if (!item || !allowed.has(item.id) || seen.has(item.id) || !Number.isSafeInteger(item.quantity) || item.quantity < 1 || item.quantity > 999) return false;
+      if (!item || !allowed.has(item.id) || seen.has(item.id) || !validQuantity(allowed.get(item.id),item.quantity)) return false;
       seen.add(item.id);return true;
     }).map(({id, quantity}) => ({id, quantity: allowed.get(id).kind === 'fragment' ? 1 : quantity}));
   } catch { return []; }

@@ -2,6 +2,8 @@
 import {Picture} from 'astro:assets';
 import {products,money,photoFor,productHref} from '@/catalog/data';
 import {labels} from '@/catalog/labels';
+import {quantityStep} from '@/catalog/quantity.mjs';
+import PdfActions from './PdfActions.astro';
 import type {Locale} from '@/catalog/types';
 interface Props {locale:Locale}
 const {locale}=Astro.props;const uk=locale==='uk';const l=labels(locale);
@@ -25,7 +27,7 @@ const {locale}=Astro.props;const uk=locale==='uk';const l=labels(locale);
     <div><a href={productHref(locale,p.id)}><strong>{p.name}</strong></a><p>{p.lengthMm} × {p.widthMm} × {p.thicknessMm} {l.mm} · {p.finishPending?l.surfacePending:p.finish}</p><p>{p.inStock?l.inStock:l.outOfStock}</p><p>{p.kind==='fragment'?(uk?'Фрагмент: розрахунок за запитом':'Fragment: estimate on request'):`${money(p.priceSlabCents,locale)} / ${uk?'сляб':'slab'}`}</p><p class="cart-warning" data-cart-warning hidden></p></div>
    </div>
    <div class="cart-item-actions">
-    {p.kind==='slab'&&<label>{uk?'Слябів':'Slabs'}<input data-quantity required type="number" min="1" max="999" step="1" value="1" aria-label={`${uk?'Кількість слябів':'Slab quantity'}: ${p.name}, ${p.lengthMm} × ${p.widthMm}`} /></label>}
+    {p.kind==='slab'&&<label>{uk?(quantityStep(p)===0.5?'Слябів · крок 0,5':'Слябів'):(quantityStep(p)===0.5?'Slabs · step 0.5':'Slabs')}<input data-quantity required type="number" min={quantityStep(p)} max="999" step={quantityStep(p)} value="1" aria-label={`${uk?'Кількість слябів':'Slab quantity'}: ${p.name}, ${p.lengthMm} × ${p.widthMm}`} /></label>}
     <span data-line-total></span>
     <button type="button" data-remove={p.id} aria-label={`${uk?'Прибрати':'Remove'} ${p.name}`}>{uk?'Прибрати':'Remove'}</button>
    </div>
@@ -33,11 +35,11 @@ const {locale}=Astro.props;const uk=locale==='uk';const l=labels(locale);
   </ul>
   <div data-cart-summary hidden>
    <p class="cart-total" data-cart-total role="status" aria-live="polite" aria-atomic="true"></p>
-   <p class="cart-note">{uk?'PDF-КП: до 20 позицій. Лише цілі сляби в наявності з підтвердженими ціною, обробкою та фото. Без знижок.':'PDF offer: up to 20 items. Whole slabs in stock with confirmed prices, finish and photos. No discounts.'}</p>
+   <p class="cart-note">{uk?'PDF-КП: до 20 позицій. Натуральний камінь — цілі сляби; SM Quartz — крок 0,5. Позиції в наявності з підтвердженими ціною, обробкою та фото. Без знижок.':'PDF offer: up to 20 items. Natural stone: whole slabs; SM Quartz: steps of 0.5. In-stock items with confirmed prices, finish and photos. No discounts.'}</p>
    <p class="cart-warning" data-cart-blocked hidden></p>
    <button class="cart-primary" type="button" data-create-offer>{uk?'Сформувати КП в PDF':'Create PDF offer'}</button>
    <p data-offer-status role="status" aria-live="polite"></p>
-   <a class="cart-primary" data-offer-download hidden download="ALTACO_Commercial_Offer.pdf">{uk?'Завантажити PDF-КП':'Download PDF offer'}</a>
+   <PdfActions locale={locale} name={uk?'Комерційна пропозиція':'Commercial offer'}/>
    <button type="button" data-clear-cart>{uk?'Очистити кошик':'Clear cart'}</button>
   </div>
  </div>

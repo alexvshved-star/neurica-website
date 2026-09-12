@@ -2,6 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readCart,writeCart} from '../../src/catalog/cart.mjs';
 const products=[{id:'a',kind:'slab'},{id:'b',kind:'fragment'},{id:'c',kind:'sample-slab'}];
+test('SM Quartz half quantities survive reload; natural stone and fragments reject halves',()=>{
+ const items=[{id:'sm',quantity:0.5},{id:'sm2',quantity:1.5},{id:'a',quantity:0.5},{id:'b',quantity:0.5}];
+ const catalogue=[...products,{id:'sm',kind:'slab',family:'sm-quartz'},{id:'sm2',kind:'slab',family:'sm-quartz'}];
+ assert.deepEqual(readCart(writeCart(items),catalogue),items.slice(0,2));
+});
 test('cart round trip persists IDs and quantities, not stale prices or personal data',()=>{
  const encoded=writeCart([{id:'a',quantity:2,price:1,customer:'secret'}]);
  assert.deepEqual(JSON.parse(encoded),{version:1,items:[{id:'a',quantity:2}]});

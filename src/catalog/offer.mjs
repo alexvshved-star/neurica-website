@@ -27,6 +27,7 @@ export function createOffer(snapshot, selection, assets, locale='uk', createdAt=
   pdf.setProperties({title:uk?'Комерційна пропозиція ALTACO':'ALTACO Commercial Offer',author:'ALTACO',subject:'Retail prices including VAT'});
   const dark='#0f181f',gold='#b38a3c',ink='#4d555b',muted='#78828a';
   const money=c=>new Intl.NumberFormat(uk?'uk-UA':'en-IE',{style:'currency',currency:'EUR',currencyDisplay:'narrowSymbol',minimumFractionDigits:2}).format(c/100).replace(/[\u00a0\u202f]/g,' ');
+  const qty=q=>new Intl.NumberFormat(uk?'uk-UA':'en-GB',{maximumFractionDigits:1}).format(q);
   const date=new Intl.DateTimeFormat(uk?'uk-UA':'en-GB',{timeZone:'Europe/Kyiv'}).format(createdAt);
   const imported=new Intl.DateTimeFormat(uk?'uk-UA':'en-GB',{timeZone:'Europe/Kyiv'}).format(new Date(snapshot.importedAt));
   const text=(s,x,y,size=10,color=ink,bold=false,width=178)=>{
@@ -64,7 +65,7 @@ export function createOffer(snapshot, selection, assets, locale='uk', createdAt=
   text(items.length===1?first.name.toUpperCase():(uk?'ПІДБІР МАТЕРІАЛІВ':'MATERIAL SELECTION'),17.5,89,23,'#ffffff',true,130);
   text(items.length===1?`${first.materialType.toUpperCase()} / ${first.finish.toUpperCase()}`:`${uk?'ПОЗИЦІЙ':'MATERIALS'}: ${items.length}`,17.5,111,10,gold);
   text(items.length===1?collection(first):'ALTACO / '+(uk?'СКЛАД КИЇВ':'KYIV STOCK'),17.5,123,8,'#a2aab0',false,170);
-  text(`${uk?'СЛЕБІВ':'SLABS'}: ${items.reduce((sum,item)=>sum+item.quantity,0)}`,17.5,142,10,'#ffffff',true);
+  text(`${uk?'СЛЕБІВ':'SLABS'}: ${qty(items.reduce((sum,item)=>sum+item.quantity,0))}`,17.5,142,10,'#ffffff',true);
   text(`${uk?'РАЗОМ З ПДВ':'TOTAL INCLUDING VAT'}: ${money(total)}`,17.5,153,14,gold,true);
   rect(17.5,169,175,8,'#222c33');
   text(items.length===1?first.name:'ALTACO',22,174.5,7,'#ffffff',true,160);
@@ -74,13 +75,14 @@ export function createOffer(snapshot, selection, assets, locale='uk', createdAt=
     pdf.addPage();rect(0,0,210,26,dark);logo(16,7,48);rect(0,26,210,.8,gold);
     text(uk?'КОМЕРЦІЙНА ПРОПОЗИЦІЯ':'COMMERCIAL OFFER',149,8,6,'#a2aab0',false,50);
     text(p.name,16,45,19,ink,false,155);
-    text(`${uk?'КІЛЬКІСТЬ СЛЕБІВ':'SLAB QUANTITY'}: ${quantity}`,16,62,8,gold,true);
+    text(`${uk?'КІЛЬКІСТЬ СЛЕБІВ':'SLAB QUANTITY'}: ${qty(quantity)}`,16,62,8,gold,true);
+    if(quantity%1!==0)text(uk?'Пів слябу: 50% ціни. Розміри частини погоджуються окремо.':'Half slab: 50% of slab price. Cut dimensions agreed separately.',16,69,7,muted,false,178);
     rect(16,74,178,8,'#222c33');text(p.materialType.toUpperCase(),19,79.5,7,'#ffffff',true,100);text(p.finish.toUpperCase(),153,79.5,7,'#ffffff',true,38);
     photo(p,16,82,178,81.37);
     const area=p.lengthMm*p.widthMm/1e6;
     const facts=[
-      [uk?'ФОРМАТ':'FORMAT',format(p)],
-      [uk?'ПЛОЩА СЛЕБА':'SLAB AREA',new Intl.NumberFormat(uk?'uk-UA':'en-GB',{minimumFractionDigits:3,maximumFractionDigits:3}).format(area)+' m²'],
+      [uk?'ФОРМАТ ЦІЛОГО СЛЯБУ':'FULL SLAB FORMAT',format(p)],
+      [uk?'ПЛОЩА ЦІЛОГО СЛЯБУ':'FULL SLAB AREA',new Intl.NumberFormat(uk?'uk-UA':'en-GB',{minimumFractionDigits:3,maximumFractionDigits:3}).format(area)+' m²'],
       [uk?'КОЛЕКЦІЯ':'COLLECTION',collection(p)]
     ];
     for(const [j,[label,value]] of facts.entries()){const x=16+j*60;text(label,x,177,6.5,muted);text(value,x,184,8,ink,false,54);}
@@ -89,7 +91,7 @@ export function createOffer(snapshot, selection, assets, locale='uk', createdAt=
     text(p.priceM2Cents===null?(uk?'За запитом':'On request'):money(p.priceM2Cents),24,228,17,ink);
     text(uk?'ЦІНА ЗА СЛЕБ, З ПДВ':'PRICE PER SLAB, INCL. VAT',113,214,7,muted);
     text(money(p.priceSlabCents),113,228,17,ink);
-    rect(112,192,82,10,gold);text(`${quantity} ${uk?'СЛЕБ(ІВ) / РАЗОМ':'SLAB(S) / TOTAL'} ${money(totalCents)}`,116,198.5,8,dark,true,74);
+    rect(112,192,82,10,gold);text(`${qty(quantity)} ${uk?'СЛЕБ(ІВ) / РАЗОМ':'SLAB(S) / TOTAL'} ${money(totalCents)}`,116,198.5,8,dark,true,74);
     rules();pdf.setDrawColor('#c9ced1');pdf.setLineWidth(.2);pdf.line(16,285,194,285);
     text('ALTACO / '+(uk?'КИЇВ':'KYIV')+' / ALTACO.COM.UA',16,290,6,muted);
     text(String(index+2).padStart(2,'0'),190,290,7,muted);
