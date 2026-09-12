@@ -1,8 +1,23 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import {labels} from '../../src/catalog/labels.ts';
 import {REQUIRED_HEADERS,normalizeStock,validateSnapshot,selectProducts,variantKey} from '../../src/catalog/model.mjs';
 const snapshot=JSON.parse(fs.readFileSync(new URL('../../src/catalog/snapshot.json',import.meta.url)));
+test('availability categories use Kyiv stock and on-order labels in both languages',()=>{
+ assert.equal(labels('uk').inStock,'В наявності • Київ');
+ assert.equal(labels('uk').outOfStock,'Під замовлення');
+ assert.equal(labels('en').inStock,'In stock • Kyiv');
+ assert.equal(labels('en').outOfStock,'On order');
+ for(const samples of ['', 'yes']){
+  const all=selectProducts(snapshot.products,{samples});
+  const stocked=selectProducts(snapshot.products,{samples,stock:'yes'});
+  const ordered=selectProducts(snapshot.products,{samples,stock:'no'});
+  assert.ok(stocked.length>0);assert.ok(ordered.length>0);
+  assert.ok(stocked.every(p=>p.inStock));assert.ok(ordered.every(p=>!p.inStock));
+  assert.equal(stocked.length+ordered.length,all.length);
+ }
+});
 const makeRow=(name,finish='Silk',width=1550,stock=1)=>[name,'SM Quartz','internal color','internal claim','',''+finish,3200,width,20,91,92,93,94,stock,96,98765,100,98766,496,99];
 const headers=Array.from({length:22},(_,i)=>REQUIRED_HEADERS[i]??'');
 const record={id:'sm-123456789abc'};
