@@ -15,7 +15,7 @@ const initial=selectProducts(products);
  <PriceLists locale={locale}/>
  <form class="catalog-filters" data-filters role="search" aria-label={l.search}>
   <label class="catalog-search"><span class="mono-label">{l.search}</span><input type="search" name="q" placeholder={l.placeholder} autocomplete="off" /></label>
-  <label><span class="mono-label">{l.collection}</span><select name="family"><option value="">{l.all}</option><option value="natural">{locale==='uk'?'НАТУРАЛЬНІ МАТЕРІАЛИ':'NATURAL MATERIALS'}</option><option value="sm-quartz">SANTAMARGHERITA</option></select></label>
+  <label><span class="mono-label">{l.collection}</span><select name="family"><option value="">{l.all}</option><option value="natural">{locale==='uk'?'Натуральні матеріали':'Natural materials'}</option><option value="sm-quartz">Santa Margherita</option></select></label>
   <label><span class="mono-label">{l.type}</span><select name="type"><option value="">{l.all}</option>{values('materialType').map(v=><option value={v}>{materialLabel(v,locale)}</option>)}</select></label>
   <label><span class="mono-label">{l.finish}</span><select name="finish"><option value="">{l.all}</option>{values('finish').filter(v=>products.some(p=>p.finish===v&&!p.finishPending)).map(v=><option value={v}>{v}</option>)}</select></label>
   <label><span class="mono-label">{l.thickness}</span><select name="thickness"><option value="">{l.all}</option>{values('thicknessMm').map(v=><option value={v}>{v} {l.mm}</option>)}</select></label>

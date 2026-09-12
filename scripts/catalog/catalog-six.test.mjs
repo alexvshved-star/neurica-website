@@ -33,7 +33,8 @@ test('six controls use family behind manufacturer label, without collection, sor
  const source=fs.readFileSync(new URL('../../src/components/catalog/Catalog.astro',import.meta.url),'utf8');
  const form=source.split('<form')[1].split('</form>')[0];
  assert.deepEqual([...form.matchAll(/name="([^"]+)"/g)].map(m=>m[1]),['q','family','type','finish','thickness','stock']);
- assert.match(form,/l.collection/);assert.match(form,/НАТУРАЛЬНІ МАТЕРІАЛИ/);assert.match(form,/SANTAMARGHERITA/);
+ assert.match(form,/l.collection/);assert.match(form,/Натуральні матеріали/);assert.match(form,/Santa Margherita/);
+ assert.doesNotMatch(form,/НАТУРАЛЬНІ МАТЕРІАЛИ|NATURAL MATERIALS|SANTAMARGHERITA/);
  const result=selectProducts(snapshot.products);let unavailable=false;
  for(const p of result){if(!p.inStock)unavailable=true;else assert.equal(unavailable,false);}
 });
