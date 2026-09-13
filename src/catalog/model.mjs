@@ -1,3 +1,4 @@
+import {isCalendarDate} from './calendar-date.mjs';
 /** Public catalogue contract. No raw stock rows may be served or committed. */
 export const REQUIRED_HEADERS = {0:'Артикул',1:'Тип матеріалу',5:'Обробка',6:'Висота, мм',7:'Ширина, мм',8:'Товщина, мм',13:'В наявності, слебів',16:'Роздріб, €/м²',18:'Роздріб, €/слеб'};
 export const PRODUCT_FIELDS = ['id','name','family','kind','materialType','manufacturer','collection','code','finish','finishPending','lengthMm','widthMm','thicknessMm','inStock','priceM2Cents','priceSlabCents','pricePending','photo','reference'];
@@ -5,7 +6,7 @@ export function validateSnapshot(snapshot) {
   if (Object.keys(snapshot).some(k=>!['schemaVersion','importedAt','dataAsOf','sourceLabel','vat','products'].includes(k))) throw new Error('Non-public snapshot field');
   if (snapshot.schemaVersion !== 1 || !Array.isArray(snapshot.products) || !snapshot.products.length) throw new Error('Empty or unsupported catalogue');
   if (!Number.isFinite(Date.parse(snapshot.importedAt))) throw new Error('Invalid import timestamp');
-  if (snapshot.dataAsOf !== null && !/^\d{4}-\d{2}-\d{2}$/.test(snapshot.dataAsOf)) throw new Error('Invalid source date');
+  if (snapshot.dataAsOf !== null && !isCalendarDate(snapshot.dataAsOf)) throw new Error('Invalid source date');
   const seen = new Set();
   for (const p of snapshot.products) {
     if (Object.keys(p).some(k => !PRODUCT_FIELDS.includes(k))) throw new Error(`Non-public field in ${p.id}`);

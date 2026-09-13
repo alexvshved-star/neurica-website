@@ -29,12 +29,25 @@ test('dataAsOf formatting never substitutes importedAt or today’s date', () =>
   const importedAt = '2026-09-06T18:29:49Z';
   const dataAsOf = '2026-09-10';
   const text = stockAsOfText(dataAsOf, 'uk');
-  assert.ok(!text.includes('06') || text.includes('10'));
-  assert.equal(formatStockDate(dataAsOf, 'uk'), formatStockDate(dataAsOf, 'uk'));
+  assert.equal(text, 'Залишки станом на 10 вересня 2026 р.');
   assert.notEqual(formatStockDate(dataAsOf, 'uk'), formatStockDate(importedAt.slice(0, 10), 'uk'));
 });
 
 test('formatStockDate renders a plain calendar date, not a timestamp', () => {
   const formatted = formatStockDate('2026-09-10', 'uk');
   assert.doesNotMatch(formatted, /\d{2}:\d{2}/);
+});
+
+ test('import validator and display reject impossible calendar dates and accept leap days', async () => {
+  const {validateSnapshot} = await import('../../src/catalog/model.mjs');
+  const {readFileSync} = await import('node:fs');
+  const snapshot=JSON.parse(readFileSync(new URL('../../src/catalog/snapshot.json',import.meta.url)));
+  for(const date of ['2026-02-31','2026-99-99','2026-02-29','2026-04-31','',undefined,123]) {
+    assert.throws(()=>validateSnapshot({...snapshot,dataAsOf:date}),/source date/);
+    assert.throws(()=>stockAsOfText(date,'uk'),/source date/);
+  }
+  for(const date of ['2024-02-29','2026-02-28','2026-12-31']) {
+    validateSnapshot({...snapshot,dataAsOf:date});
+    assert.match(stockAsOfText(date,'en'),/^Stock as of /);
+  }
 });
