@@ -1,5 +1,7 @@
 import {jsPDF} from 'jspdf';
 import {estimateLine} from './estimate.mjs';
+import {altacoContactLine} from './contact.mjs';
+import {stockAsOfText} from './freshness.mjs';
 
 export function offerItems(snapshot, selection) {
   if (snapshot.vat !== 'included') throw new Error('VAT must be confirmed');
@@ -48,15 +50,17 @@ export function createOffer(snapshot, selection, assets, locale='uk', createdAt=
       'Ціни в EUR, з ПДВ. Розрахунок у гривні - за погодженим курсом на дату оплати.',
       'Наявність, кількість, резерв, строк відвантаження й оплату підтверджує менеджер ALTACO.',
       'Фото передає характер матеріалу; фактичний малюнок конкретного слеба погоджується окремо.',
-      `Дані каталогу імпортовано ${imported}. Ціни та наявність перед замовленням потребують підтвердження.`
+      `Дані каталогу імпортовано ${imported}. Ціни та наявність перед замовленням потребують підтвердження.`,
+      stockAsOfText(snapshot.dataAsOf,'uk')
     ]:[
       'Prices in EUR, including VAT. Payment in UAH at the exchange rate agreed on the payment date.',
       'ALTACO confirms availability, quantities, reservation, dispatch and payment terms.',
       'The image illustrates the material; the actual slab pattern is agreed separately.',
-      `Catalogue imported ${imported}. Confirm prices and availability before ordering.`
+      `Catalogue imported ${imported}. Confirm prices and availability before ordering.`,
+      stockAsOfText(snapshot.dataAsOf,'en')
     ];
     let y=255;for(const n of notes)y+=text(n,16,y,6.8,muted,false,178)+1.2;
-    text('+38 097 242 21 21 / ALTACO.COM.UA',148,279,7,gold,true,48);
+    text(altacoContactLine(),148,279,7,gold,true,48);
   };
   // Shared cover, with the selected material's texture and the combined amount.
   rect(0,0,210,297,dark);logo(17.5,24,70);rect(17.5,38,22,0.7,gold);

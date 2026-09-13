@@ -1,4 +1,6 @@
 import {jsPDF} from 'jspdf';
+import {altacoContactLine} from './contact.mjs';
+import {stockAsOfText} from './freshness.mjs';
 // Verified labels in the supplied SM Quartz stock PDF, pages 3–7. No PDF prices are imported.
 export const SM_GROUPS={T5L6:1,T590:1,T5J0:2,T5Q2:2,T5Q5:2,T5Q6:2,T5N9:3,T5P3:4,T5R4:5,T5R3:5,T5R2:5,'5W2':5,'5W1':5,T5Q8:5,T5U5:6,T5T0:6,'5W6':6,C14:7,T5P0:'archive',T5Q0:'archive',T5T1:'archive',T5U1:'archive',T5U2:'archive',T560:'archive'};
 const NATURAL_GROUPS=['Bagnara / Kitchen Selection','Brazilian Exotic Collection','Monohrom / Marmo di Carrara'];
@@ -49,7 +51,8 @@ export function createPriceList(snapshot,family,assets,locale='uk',createdAt=new
   'Ціни роздрібні, в EUR, з ПДВ, без знижок. Розрахунок у гривні - за погодженим курсом на дату оплати.',
   'Непідтверджені ціни й характеристики позначені для уточнення. Відсутня ціна не означає нульову вартість.',
   'Макрофото передає характер матеріалу; фактичний малюнок конкретного слеба погоджується окремо.',
-  `Дата формування: ${date(createdAt)}. Дата імпорту: ${date(snapshot.importedAt)}. Автоматичного оновлення немає; ціни й наявність перед замовленням підтверджує менеджер.`
+  `Дата формування: ${date(createdAt)}. Дата імпорту: ${date(snapshot.importedAt)}. Автоматичного оновлення немає; ціни й наявність перед замовленням підтверджує менеджер.`,
+  stockAsOfText(snapshot.dataAsOf,'uk')
  ]:[
   'This list includes materials with positive availability in the ALTACO catalogue snapshot.',
   'Each card represents a specific material, lot, finish, format and thickness. Fragments are explicitly labelled.',
@@ -57,11 +60,12 @@ export function createPriceList(snapshot,family,assets,locale='uk',createdAt=new
   'Retail prices in EUR, including VAT, without discounts. Payment in UAH at the rate agreed on the payment date.',
   'Unconfirmed prices and specifications are marked for clarification. A missing price does not mean zero cost.',
   'Macro images illustrate the material. The actual slab pattern is agreed separately.',
-  `Generated: ${date(createdAt)}. Imported: ${date(snapshot.importedAt)}. No automatic updates; a manager confirms current prices and availability.`
+  `Generated: ${date(createdAt)}. Imported: ${date(snapshot.importedAt)}. No automatic updates; a manager confirms current prices and availability.`,
+  stockAsOfText(snapshot.dataAsOf,'en')
  ];
  let y=63;for(const n of notes)y+=text(n,16,y,10,ink,false,175)+9;
  text(uk?'ЗАПИТ НА МАТЕРІАЛ':'MATERIAL ENQUIRIES',16,244,10,gold,true);
- text('+38 067 444 7880 / ALTACO.COM.UA',16,255,12,ink,true);footer();
+ text(altacoContactLine(),16,255,12,ink,true);footer();
  for(const section of sections){for(let offset=0;offset<section.products.length;offset+=6){
   pdf.addPage();header();
   text(title+' / '+(uk?'СКЛАД КИЇВ':'KYIV STOCK'),16,31,6.5,muted);

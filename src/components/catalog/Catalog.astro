@@ -1,7 +1,8 @@
 ---
-import {products} from '@/catalog/data';
+import {products,snapshot} from '@/catalog/data';
 import {selectProducts} from '@/catalog/model.mjs';
 import {labels,materialLabel} from '@/catalog/labels';
+import {stockAsOfText} from '@/catalog/freshness.mjs';
 import type {Locale} from '@/catalog/types';
 import ProductCard from './ProductCard.astro';
 import Selection from './Selection.astro';
@@ -22,6 +23,7 @@ const initial=selectProducts(products);
   <label class="catalog-stock"><span class="mono-label">{l.availability}</span><select name="stock"><option value="">{l.all}</option><option value="yes">{l.inStock}</option><option value="no">{l.outOfStock}</option></select></label>
   <div class="catalog-filter-actions"><button type="reset" class="mono-label">{l.reset}</button></div>
  </form>
+ <p class="catalog-freshness mono">{stockAsOfText(snapshot.dataAsOf,locale)}</p>
  <noscript><p>{l.noJs}</p></noscript>
  <Selection locale={locale}/>
  <p class="catalog-count mono" role="status" aria-live="polite" aria-atomic="true">{l.count}: <span data-count>{initial.length}</span></p>
@@ -62,6 +64,7 @@ const initial=selectProducts(products);
 .catalog-filters input[type=search],.catalog-filters select{box-sizing:border-box;border:1px solid var(--color-rule);border-radius:0;background:var(--color-bg);color:var(--color-text);font:inherit;font-size:14px;width:100%;height:46px;min-height:46px;padding:10px 12px;min-width:0}
 .catalog-filter-actions{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:16px}.catalog-filters .catalog-checkbox{flex-direction:row;align-items:center;font-size:12px;color:var(--color-muted);min-height:44px}.catalog-checkbox input{width:18px;height:18px;accent-color:var(--brand-cyan);flex-shrink:0}
 .catalog-filter-actions button{border:1px solid var(--color-rule);background:transparent;color:var(--color-text);padding:12px;cursor:pointer;min-height:44px;font-size:11px}.catalog-filters :focus-visible{outline:2px solid var(--brand-cyan);outline-offset:3px}
+.catalog-freshness{color:var(--color-muted);font-size:11px;margin:12px 0 0}
 .catalog-count{text-align:right;color:var(--color-muted);font-size:12px;margin:24px 0}.catalog-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 24px}.catalog-grid :global([hidden]){display:none!important}.catalog-empty{padding:48px 16px;text-align:center}
 @media(max-width:899px){.catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 16px}.catalog-filters{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.catalog-search,.catalog-stock{grid-column:1/-1}}
 @media(max-width:480px){.catalog-filter-actions{align-items:flex-start;flex-direction:column}.catalog-filters select,.catalog-filters input[type=search]{font-size:16px}.catalog-filters label>span{font-size:10px}}
