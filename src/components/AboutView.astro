@@ -1,0 +1,78 @@
+---
+import Base from '@/layouts/Base.astro';
+import Nav from '@/components/Nav.astro';
+import Footer from '@/components/Footer.astro';
+import { t, type Locale } from '@/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<Base locale={locale} title={t(locale, 'about.title')}>
+  <Nav locale={locale} />
+  <main>
+    <div class="about-content">
+      <section class="about-block">
+        <h1>{t(locale, 'about.title')}</h1>
+        <p><a href={`mailto:${t(locale, 'about.email')}`}>{t(locale, 'about.email')}</a></p>
+      </section>
+
+      <section class="about-block">
+        <h2>{t(locale, 'about.officeTitle')}</h2>
+        <p>{t(locale, 'about.officeValue')}</p>
+      </section>
+
+      <section class="about-block">
+        <h2>{t(locale, 'about.legalTitle')}</h2>
+        <p>{t(locale, 'about.legalEntity')}</p>
+        <p>{t(locale, 'about.legalEdrpou')}</p>
+        <p>{t(locale, 'about.legalResident')}</p>
+      </section>
+    </div>
+  </main>
+  <Footer locale={locale} />
+</Base>
+
+<style>
+  main {
+    padding: var(--section-gap) var(--grid-margin);
+  }
+
+  /* Центрування — наскрізне для всієї прози сайту
+     (docs/02-design-system.md, «Центрування»): міра локальна 560px,
+     не --width-reading (той токен лишається джерелом істини, тут
+     просто без активних споживачів). Окремий внутрішній блок, не
+     `main` сам — інакше горизонтальний padding `main` віднімається
+     ще раз усередині вже звуженої 560px колонки. */
+  .about-content {
+    max-width: 560px;
+    margin-inline: auto;
+    text-align: center;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  .about-content > * + * {
+    margin-top: var(--space-8);
+  }
+
+  .about-block > * + * {
+    margin-top: var(--space-3);
+  }
+
+  /* Підзаголовки «Офіс» і «Реквізити» — службові mono-мітки.
+     H1 використовує спільний стандарт із base.css.
+     Значення — основний текст Montserrat, успадкований із body. */
+  .about-block h2 {
+    font-family: var(--font-mono);
+    font-size: var(--type-metadata);
+    font-weight: var(--weight-mono);
+    letter-spacing: var(--tracking-label);
+    line-height: var(--leading-mono);
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+</style>

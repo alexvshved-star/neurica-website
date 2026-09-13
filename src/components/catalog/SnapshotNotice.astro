@@ -1,0 +1,14 @@
+---
+import {snapshot} from '@/catalog/data';
+import {labels} from '@/catalog/labels';
+import {stockAsOfText} from '@/catalog/freshness.mjs';
+import type {Locale} from '@/catalog/types';
+interface Props {locale:Locale}
+const {locale}=Astro.props;const l=labels(locale);
+const date=new Intl.DateTimeFormat(locale==='uk'?'uk-UA':'en-GB',{dateStyle:'short',timeZone:'UTC'}).format(new Date(snapshot.importedAt));
+---
+<aside class="snapshot-notice"><p class="mono">{l.snapshot}: <time datetime={snapshot.importedAt}>{date}</time></p><p class="mono">{stockAsOfText(snapshot.dataAsOf,locale)}</p><p>{l.freshness}</p><p>{l.vat}</p></aside>
+<style>
+.snapshot-notice{border-block:1px solid var(--color-rule);padding:var(--space-4) 0;color:var(--color-muted);font-size:var(--type-small);max-width:900px;margin:0 auto var(--space-8);text-align:center;}
+.snapshot-notice p+p{margin-top:var(--space-2)}
+</style>

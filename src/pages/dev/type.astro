@@ -1,0 +1,307 @@
+---
+// Type specimen — інструмент розробки, не публічна сторінка (розділ 7
+// typography-брифу кроку 05a). Збирається тільки при import.meta.env.DEV:
+// у production-білді компонент повертає 404-Response, і Astro не
+// записує dist/dev/type/index.html узагалі — маршруту не існує,
+// у sitemap.xml потрапити нічому.
+if (!import.meta.env.DEV) {
+  return new Response(null, { status: 404 });
+}
+
+import '@/styles/tokens.css';
+import '@/styles/base.css';
+import { getCollection } from 'astro:content';
+
+const all = (await getCollection('work')).map((e) => e.data);
+const longestUk = [...all].sort(
+  (a, b) => (b.translations.uk?.title.length ?? 0) - (a.translations.uk?.title.length ?? 0)
+)[0];
+const ukTitle = longestUk.translations.uk?.title ?? '';
+const enTitle = longestUk.translations.en?.title ?? '';
+
+const cyrillicTest = 'ЖИВА ЛАБОРАТОРІЯ · НЕ PRODUCTION-КОНТУР';
+
+const bodyParagraphUk =
+  "Neurica — публічна експериментальна поверхня EONYX: прототипи, live demo, візуальні дослідження, кейси. Жива лабораторія, а не другий production-контур.";
+const bodyParagraphEn =
+  "Neurica is EONYX's public experimental surface: prototypes, live demos, visual studies, case studies. A living lab, not a second production surface.";
+const leadTextUk = 'AI experiments, prototypes and selected work by EONYX';
+---
+
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Type specimen — dev only</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&family=Montserrat:wght@300;400;600;700;900&subset=cyrillic,cyrillic-ext,latin&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <main class="specimen">
+      <section class="specimen__section">
+        <h2 class="specimen__label small">1. Шкала</h2>
+
+        <div class="specimen__row">
+          <p class="specimen__tag mono">--type-display / weight-wordmark (900)</p>
+          <p class="type-display">NEURICA</p>
+        </div>
+
+        <div class="specimen__row">
+          <p class="specimen__tag mono">--type-h1 / weight-h1 (600, semibold)</p>
+          <h1>{ukTitle}</h1>
+          <h1>{enTitle}</h1>
+        </div>
+
+        <div class="specimen__row">
+          <p class="specimen__tag mono">--type-h2 / weight-h2 (600, semibold)</p>
+          <h2>Приклад заголовка другого рівня</h2>
+        </div>
+
+        <div class="specimen__row">
+          <p class="specimen__tag mono">--type-lead / weight-lead (300, light)</p>
+          <p style="font-size: var(--type-lead); font-weight: var(--weight-lead)">{leadTextUk}</p>
+        </div>
+
+        <div class="specimen__row">
+          <p class="specimen__tag mono">--type-body / weight-body (розділ 3 — типографічний прохід v0.2)</p>
+          <p>Звичайний абзац тексту на --width-reading, --weight-body, --leading-body.</p>
+        </div>
+
+        <div class="specimen__row">
+          <p class="specimen__tag mono">--type-small (.small) — caption, другорядні підписи</p>
+          <p class="small">Приклад підпису до зображення у VisualStudyTemplate</p>
+        </div>
+
+        <div class="specimen__row">
+          <p class="specimen__tag mono">--type-mono (.mono) / weight-mono (400)</p>
+          <p class="mono" style="font-size: var(--type-mono)">inventory → catalog → select → PDF</p>
+        </div>
+
+        <div class="specimen__row">
+          <p class="specimen__tag mono">--type-metadata (.meta) / weight-mono (400)</p>
+          <p class="meta">CASE · DEMO · 2026</p>
+        </div>
+      </section>
+
+      <section class="specimen__section">
+        <h2 class="specimen__label small">2. Mono-шар</h2>
+
+        <div class="specimen__row">
+          <p class="specimen__tag mono">Рядок об'єкта — TYPE · STATUS · рік</p>
+          <p class="meta">CASE<span class="meta meta--status"> · DEMO</span><span class="meta meta--status"> · 2026</span></p>
+        </div>
+
+        <div class="specimen__row">
+          <p class="specimen__tag mono">Бейдж картки — LIVE / FROZEN</p>
+          <p class="meta">TOOL<span class="meta meta--live"> · LIVE</span></p>
+          <p class="meta">CASE<span class="meta meta--frozen"> · FROZEN</span></p>
+        </div>
+
+        <div class="specimen__row">
+          <p class="specimen__tag mono">Теги — mono (типографічний прохід v0.2: категоріальні метадані, не голос)</p>
+          <ul class="mono" style="display:flex; gap: var(--space-3); color: var(--color-muted)">
+            <li>каталог</li>
+            <li>altaco</li>
+          </ul>
+        </div>
+
+        <div class="specimen__row">
+          <p class="specimen__tag mono">RuntimeNotice — DEMO</p>
+          <div class="runtime-notice-preview">
+            <p class="meta meta--status">DEMO · дані від 2026-08-12</p>
+            <p class="mono" style="margin-top: var(--space-2); color: var(--color-muted)">Демонстраційний набір. Не робоча система.</p>
+          </div>
+        </div>
+
+        <div class="specimen__row">
+          <p class="specimen__tag mono">
+            by EONYX (шапка/підвал) — голос бренду, НЕ mono (типографічний
+            прохід v0.2, принцип): Montserrat regular, mixed case.
+          </p>
+          <p style="font-weight: var(--weight-regular); font-size: var(--type-metadata); color: var(--color-muted)">by EONYX</p>
+        </div>
+
+        <div class="specimen__row">
+          <p class="specimen__tag mono">
+            Кирилична розрядка — --tracking-label: 0.14em на верхньому регістрі.
+            У виробництві таксономія (type/status) завжди англійська; це єдине
+            місце, де перевіряється гіпотетичний кириличний .meta-рядок.
+          </p>
+          <p class="meta" data-test="cyrillic-tracking">{cyrillicTest}</p>
+        </div>
+      </section>
+
+      <section class="specimen__section">
+        <h2 class="specimen__label small">3. Заголовки — 600 проти 700</h2>
+        <p class="specimen__tag mono">
+          600 (semibold) — дефолт h1/h2, рекомендований брендбуком. 700
+          (bold) лишається для дрібних акцентних заголовків (напр. знак
+          NEURICA в шапці), де менший кегль потребує більшої ваги, щоб
+          триматися — не однакова роль на різних кеглях.
+        </p>
+        <div class="specimen__weight-grid">
+          <div>
+            <p class="specimen__tag mono">uk · h1 · 600</p>
+            <p style="font-family: var(--font-display); font-size: var(--type-h1); font-weight: 600; line-height: var(--leading-heading)">{ukTitle}</p>
+          </div>
+          <div>
+            <p class="specimen__tag mono">uk · h1 · 700</p>
+            <p style="font-family: var(--font-display); font-size: var(--type-h1); font-weight: 700; line-height: var(--leading-heading)">{ukTitle}</p>
+          </div>
+          <div>
+            <p class="specimen__tag mono">en · h1 · 600</p>
+            <p style="font-family: var(--font-display); font-size: var(--type-h1); font-weight: 600; line-height: var(--leading-heading)">{enTitle}</p>
+          </div>
+          <div>
+            <p class="specimen__tag mono">en · h1 · 700</p>
+            <p style="font-family: var(--font-display); font-size: var(--type-h1); font-weight: 700; line-height: var(--leading-heading)">{enTitle}</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="specimen__section">
+        <h2 class="specimen__label small">4. Lead — 300 проти 400 (окремо від body)</h2>
+        <p class="specimen__tag mono">
+          --type-lead 1.25rem — штрих товщий за body (1rem), світлий текст
+          на темному фоні тоншає сильніше на дрібному кеглі. Перевіряти
+          lead і body окремо, не "300 чи 400 взагалі".
+        </p>
+        <div class="specimen__weight-grid">
+          <div>
+            <p class="specimen__tag mono">uk · lead · 300</p>
+            <p style="font-size: var(--type-lead); font-weight: 300; max-width: var(--width-reading)">{leadTextUk}</p>
+          </div>
+          <div>
+            <p class="specimen__tag mono">uk · lead · 400</p>
+            <p style="font-size: var(--type-lead); font-weight: 400; max-width: var(--width-reading)">{leadTextUk}</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="specimen__section">
+        <h2 class="specimen__label small">5. Body — 300 проти 400 (рішення 017)</h2>
+        <p class="specimen__tag mono">
+          Реальні умови: --width-reading 680px, --leading-body 1.6,
+          --color-text на --color-bg, обома мовами.
+        </p>
+        <div class="specimen__weight-grid">
+          <div>
+            <p class="specimen__tag mono">uk · body · 300</p>
+            <p style="font-weight: 300; max-width: var(--width-reading); line-height: var(--leading-body)">{bodyParagraphUk}</p>
+          </div>
+          <div>
+            <p class="specimen__tag mono">uk · body · 400</p>
+            <p style="font-weight: 400; max-width: var(--width-reading); line-height: var(--leading-body)">{bodyParagraphUk}</p>
+          </div>
+          <div>
+            <p class="specimen__tag mono">en · body · 300</p>
+            <p style="font-weight: 300; max-width: var(--width-reading); line-height: var(--leading-body)">{bodyParagraphEn}</p>
+          </div>
+          <div>
+            <p class="specimen__tag mono">en · body · 400</p>
+            <p style="font-weight: 400; max-width: var(--width-reading); line-height: var(--leading-body)">{bodyParagraphEn}</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="specimen__section">
+        <h2 class="specimen__label small">6. Фокус — усі чотири напрямки</h2>
+        <div class="specimen__focus-grid">
+          {(['monochrome', 'chromatic', 'material', 'organic'] as const).map((dir) => (
+            <div class="specimen__focus-swatch" data-direction={dir}>
+              <p class="meta">{dir}</p>
+              <a href="#" class="mono">Тестове посилання (Tab сюди)</a>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="specimen__section">
+        <h2 class="specimen__label small">7. Moushn — hover-lift (перевірити з prefers-reduced-motion)</h2>
+        <a href="#" class="specimen__motion mono">Наведи або протабуй — --hover-duration</a>
+      </section>
+    </main>
+
+    <style>
+      body {
+        padding: var(--space-8);
+      }
+
+      .specimen__section {
+        max-width: var(--width-content);
+        margin-bottom: var(--space-16);
+        padding-bottom: var(--space-8);
+        border-bottom: var(--rule-hairline) solid var(--color-rule);
+      }
+
+      .specimen__label {
+        text-transform: uppercase;
+        letter-spacing: var(--tracking-label);
+        color: var(--color-muted);
+        margin-bottom: var(--space-6);
+      }
+
+      .specimen__row {
+        margin-bottom: var(--space-8);
+      }
+
+      .specimen__row h1,
+      .specimen__row h2 {
+        margin-top: var(--space-2);
+      }
+
+      .specimen__tag {
+        color: var(--color-muted);
+        font-size: var(--type-small);
+      }
+
+      .runtime-notice-preview {
+        margin-top: var(--space-2);
+        padding: var(--space-4);
+        border: var(--rule-hairline) solid var(--color-rule);
+        background: var(--color-surface);
+        max-width: 400px;
+      }
+
+      .specimen__weight-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-8);
+        margin-top: var(--space-6);
+      }
+
+      .specimen__weight-grid p:not(.specimen__tag) {
+        max-width: var(--width-reading);
+      }
+
+      .specimen__focus-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--space-4);
+      }
+
+      .specimen__focus-swatch {
+        padding: var(--space-6);
+        background: var(--color-bg);
+      }
+
+      .specimen__focus-swatch > * + * {
+        margin-top: var(--space-4);
+      }
+
+      .specimen__motion {
+        display: inline-block;
+        transition: transform var(--hover-duration) var(--ease-out);
+      }
+
+      .specimen__motion:hover,
+      .specimen__motion:focus-visible {
+        transform: var(--hover-lift);
+      }
+    </style>
+  </body>
+</html>

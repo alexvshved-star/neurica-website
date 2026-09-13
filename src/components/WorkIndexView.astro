@@ -1,0 +1,62 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '@/layouts/Base.astro';
+import Nav from '@/components/Nav.astro';
+import Footer from '@/components/Footer.astro';
+import WorkIndexRow from '@/components/WorkIndexRow.astro';
+import { t, type Locale } from '@/i18n';
+import { excludeArchive, sortByPublishedDesc, warnArtDirectionRepeats } from '@/lib/validate';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const all = (await getCollection('work')).map((e) => e.data);
+// Індекс: усе крім ARCHIVE, включно з FROZEN (рішення 018), зворотний
+// хронологічний порядок за published. Повнота важливіша за акцент —
+// картки тут не отримують масштабної варіації (це для стрічки).
+const items = sortByPublishedDesc(excludeArchive(all));
+warnArtDirectionRepeats(items, `work/${locale}`);
+
+// Фільтр за type — статичні /work/[type], зарезервовано, не
+// реалізовано в v1 (рішення 020). Фільтр за type/status як
+// інтерактивний UI заборонений NON-GOALS (форми, поля вводу).
+---
+
+<Base locale={locale} title={t(locale, 'work.title')}>
+  <Nav locale={locale} />
+  <main>
+    <h1>{t(locale, 'work.title')}</h1>
+    <section class="work-index">
+      {items.length > 0
+        ? items.map((entry) => <WorkIndexRow entry={entry} locale={locale} />)
+        : <p class="mono">{t(locale, 'work.empty')}</p>}
+    </section>
+  </main>
+  <Footer locale={locale} />
+</Base>
+
+<style>
+  main {
+    padding: var(--section-gap) var(--grid-margin) 0;
+  }
+
+  /* Вузький список (design-brief §1): один рядок метаданих на
+     об'єкт, не картка. Колонка ~880px, центрована — та сама вісь
+     margin-inline:auto, що й решта центрованих сторінок сайту
+     (docs/02-design-system.md, «Центрування»), тільки своя міра, не
+     560px прозової колонки: список потребує місця під мініатюру +
+     текст + рік в один рядок. h1 отримує ту саму міру, щоб не
+     виникало двох осей на одній сторінці. */
+  h1 {
+    max-width: 880px;
+    margin-inline: auto;
+  }
+
+  .work-index {
+    max-width: 880px;
+    margin-inline: auto;
+    padding: var(--space-8) 0 var(--section-gap);
+  }
+</style>

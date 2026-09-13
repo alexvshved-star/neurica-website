@@ -1,0 +1,182 @@
+---
+import { Picture } from 'astro:assets';
+import { type Locale } from '@/i18n';
+import { renderableStatus } from '@/lib/validate';
+import type { WorkEntry } from '@/content.config';
+
+// Клітинка сітки 2×2 на головній (design-brief "hero+grid", крок
+// hero-тільки-текст): --image-ratio свідомо не діє тут — усі
+// клітинки 1/1 незалежно від art_direction (докладніше —
+// docs/02-design-system.md, «Стрічка головної»). Окремий компонент,
+// не WorkCard: WorkCard лишається для /archive (compact), його
+// не-компактний режим більше нізвідки не викликається — свідомо
+// не видалений, див. звіт кроку.
+//
+// Крок "підпис поверх кадру": підпис і фото — ОДИН grid-item за
+// позицією (той самий --cell-col/--cell-row в обох, HomeView.astro
+// .feed__grid), CSS Grid стековує їх один на одного, підпис
+// притиснутий до низу кадру напівпрозорим градієнтом під ним, не
+// окремим рядком нижче (докладніше — docs/05-decisions.md).
+
+interface Props {
+  entry: WorkEntry;
+  locale: Locale;
+  index: number;
+  total: number;
+  priority?: boolean;
+}
+
+const { entry, locale, index, total, priority = false } = Astro.props;
+const translation = entry.translations[locale];
+if (!translation) {
+  throw new Error(`HomeGridCell: ${entry.slug} не має перекладу для ${locale} (мало впасти на 5.7 раніше)`);
+}
+
+const href = locale === 'uk' ? `/work/${entry.slug}` : `/en/work/${entry.slug}`;
+const status = renderableStatus(entry.status);
+const statusClass = entry.status === 'LIVE'
+  ? 'meta--live'
+  : entry.status === 'FROZEN' || entry.status === 'ARCHIVE'
+    ? 'meta--frozen'
+    : 'meta--status';
+
+// object-position покадрово, не однаково (design-brief п.2): де кроп
+// справді відбувається (портретна ORGANIC у квадратній клітинці),
+// позиція підібрана під сюжет конкретного кадру — see docs/05-
+// decisions.md. altaco-catalog (MATERIAL) уже нативно 1:1, кропу
+// нема, тому без запису тут нічого не змінює. Заглушки — тимчасові,
+// без спеціального значення.
+const COVER_POSITION: Partial<Record<string, string>> = {
+  'what-neurica-is': '50% 25%',
+};
+const cellPosition = COVER_POSITION[entry.slug] ?? '50% 50%';
+
+// column: 1 або 2. Один рядок на пару клітинок — captionRow =
+// imageRow, підпис стековано на фото, не в окремому рядку під ним.
+// Окремий --cell-row-mobile: на 1 колонці (HomeView.astro, ≤768px)
+// кожен елемент — свій рядок (не пара), інакше два сусідні
+// desktop-парні елементи (col1/col2 одного pairIndex) стекувались
+// би один на одного і на мобільному теж.
+const column = (index % 2) + 1;
+const pairIndex = Math.floor(index / 2);
+const imageRow = pairIndex + 1;
+const captionRow = imageRow;
+const mobileRow = index + 1;
+---
+
+<a
+  class="grid-cell__link"
+  style={`--cell-col:${column}; --cell-row:${imageRow}; --cell-row-mobile:${mobileRow};`}
+  href={href}
+  data-direction={entry.art_direction.toLowerCase()}
+>
+  <Picture
+    class="grid-cell__cover"
+    src={entry.cover}
+    alt=""
+    formats={['avif', 'webp']}
+    widths={[400, 800]}
+    sizes="(min-width: 769px) 295px, 46vw"
+    loading={priority ? 'eager' : 'lazy'}
+    style={`--cell-position: ${cellPosition}`}
+  />
+</a>
+<div
+  class="grid-cell__caption"
+  style={`--cell-col:${column}; --cell-row:${captionRow}; --cell-row-mobile:${mobileRow};`}
+>
+  <p class="meta grid-cell__type">
+    {entry.type.replace('_', ' ')}{status && <span class={`meta ${statusClass}`}> · {status}</span>}
+  </p>
+  <h2 class="grid-cell__title">{translation.title}</h2>
+</div>
+
+<style>
+  /* Підпис і фото займають ОДНУ й ту саму grid-область
+     (--cell-col/--cell-row однакові в обох) — CSS Grid від природи
+     стековує елементи з однаковим grid-area один на одного, items
+     розтягуються (stretch за замовчуванням) на всю область, тому
+     .grid-cell__caption без жодного absolute/position:relative
+     точно збігається з розміром .grid-cell__link. min-width:0 —
+     без цього track 1fr бере мінімум від нерозривного тексту
+     заголовка, і колонки виходять різної ширини (виявлено виміром
+     раніше, той самий клас багів, що text-overflow у флекс-дитині,
+     WorkIndexRow.astro). */
+  .grid-cell__link,
+  .grid-cell__caption {
+    min-width: 0;
+  }
+
+  .grid-cell__link {
+    display: block;
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  /* aspect-ratio:1/1 фіксовано (design-brief п.4) — --image-ratio
+     свідомо не застосований тут, на відміну від сторінки об'єкта
+     (WorkDetailView.astro) і раніше стрічки (тепер /work). */
+  .grid-cell__link :global(.grid-cell__cover) {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: var(--cell-position, 50% 50%);
+    filter: var(--image-filter, none);
+  }
+
+  /* Підпис поверх кадру: flex, притиснутий до низу, по центру,
+     ~20px від низу. pointer-events:none — підпис лежить точно над
+     .grid-cell__link (клікабельна ціль), без цього клік по тексту
+     не потрапляв би на посилання під ним; усередині немає власних
+     інтерактивних елементів, тому нічого не втрачається.
+     Градієнт: rgba(0,0,0,0.75) знизу, плато до 18% (там сидить
+     фактична текстова зона — TYPE+заголовок), спад до прозорого на
+     40% висоти кадру. Простий лінійний спад 0.75→прозорий 40% (без
+     плато) не тримав достатньої непрозорості САМЕ в текстовій зоні —
+     на agent-workflow (яскраві поручні сходів під підписом) контраст
+     падав до 3.19:1. Контраст виміряний реальним рендером (canvas +
+     WCAG-формула на фактичних пікселях у зоні TYPE+заголовок) для
+     всіх чотирьох клітинок — цифри в звіті кроку/docs/05-decisions.md. */
+  .grid-cell__caption {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 20px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.75) 18%, transparent 40%);
+    pointer-events: none;
+    /* z-index:1 — без нього стековано під фото, а не над: .grid-cell__cover
+       має filter (--image-filter, ненульовий для кожного art_direction),
+       який створює stacking context на img, і цей шар малюється НАД
+       звичайним in-flow вмістом незалежно від порядку в DOM (виявлено
+       емпірично — з-index на .grid-cell__link у DevTools нема, підпис
+       ховався під кадром, хоча йде пізніше в розмітці). Grid-айтеми
+       (яким є цей div, пряма дитина .feed__grid) застосовують z-index
+       навіть при position:static — position:relative не потрібен. */
+    z-index: 1;
+  }
+
+  .grid-cell__type {
+    margin-bottom: var(--space-1);
+  }
+
+  /* Виняток із правила двох регістрів (docs/02-design-system.md,
+     «Два регістри»), звужений і задокументований, не мовчазний:
+     підпис клітинки сітки читається як етикетка експоната, тому
+     заголовок теж mono, а не Montserrat — тільки тут, ніде більше
+     (сторінка об'єкта, /work, H1 — Montserrat, як і раніше).
+     Типографіка та сама вага/кегль/розрядка, що й до перенесення
+     підпису поверх кадру (докладніше — docs/05-decisions.md). */
+  .grid-cell__title {
+    font-family: var(--font-mono);
+    font-weight: var(--weight-bold);
+    font-size: 0.8125rem;
+    line-height: 1.35;
+    letter-spacing: var(--tracking-mono-label);
+    text-transform: uppercase;
+    color: var(--color-text);
+  }
+</style>

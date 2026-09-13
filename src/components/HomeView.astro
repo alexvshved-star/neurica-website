@@ -1,0 +1,211 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '@/layouts/Base.astro';
+import Nav from '@/components/Nav.astro';
+import Footer from '@/components/Footer.astro';
+import HomeGridCell from '@/components/HomeGridCell.astro';
+import { brandDescriptor, t, type Locale } from '@/i18n';
+import { excludeArchive, selectHomeFeed, warnArtDirectionRepeats } from '@/lib/validate';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const all = (await getCollection('work')).map((e) => e.data);
+const items = selectHomeFeed(excludeArchive(all));
+warnArtDirectionRepeats(items, `home/${locale}`);
+
+const workHref = locale === 'uk' ? '/work' : '/en/work';
+---
+
+<Base locale={locale} title="NEURICA" description={brandDescriptor}>
+  <Nav locale={locale} />
+  <main>
+    <div class="page-column">
+      <header class="hero">
+        <h1 class="type-display hero__wordmark">NEURICA</h1>
+        <p class="hero__eyebrow">experiments</p>
+        <p class="hero__descriptor">{brandDescriptor}</p>
+      </header>
+    </div>
+    <section class="feed__grid">
+      {items.map((entry, i) => (
+        <HomeGridCell entry={entry} locale={locale} index={i} total={items.length} priority={i === 0} />
+      ))}
+    </section>
+    <a class="feed__view-all mono-label" href={workHref}>{t(locale, 'work.viewAll')} →</a>
+  </main>
+  <Footer locale={locale} />
+</Base>
+
+<style>
+  /* Контейнер hero, 660px. Сітка тепер СИБЛІНГ .page-column (крок
+     "сітка має масштабуватися"), не дитина — той самий прийом, що
+     вже є на сторінці об'єкта (WorkDetailView.astro: header 560px,
+     cover на всю ширину, обидва центровані відносно того самого
+     батька, кожен зі своїм margin-inline:auto). Раніше .feed__grid
+     була ВСЕРЕДИНІ .page-column, і це працювало, ДОКИ сітка була
+     вузчою за 660px; крок "сітка має масштабуватися" ввів
+     clamp(600px,42vw,900px), і на 1680/1920 сітка (705–806px) стала
+     ШИРШОЮ за 660px-контейнер — margin:auto для елемента, ширшого за
+     батька, вироджується в 0 (CSS-специфікація), сітка "прилипала"
+     до лівого краю page-column і втрачала центрування (виявлено
+     виміром: зсув від центру viewport +22.8px на 1680, +73.2px на
+     1920). Винесення сітки в сиблінги знімає обмеження зверху.
+     padding-bottom тут прибраний (був 0 у shorthand) — див. окремий
+     коментар на .feed__view-all, куди перенесено grid→view-all
+     проміжок, щоб вертикальний ритм лишився тим самим, що виміряно
+     раніше (docs/05-decisions.md). */
+  .page-column {
+    width: min(660px, 92vw);
+    margin-inline: auto;
+    padding: calc(var(--section-gap) * 0.5) 0 0;
+    text-align: center;
+  }
+
+  /* --type-display — фіксоване значення, не clamp зі шкалою vw
+     (крок "композиція сітки"): контейнер (.page-column) сам більше
+     не росте з viewport понад 660px (min(660px, 92vw) — на 768px
+     92vw уже 706px, стеля 660px спрацьовує вже тут), тому й розміру
+     рости нема з чого — той самий 660px для 768/1440/1680.
+     7rem=112px виміряно реальним рендером (Range.getClientRects()
+     на текстовому вузлі, Playwright): NEURICA — 605px в 1 рядок,
+     запас ≈55px до 660px колонки; перенос на два рядки настає вже
+     на 124px. Мобільна шкала (≤768px, tokens.css :root) не
+     чіпається. */
+  @media (min-width: 768px) {
+    .hero {
+      --type-display: 3.5rem;
+    }
+  }
+
+  /* Мобільний ловок-ап зменшений так само вдвічі, локально до .hero:
+     глобальний mobile-override --type-display (tokens.css :root,
+     clamp(2.75rem,16vw,5rem)) — спільний токен, чіпати його зверху
+     не можна (той самий принцип, що вже застосований до
+     --section-gap/--type-lead нижче). */
+  @media (max-width: 767px) {
+    .hero {
+      --type-display: clamp(1.375rem, 8vw, 2.5rem);
+    }
+  }
+
+  .hero__wordmark {
+    letter-spacing: var(--tracking-wordmark);
+  }
+
+  /* Другий рівень лок-апа — той самий рецепт, що й раніше (рішення
+     032): кегль і базова лінія прив'язані до --type-display,
+     масштабуються разом на будь-якому брейкпойнті. */
+  .hero__eyebrow {
+    margin-top: calc(var(--type-display) * 0.151);
+    font-weight: var(--weight-strong);
+    font-size: calc(var(--type-display) * 0.44);
+    line-height: 1;
+    letter-spacing: 0.26em;
+    text-transform: lowercase;
+  }
+
+  /* Дескриптор переведено на mono-регістр TYPE (.meta, tokens.css) —
+     та сама гарнітура/вага/розрядка/uppercase, що на картках сітки
+     (EDITORIAL/CASE/...) і в nav (рішення 047/048). Третє розширення
+     винятку з "Два регістри" (docs/02-design-system.md), задокументоване
+     окремо. Кегль і колір НЕ від .meta — лишаються тими, що вже були
+     тут (--type-lead*0.5, --color-muted), .meta для них не чіпається,
+     звідси властивості продубльовані вручну, не через клас. */
+  .hero__descriptor {
+    margin-top: var(--space-4);
+    font-family: var(--font-mono);
+    font-weight: var(--weight-mono);
+    font-size: calc(var(--type-lead) * 0.5);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  /* Базові значення — ті самі, що діяли до кроку "адаптив головної,
+     широкі екрани" (280px клітинка, gap 20px, margin-top —
+     --section-gap токен, на mobile 64px через :root override у
+     tokens.css). Desktop-специфічний перерахунок (600px/295px/10px/
+     60px) — нижче, у @media (min-width:769px), СВІДОМО не тут: цей
+     крок явно про широкі екрани (мінімум зачепив 1280/1600), mobile-
+     верстку явно наказано не чіпати — спільна властивість без
+     медіа-умови зачепила б і mobile (виявлено під час діагностики:
+     без розділення на 768px клітинка виростала з 580 до 600px,
+     gap — з 20 до 10px, обидва мобільні, всупереч інструкції). */
+  .feed__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: min(calc(280px * 2 + 20px), 92vw);
+    margin: calc(var(--section-gap) * 0.5) auto 0;
+  }
+
+  /* Крок "сітка має масштабуватися": попередня фіксована 600px
+     (рішення 050) тримала частку від viewport, що падала з 58,59%
+     на 1024 до 31,25% на 1920 — виміряно, не на око (docs/05-
+     decisions.md). clamp(600px, 42vw, 900px): 42vw — цільова частка,
+     визнана вдалою на 1440 (там і раніше було ≈41,67% при
+     фіксованих 600px, тепер точно 42%); 600px — нижня межа (спрацьовує
+     на 1024/1280, де 42vw ще не дотягує до 600); 900px — верхня межа
+     (не спрацьовує в діапазоні 1024–1920, резерв на ширші монітори).
+     gap:10px лишається фіксованим по обох осях — клітинка залишається
+     квадратною автоматично (repeat(2,1fr) + однаковий gap, висота
+     керується aspect-ratio на самому зображенні), тому окремо
+     клітинку не рахували. margin-top — фіксовані 60px (не змінювались
+     цим кроком). Той самий поріг min-width:769px, що й раніше —
+     769–1920 повністю в зоні, де clamp активний (42vw там завжди між
+     600 і 900), розриву на межі з mobile нема (на 769px 92vw-формула
+     й так завжди давала рівно 600, той самий floor, що в clamp). */
+  @media (min-width: 769px) {
+    .feed__grid {
+      gap: 10px;
+      width: clamp(600px, 42vw, 900px);
+      margin-top: 30px;
+    }
+  }
+
+  .feed__grid :global(.grid-cell__link),
+  .feed__grid :global(.grid-cell__caption) {
+    grid-column: var(--cell-col, 1);
+    grid-row: var(--cell-row, auto);
+  }
+
+  /* Мобільний: один стовпчик (design-brief п.3), клітинки лишаються
+     КВАДРАТНИМИ — aspect-ratio:1/1 на .grid-cell__cover
+     (HomeGridCell.astro) не залежить від кількості колонок.
+     --cell-row-mobile (не auto!) — кожен елемент отримує свій
+     власний рядок (index+1), а не пару desktop-рядка: якби тут
+     лишався grid-row:auto, природний порядок DOM (фото1, підпис1,
+     фото2, підпис2…) і так дав би правильну послідовність за
+     СТАРОЮ схемою (підпис окремим рядком під фото), але зараз
+     підпис і фото мають ОДНАКОВИЙ --cell-row (стек, не послідовність)
+     — двом сусіднім desktop-парним елементам (col1/col2 одного
+     pairIndex) auto дав би різні авто-рядки, ламаючи стек. Той
+     самий поріг 768px, що й скрізь на сайті. */
+  @media (max-width: 768px) {
+    .feed__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .feed__grid :global(.grid-cell__link),
+    .feed__grid :global(.grid-cell__caption) {
+      grid-column: 1;
+      grid-row: var(--cell-row-mobile, auto);
+    }
+  }
+
+  /* margin-top: var(--section-gap) — компенсує padding-bottom,
+     прибраний з .page-column (сітка→"Усі роботи" раніше йшов звідти,
+     коли .feed__grid ще була дитиною .page-column); значення те
+     саме, тому проміжок сітка→"Усі роботи" лишається тим самим, що
+     виміряно раніше (128px desktop / 64px mobile). margin-bottom не
+     чіпався. */
+  .feed__view-all {
+    display: block;
+    width: min(660px, 92vw);
+    margin: var(--section-gap) auto var(--section-gap);
+    text-align: center;
+  }
+</style>

@@ -1,0 +1,1008 @@
+{
+  "natural|Ouro Brazil|Polished|3020,1680,20": {
+    "id": "nat-c332a398e68c",
+    "photo": "natural-29.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 7
+    },
+    "materialType": "granite",
+    "collection": "Brazilian Exotic Collection"
+  },
+  "natural|Wild Silk|Polished|3000,1850,30": {
+    "id": "nat-6a2146473182",
+    "photo": "natural-30.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 7
+    },
+    "materialType": "granite",
+    "collection": "Brazilian Exotic Collection"
+  },
+  "natural|Cosmic Black|Brushed|3020,1200,20": {
+    "id": "nat-a41841c3abef",
+    "photo": "natural-31.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 7
+    },
+    "materialType": "quartzite",
+    "collection": "Brazilian Exotic Collection"
+  },
+  "natural|Duetto \\ кусок|Brushed|3120,700,20": {
+    "id": "nat-65cd9476b843",
+    "photo": "natural-32.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 7
+    },
+    "materialType": "quartzite",
+    "collection": "Brazilian Exotic Collection"
+  },
+  "natural|Azul Macaubas|Polished|3380,1930,20": {
+    "id": "nat-77c25f8d40a6",
+    "photo": "natural-33.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 7
+    },
+    "materialType": "quartzite",
+    "collection": "Brazilian Exotic Collection"
+  },
+  "natural|Cristallo|Polished|2950,1670,20": {
+    "id": "nat-a99c8a6a7ac4",
+    "photo": "natural-34.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 7
+    },
+    "materialType": "quartzite",
+    "collection": "Brazilian Exotic Collection"
+  },
+  "natural|Bianco Carrara|Polished|2830,1990,20": {
+    "id": "nat-671acf94e1fb",
+    "photo": "natural-36.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 8
+    },
+    "materialType": "marble",
+    "collection": "Monohrom / Marmo di Carrara"
+  },
+  "natural|Versilys|Polished|2930,1990,20": {
+    "id": "nat-ee7d4af8d1c6",
+    "photo": "natural-37.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 8
+    },
+    "materialType": "marble",
+    "collection": "Monohrom / Marmo di Carrara"
+  },
+  "natural|Palissandro B&B|Polished|2940,1680,20": {
+    "id": "nat-af7f92429ae9",
+    "photo": "natural-38.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 8
+    },
+    "materialType": "marble",
+    "collection": "Monohrom / Marmo di Carrara"
+  },
+  "natural|Calacatta Gold|Polished|2650,1940,20": {
+    "id": "nat-d37837004a85",
+    "photo": "natural-39.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 8
+    },
+    "materialType": "marble",
+    "collection": "Monohrom / Marmo di Carrara"
+  },
+  "natural|Arabescatto Classico|Polished|2550,1660,20": {
+    "id": "nat-f408304985f9",
+    "photo": "natural-40.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 8
+    },
+    "materialType": "marble",
+    "collection": "Monohrom / Marmo di Carrara"
+  },
+  "natural|Statuarietto|Polished|3120,1900,20": {
+    "id": "nat-e4b710f47013",
+    "photo": "natural-41.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 8
+    },
+    "materialType": "marble",
+    "collection": "Monohrom / Marmo di Carrara"
+  },
+  "natural|Striato Elegante|Honed|2870,1390,20": {
+    "id": "nat-ff10683a318a",
+    "photo": "natural-43.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 9
+    },
+    "materialType": "marble",
+    "collection": "Monohrom / Marmo di Carrara"
+  },
+  "natural|Tundra Grey|Honed|2640,1640,20": {
+    "id": "nat-b2a4d9c0faff",
+    "photo": "natural-44.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 9
+    },
+    "materialType": "marble",
+    "collection": "Monohrom / Marmo di Carrara"
+  },
+  "natural|Palissandro Bluette|Polished|2650,1290,20": {
+    "id": "nat-cb7f860f7aef",
+    "photo": "natural-45.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 9
+    },
+    "materialType": "marble",
+    "collection": "Monohrom / Marmo di Carrara"
+  },
+  "natural|Arabescatto Orobico|Polished|2000,1000,20": {
+    "id": "nat-d8da96e86011",
+    "photo": "natural-46.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 9
+    },
+    "materialType": "marble",
+    "collection": "Monohrom / Marmo di Carrara"
+  },
+  "natural|Brown Silk|Satinato|3120,1940,20": {
+    "id": "nat-e9c1fe782b60",
+    "photo": "natural-7.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 3
+    },
+    "materialType": "quartzite",
+    "collection": "Bagnara / Kitchen Selection"
+  },
+  "natural|Silver Cloud|Satinato|2990,1970,20": {
+    "id": "nat-3a9919a5c964",
+    "photo": "natural-8.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 3
+    },
+    "materialType": "granite",
+    "collection": "Bagnara / Kitchen Selection"
+  },
+  "natural|Azul Aran|Polished|2780,1930,20": {
+    "id": "nat-d3042ab60764",
+    "photo": "natural-9.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 3
+    },
+    "materialType": "granite",
+    "collection": "Bagnara / Kitchen Selection"
+  },
+  "natural|Azul Aran B055958|Polished|3570,1500,20": {
+    "id": "nat-120e46dfe4a5",
+    "photo": "natural-10.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 3
+    },
+    "materialType": "granite",
+    "collection": "Bagnara / Kitchen Selection"
+  },
+  "natural|Atlantic Stone|Levigato|2610,1910,20": {
+    "id": "nat-28b3f7d4b9a0",
+    "photo": "natural-11.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 3
+    },
+    "materialType": "granite",
+    "collection": "Bagnara / Kitchen Selection"
+  },
+  "natural|Bianco Montorfano|Satinato|3360,1960,20": {
+    "id": "nat-6277b46566a3",
+    "photo": "natural-12.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 3
+    },
+    "materialType": "granite",
+    "collection": "Bagnara / Kitchen Selection"
+  },
+  "natural|Bethel White|Satinato|3360,1620,20": {
+    "id": "nat-7daacee24474",
+    "photo": "natural-14.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 4
+    },
+    "materialType": "granite",
+    "collection": "Bagnara / Kitchen Selection"
+  },
+  "natural|Carbon Grey|Levigato|3370,1910,20": {
+    "id": "nat-c5165b056f5b",
+    "photo": "natural-15.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 4
+    },
+    "materialType": "quartzite",
+    "collection": "Bagnara / Kitchen Selection"
+  },
+  "natural|Carbon Grey \\ кусок|Levigato|3350,1150,20": {
+    "id": "nat-662e977d1939",
+    "photo": "natural-15.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 4
+    },
+    "materialType": "quartzite",
+    "collection": "Bagnara / Kitchen Selection"
+  },
+  "natural|Black Pepper|Satinato|3160,1890,20": {
+    "id": "nat-63ea66205fc9",
+    "photo": "natural-16.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 4
+    },
+    "materialType": "granite",
+    "collection": "Bagnara / Kitchen Selection"
+  },
+  "natural|Kuroca \\ 2021|Polished|3380,1910,20": {
+    "id": "nat-f24686840248",
+    "photo": "natural-17.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 4
+    },
+    "materialType": "quartzite",
+    "collection": "Bagnara / Kitchen Selection"
+  },
+  "natural|Nero Zimbabwe NA \\ 2022|Honed|3230,1950,20": {
+    "id": "nat-c140bd26a211",
+    "photo": "natural-18.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 4
+    },
+    "materialType": "granite",
+    "collection": "Bagnara / Kitchen Selection"
+  },
+  "natural|Black Tempest \\ 2022|Polished|3300,1970,30": {
+    "id": "nat-94e73a810c94",
+    "photo": "natural-20.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 5
+    },
+    "materialType": "quartzite",
+    "collection": "Bagnara / Kitchen Selection"
+  },
+  "natural|Kuroca \\ 2022|Polished|3240,1820,20": {
+    "id": "nat-2e7d947a46a9",
+    "photo": "natural-17.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 5
+    },
+    "materialType": "quartzite",
+    "collection": "Bagnara / Kitchen Selection"
+  },
+  "natural|Moon Rock \\ 2022|P.E.C.|3260,1880,20": {
+    "id": "nat-33a99b6d83ac",
+    "photo": "natural-21.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 5
+    },
+    "materialType": "quartzite",
+    "collection": "Bagnara / Kitchen Selection"
+  },
+  "natural|Azul Aran 2024|Satinato|3200,1750,20": {
+    "id": "nat-43fffeeacf56",
+    "photo": "natural-9.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 5
+    },
+    "materialType": "granite",
+    "collection": "Bagnara / Kitchen Selection"
+  },
+  "natural|Mystic Grey 2025/1|Satinato|3460,1990,20": {
+    "id": "nat-7136f121dc96",
+    "photo": "natural-22.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 5
+    },
+    "materialType": "granite",
+    "collection": "Bagnara / Kitchen Selection"
+  },
+  "natural|Mystic Grey 2025/2|Satinato|3540,1970,20": {
+    "id": "nat-c21160846258",
+    "photo": "natural-22.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 5
+    },
+    "materialType": "granite",
+    "collection": "Bagnara / Kitchen Selection"
+  },
+  "natural|Vittoria Regia 2025|Polished|3150,2000,20": {
+    "id": "nat-51e554ee43b9",
+    "photo": "natural-vittoria-regia.webp",
+    "photoSource": {
+      "file": "Vittoria Regia.webp",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "natural|Botticino Fiorito 2025|Satinato|3150,2000,20": {
+    "id": "nat-44bdad45ecef",
+    "photo": "natural-47.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 9
+    },
+    "materialType": "marble",
+    "collection": "Monohrom / Marmo di Carrara"
+  },
+  "natural|Bottichelli 2025|Honed|3200,1950,20": {
+    "id": "nat-251fbb99c7b2",
+    "photo": "natural-48.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 9
+    },
+    "materialType": "marble",
+    "collection": "Monohrom / Marmo di Carrara"
+  },
+  "natural|Breccia Sarda|Satinato|2750,1900,20": {
+    "id": "nat-9b37c484d151",
+    "photo": "natural-50.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 10
+    },
+    "materialType": "marble",
+    "collection": "Monohrom / Marmo di Carrara"
+  },
+  "natural|Breche De Aubisque Extra|Satinato|3030,1750,20": {
+    "id": "nat-030eea1548c7",
+    "photo": "natural-51.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 10
+    },
+    "materialType": "marble",
+    "collection": "Monohrom / Marmo di Carrara"
+  },
+  "natural|Alpinus Vintage Bookmatch|Satinato|3250,1950,20": {
+    "id": "nat-7f74a8e4d6c5",
+    "photo": "natural-24.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 6
+    },
+    "materialType": "granite",
+    "collection": "Bagnara / Kitchen Selection"
+  },
+  "natural|Madreperla Bookmatch|Satinato|3250,2020,20": {
+    "id": "nat-6b1171601a70",
+    "photo": "natural-25.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 6
+    },
+    "materialType": "quartzite",
+    "collection": "Bagnara / Kitchen Selection"
+  },
+  "natural|Sahara Roots|Honed|2800,1900,20": {
+    "id": "nat-e1c99dceee5a",
+    "photo": "natural-52.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 10
+    },
+    "materialType": "marble",
+    "collection": "Monohrom / Marmo di Carrara"
+  },
+  "natural|Eramosa CC|Honed|3150,1480,20": {
+    "id": "nat-916f1e984222",
+    "photo": "natural-53.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 10
+    },
+    "materialType": "marble",
+    "collection": "Monohrom / Marmo di Carrara"
+  },
+  "natural|Travertino Tipo Classico|Honed|3050,1350,20": {
+    "id": "nat-9d25810e5056",
+    "photo": "natural-travertino-tipo-classico.jpg",
+    "photoSource": {
+      "file": "Travertino_Classico_02.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "natural|Black Tempest / 2026|Satinato|3300,1950,20": {
+    "id": "nat-346630f20f40",
+    "photo": "natural-26.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 6
+    },
+    "materialType": "quartzite",
+    "collection": "Bagnara / Kitchen Selection"
+  },
+  "natural|Nero Zimbabwe / 2026|Flame&Brushed|3300,1950,20": {
+    "id": "nat-e4241d0ff876",
+    "photo": "natural-27.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 6
+    },
+    "materialType": "granite",
+    "collection": "Bagnara / Kitchen Selection"
+  },
+  "sample-slab|TRAVERTINO STRIATO SILVER|Polished|3260,1620,20": {
+    "id": "nat-f60f5c377fd1",
+    "photo": "natural-54.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 10
+    },
+    "materialType": "travertine",
+    "collection": "Monohrom / Marmo di Carrara"
+  },
+  "sample-slab|TRAVERTINO ROMANO CLASSICO CC|Polished|2550,1530,20": {
+    "id": "nat-bac1e05befe6",
+    "photo": "natural-55.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 10
+    },
+    "materialType": "travertine",
+    "collection": "Monohrom / Marmo di Carrara"
+  },
+  "sample-slab|TRAVERTINO ROMANO CLASSICO VC|Polished|2660,1600,20": {
+    "id": "nat-a4278321ec2f",
+    "photo": "natural-57.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 11
+    },
+    "materialType": "travertine",
+    "collection": "Monohrom / Marmo di Carrara"
+  },
+  "sample-slab|TRAVERTINO GRIGIO|Polished|2560,1560,20": {
+    "id": "nat-1c42339ede1d",
+    "photo": "natural-58.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 11
+    },
+    "materialType": "travertine",
+    "collection": "Monohrom / Marmo di Carrara"
+  },
+  "sample-slab|TRAVERTINO GRIGIO VC ПОЛІРОВАНИЙ ТА ЗАПОВНЕНИЙ ПОЛІМЕРОМ|Polished|2510,1820,20": {
+    "id": "nat-a2050e0b17c7",
+    "photo": "natural-59.jpeg",
+    "reference": {
+      "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
+      "page": 11
+    },
+    "materialType": "travertine",
+    "collection": "Monohrom / Marmo di Carrara"
+  },
+  "sm-quartz|Nero|Silk|3200,1550,20": {
+    "id": "sm-1c4b7ac8220c",
+    "photo": "sm-nero.jpg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 3
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "T590",
+    "photoSource": {
+      "file": "Nero.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|Caledonia|Silk|3200,1550,20": {
+    "id": "sm-87a8b8fb77ae",
+    "photo": "sm-caledonia.jpg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 3
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "T5L6",
+    "photoSource": {
+      "file": "Caledonia.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|Oregon|Silk|3200,1550,20": {
+    "id": "sm-71ab63240b2e",
+    "photo": "sm-oregon.jpg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 5
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "T5Q0",
+    "photoSource": {
+      "file": "oregon-sm.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|Carnia|Silk|3200,1550,20": {
+    "id": "sm-baf858aaf32b",
+    "photo": "sm-carnia.jpg",
+    "photoSource": {
+      "file": "Carnia.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|Istria|Silk|3300,1650,20": {
+    "id": "sm-9a2586c8ebd7",
+    "photo": "sm-istria.jpg",
+    "photoSource": {
+      "file": "Istria.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|City Dark|Silk|3200,1550,20": {
+    "id": "sm-633dd7b99a4d",
+    "photo": "sm-city-dark.jpg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 3
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "T5Q5",
+    "photoSource": {
+      "file": "City_Dark.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|City Beige|Polished|3200,1550,20": {
+    "id": "sm-8ba81fb43142",
+    "photo": "sm-city-beige.jpg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 3
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "T5Q2",
+    "photoSource": {
+      "file": "City_Beige.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|City Beige|Silk|3200,1550,20": {
+    "id": "sm-fa4b9d436faf",
+    "photo": "sm-city-beige.jpg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 3
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "T5Q2",
+    "photoSource": {
+      "file": "City_Beige.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|City White|Polished|3300,1650,20": {
+    "id": "sm-1bbc094b494e",
+    "photo": "sm-city-white.jpg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 5
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "T5Q6",
+    "photoSource": {
+      "file": "City_White-1.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|City White|Silk|3300,1650,20": {
+    "id": "sm-a8fe82781c00",
+    "photo": "sm-city-white.jpg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 5
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "T5Q6",
+    "photoSource": {
+      "file": "City_White-1.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|Zenith|Polished|3300,1650,20": {
+    "id": "sm-3c7d421b349e",
+    "photo": "sm-zenith.jpg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 7
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "T560",
+    "photoSource": {
+      "file": "Zenith.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|Ardenne|Silk|3200,1550,20": {
+    "id": "sm-a59910c9290f",
+    "photo": "sm-ardenne.jpg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 3
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "T5J0",
+    "photoSource": {
+      "file": "Ardenne.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|Sabia Beige|Polished|3200,1550,20": {
+    "id": "sm-fdb798e6b5c7",
+    "photo": "sm-sabia-beige.jpg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 4
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "T5N9",
+    "photoSource": {
+      "file": "Sabbia_Beige.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|Liskamm|Polished|3200,1550,20": {
+    "id": "sm-babde32e37d0",
+    "photo": "sm-liskamm.jpg",
+    "photoSource": {
+      "file": "Lyskamm.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|Grigio Nube|Polished|3200,1550,20": {
+    "id": "sm-f46c1943b7ea",
+    "photo": "sm-grigio-nube.jpg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 5
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "T5P0",
+    "photoSource": {
+      "file": "Grigio Nube.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|Metropolis Galaxy|Metropolis|3200,1550,20": {
+    "id": "sm-a85046c2a75e",
+    "photo": "sm-metropolis-galaxy.jpg",
+    "photoSource": {
+      "file": "Metropolis-galaxy.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|Metropolis Oyster|Metropolis|3200,1550,20": {
+    "id": "sm-f15eadc0f288",
+    "photo": "sm-metropolis-oyster.jpg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 4
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "C14",
+    "photoSource": {
+      "file": "Metropolis-oyster.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|Vittoria White|Silk|3200,1550,20": {
+    "id": "sm-d102dd75fc54",
+    "photo": "sm-vittoria-white.jpg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 4
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "T5P3",
+    "photoSource": {
+      "file": "Vittoria White.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|Vittoria White|Silk|3300,1650,20": {
+    "id": "sm-ed32578a171b",
+    "photo": "sm-vittoria-white.jpg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 5
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "T5P3",
+    "photoSource": {
+      "file": "Vittoria White.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|Fusion Taupe|Silk|3200,1550,20": {
+    "id": "sm-aba8bb629cab",
+    "photo": "sm-fusion-taupe.jpg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 4
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "T5R2",
+    "photoSource": {
+      "file": "FusionTaupe_02.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|Fusion Grey|Silk|3200,1550,20": {
+    "id": "sm-2fa657668cc9",
+    "photo": "sm-fusion-grey.jpg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 4
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "T5R3",
+    "photoSource": {
+      "file": "Fusion_Grey.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|Fusion Black|Silk|3200,1550,20": {
+    "id": "sm-9817c44dde0c",
+    "photo": "sm-fusion-black.jpg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 4
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "T5R4",
+    "photoSource": {
+      "file": "Fusion_Black.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|Vega|Silk|3300,1650,20": {
+    "id": "sm-faefabfbdf99",
+    "photo": "sm-vega.jpg",
+    "photoSource": {
+      "file": "Vega.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|Vega|Polished|3300,1650,20": {
+    "id": "sm-b43c2a9ee7b6",
+    "photo": "sm-vega.jpg",
+    "photoSource": {
+      "file": "Vega.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|Vermont|Silk|3300,1650,20": {
+    "id": "sm-47d0613150d7",
+    "photo": "sm-vermont.jpg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 6
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "T5Q8",
+    "photoSource": {
+      "file": "Vermont.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|Levante|Polished|3300,1650,20": {
+    "id": "sm-5dd440c78d9c",
+    "photo": "sm-levante.jpg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 7
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "T5T1",
+    "photoSource": {
+      "file": "Levante-sm.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|Libeccio|Polished|3300,1650,20": {
+    "id": "sm-e50a6670b6b8",
+    "photo": "sm-libeccio.jpg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 6
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "T5T0",
+    "photoSource": {
+      "file": "Libecio_02.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|Etesia|Polished|3300,1650,20": {
+    "id": "sm-28cbd9fbdc2f",
+    "photo": "sm-etesia.jpg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 6
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "T5U5",
+    "photoSource": {
+      "file": "Etesia.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|Monti|Polished|3300,1650,20": {
+    "id": "sm-60bf646e4a37",
+    "photo": "sm-monti.jpg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 7
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "T5U1",
+    "photoSource": {
+      "file": "Monti.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|Trevi|Polished|3300,1650,20": {
+    "id": "sm-ec2178c995da",
+    "photo": "sm-trevi.jpg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 7
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "T5U2",
+    "photoSource": {
+      "file": "Trevi.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|Trevi|Silk|3300,1650,20": {
+    "id": "sm-cce0cb72f93e",
+    "photo": "sm-trevi.jpg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 7
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "T5U2",
+    "photoSource": {
+      "file": "Trevi.jpg",
+      "providedBy": "ALTACO",
+      "receivedAt": "2026-09-07"
+    }
+  },
+  "sm-quartz|Grey Feather|Polished|3300,1650,20": {
+    "id": "sm-afb4fb0d5021",
+    "photo": "sm-24.jpeg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 5
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "5W2"
+  },
+  "sm-quartz|Light Wafer|Polished|3300,1650,20": {
+    "id": "sm-4550c0d07833",
+    "photo": "sm-26.jpeg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 6
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "5W1"
+  },
+  "sm-quartz|Light Wafer|Silk|3300,1650,20": {
+    "id": "sm-2cebf6c35b51",
+    "photo": "sm-26.jpeg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 6
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "5W1"
+  },
+  "sm-quartz|Stormio|Polished|3300,1650,20": {
+    "id": "sm-e96f3e5dd936",
+    "photo": "sm-30.jpeg",
+    "reference": {
+      "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
+      "page": 6
+    },
+    "materialType": "quartz-agglomerate",
+    "manufacturer": "Santa Margherita",
+    "code": "5W6"
+  }
+}

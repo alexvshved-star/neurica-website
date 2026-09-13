@@ -1,0 +1,49 @@
+---
+import {Picture} from 'astro:assets';
+import Base from '@/layouts/Base.astro';
+import Nav from '@/components/Nav.astro';
+import Footer from '@/components/Footer.astro';
+import {photoFor,money,catalogHref,productHref,products} from '@/catalog/data';
+import {labels,materialLabel} from '@/catalog/labels';
+import type {Product,Locale} from '@/catalog/types';
+import SnapshotNotice from './SnapshotNotice.astro';
+import Selection from './Selection.astro';
+interface Props {product:Product;locale:Locale}
+const {product:p,locale}=Astro.props;const l=labels(locale);const photo=photoFor(p.photo);
+const format=`${p.lengthMm} × ${p.widthMm} × ${p.thicknessMm} ${l.mm}`;
+const related=products.filter(other=>other.id!==p.id&&other.name.replace(/ Silk$/,'')===p.name.replace(/ Silk$/,'')&&other.family===p.family);
+const specs=[[l.type,materialLabel(p.materialType,locale)],[l.manufacturer,p.manufacturer],[l.collection,p.collection],[l.code,p.code],[l.finish,p.finishPending?l.surfacePending:p.finish],[l.format,format]];
+const mail=`mailto:altacostone@gmail.com?subject=${encodeURIComponent(`${l.contactSubject}: ${p.name}`)}&body=${encodeURIComponent(`${p.name}\n${format}\n${p.finishPending?l.surfacePending:p.finish}\nID: ${p.id}`)}`;
+---
+<Base locale={locale} title={`${p.name} — ALTACO`} description={`${l.productInfo} ${p.name}, ${format}.`} image={photo}>
+ <Nav locale={locale}/>
+ <main class="product-page">
+  <a class="product-back mono-label" href={catalogHref(locale)}>← {l.back}</a>
+  <Selection locale={locale}/>
+  <header><p class="meta">ALTACO · {p.family==='natural'?l.natural:l.sm}</p><h1>{p.name}</h1><p class="mono muted">{p.finishPending?l.surfacePending:p.finish} · {format}</p></header>
+  <div class="product-layout">
+   <figure><div class="product-photo">{photo?<Picture src={photo} alt={p.name} formats={['avif','webp']} widths={[600,1200]} sizes="(min-width: 1264px) 600px, (min-width: 769px) 50vw, calc(100vw - 32px)" loading="eager"/>:<span class="mono muted">{l.noPhoto}</span>}</div>{photo&&<figcaption>{l.photoNote}</figcaption>}</figure>
+   <section class="product-details" aria-label={l.specs}>
+    <p class:list={['mono','product-availability',{'is-available':p.inStock}]}>{p.inStock?l.inStock:l.outOfStock}</p>
+    <dl>{specs.filter(([,v])=>v).map(([k,v])=><div><dt class="mono">{k}</dt><dd>{v}</dd></div>)}</dl>
+    {p.kind!=='slab'&&<p class="muted">{p.kind==='sample-slab'?l.sampleNote:l.fragment}</p>}
+    <div class="product-prices"><h2 class="mono-label">{l.pricing}</h2><p>{money(p.priceM2Cents,locale)} {p.priceM2Cents!==null&&<span>{l.perM2}</span>}</p>{p.priceSlabCents!==null&&<p>{money(p.priceSlabCents,locale)} <span>{p.kind==='fragment'?l.perFragment:l.perSlab}</span></p>}</div>
+    {p.pricePending&&<p class="muted">{l.pendingNote}</p>}
+    {p.finishPending&&<p class="muted">{l.finishNote}</p>}
+    <a class="product-contact mono-label" href={mail}>{l.request} ↗</a>
+    {p.kind!=='sample-slab'&&<button class="product-contact mono-label product-cart" type="button" data-add-selection={p.id} hidden aria-pressed="false">{locale==='uk'?'Додати в кошик':'Add to cart'}</button>}
+   </section>
+  </div>
+  <SnapshotNotice locale={locale}/>
+  {related.length>0&&<section class="product-related"><h2 class="mono-label">{l.related}</h2><ul>{related.map(other=><li><a href={productHref(locale,other.id)}>{other.finish} · {other.lengthMm} × {other.widthMm} × {other.thicknessMm} {l.mm} — {money(other.priceM2Cents,locale)} {other.priceM2Cents!==null?l.perM2:''}</a></li>)}</ul></section>}
+  {p.reference&&<p class="product-source muted">{l.source}: {p.reference.file}, {locale==='uk'?'стор.':'p.'} {p.reference.page}.</p>}
+ </main>
+ <Footer locale={locale}/>
+</Base>
+<style>
+.product-cart{background:transparent;color:var(--color-text);font:inherit;cursor:pointer;width:100%;min-height:48px}.product-cart[hidden]{display:none}.product-cart[aria-pressed=true]{border-color:var(--brand-cyan);color:var(--brand-cyan)}
+.product-page{max-width:calc(var(--width-content) + 2 * var(--grid-margin));margin:auto;padding:var(--space-12) var(--grid-margin) var(--section-gap)}.product-back{font-size:12px;text-decoration:none}.product-page header{text-align:center;margin:48px auto;max-width:800px}.product-page h1{margin:16px auto;overflow-wrap:anywhere}.muted{color:var(--color-muted)}.product-page header>.mono{font-size:13px}
+.product-layout{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:start;margin-bottom:48px}.product-photo{position:relative;aspect-ratio:1;background:rgba(255,255,255,.035);display:grid;place-items:center}.product-photo :global(picture){position:absolute;inset:0;display:block}.product-photo :global(source){display:none}.product-photo :global(img){width:100%;height:100%;object-fit:cover}.product-page figcaption{font-size:12px;color:var(--color-muted);margin-top:16px}.product-details>*+*{margin-top:24px}
+.product-availability{font-size:12px;color:var(--color-muted)}.is-available{color:var(--brand-cyan)}.product-details dl>div{display:grid;grid-template-columns:1fr 1.4fr;gap:16px;border-bottom:1px solid var(--color-rule);padding:12px 0}.product-details dt{font-size:11px;color:var(--color-muted)}.product-details dd{font-size:14px;overflow-wrap:anywhere}.product-details .muted{font-size:13px}.product-prices h2{font-size:11px;color:var(--color-muted);margin-bottom:12px}.product-prices p{font-size:26px;font-weight:600}.product-prices span{font-size:12px;font-weight:400;color:var(--color-muted)}.product-contact{display:inline-flex;min-height:48px;align-items:center;justify-content:center;padding:12px 24px;border:1px solid var(--color-text);text-decoration:none}.product-contact:hover{background:var(--color-text);color:var(--color-bg)}.product-related{margin:32px 0}.product-related h2{margin-bottom:16px}.product-related li+li{margin-top:12px}.product-source{font-size:11px;overflow-wrap:anywhere}.product-page a:focus-visible{outline:2px solid var(--brand-cyan);outline-offset:4px}
+@media(max-width:768px){.product-layout{grid-template-columns:1fr;gap:24px}.product-page{padding-top:32px}.product-page header{margin:32px auto}.product-prices p{font-size:24px}.product-contact{width:100%}}
+</style>

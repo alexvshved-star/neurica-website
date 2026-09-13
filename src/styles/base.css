@@ -1,0 +1,144 @@
+/* ============================================================
+   NEURICA — base.css
+   Reset + застосування tokens.css. Каркас, не дизайн: мінімум
+   правил, потрібних для читабельності структурних сторінок.
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body, h1, h2, h3, p, ul, ol, dl, dd, figure {
+  margin: 0;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-weight: var(--weight-body);
+  font-size: var(--type-body);
+  line-height: var(--leading-body);
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+ul, ol {
+  padding: 0;
+  list-style: none;
+}
+
+/* ---- Display-рівень: hyphens/overflow-wrap -------------
+   Українська довша за англійську на 10-15%, а --type-display
+   доходить до 11rem. Без цих правил довгі українські слова
+   на такому кеглі не переносяться й вилазять за viewport.
+   lang-залежні, бо en і uk мають різні дефолтні hyphenation
+   dictionaries в браузері. */
+
+h1, .type-display, h2 {
+  font-family: var(--font-display);
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+:lang(uk) h1,
+:lang(uk) .type-display,
+:lang(uk) h2 {
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+:lang(en) h1,
+:lang(en) .type-display,
+:lang(en) h2 {
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+/* Hero NEURICA має власний display-стиль. Заголовки внутрішніх
+   сторінок — єдиний компактний центрований mono-стандарт,
+   затверджений на agent-workflow. H2 зберігають окрему роль. */
+
+.type-display {
+  font-weight: var(--weight-wordmark);
+  font-size: var(--type-display);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+}
+
+h1:not(.type-display) {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-bold);
+  font-size: clamp(1.125rem, 5vw, 2rem);
+  line-height: 1.3;
+  letter-spacing: var(--tracking-mono-label);
+  text-transform: uppercase;
+  width: 100%;
+  margin-inline: auto;
+  text-align: center;
+  hyphens: none;
+  -webkit-hyphens: none;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+h2 {
+  font-weight: var(--weight-h2);
+  font-size: var(--type-h2);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-tight);
+}
+
+code, pre, .mono {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-mono);
+}
+
+/* .mono-label — той самий вигляд, що заголовок картки сітки
+   (HomeGridCell.astro, .grid-cell__title): bold, uppercase,
+   --tracking-mono-label. Поширює виняток "два регістри"
+   (docs/02-design-system.md), раніше записаний тільки для підписів
+   сітки, на nav і службові посилання (крок "проміжки в сітці" п.3):
+   Nav.astro (.site-nav__links, .site-nav__lang), HomeView.astro
+   (.feed__view-all). Підвал лишається поза цим — уже в mono, але без
+   uppercase/розрядки, свідомо не займали. */
+.mono-label {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-bold);
+  font-size: var(--type-mono);
+  letter-spacing: var(--tracking-mono-label);
+  text-transform: uppercase;
+}
+
+/* --type-small — рівень для другорядних людських підписів (теги,
+   caption), відмінний від .meta: не технічна мова, без uppercase
+   і розрядки. */
+.small {
+  font-size: var(--type-small);
+}
+
+/* Видимий лише для скрінрідерів — доповнює інлайн-знаки/wordmark
+   (aria-hidden) текстовим еквівалентом без візуального місця. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

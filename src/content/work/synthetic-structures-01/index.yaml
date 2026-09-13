@@ -1,0 +1,11 @@
+type: VISUAL_STUDY
+status: STATIC
+art_direction: ORGANIC
+published: 2026-06-10
+cover: ./cover.jpg
+data_mode: NONE
+media:
+  - id: m1
+    src: ./pexels-paolo-tognoni-14028027.jpg
+  - id: m2
+    src: ./alex-quezada-QuM-p-z4ARk-unsplash.jpg
