@@ -1,4 +1,4 @@
-/** Controlled public vocabulary. Never infer a colour from a name or photo. */
+/** Imports normalize explicit source values; manual visual reviews are logged separately. */
 export const COLORS = {
  white:['Білий','White'], black:['Чорний','Black'], grey:['Сірий','Grey'],
  beige:['Бежевий','Beige'], brown:['Коричневий','Brown'], yellow:['Жовтий','Yellow'],
