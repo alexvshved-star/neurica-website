@@ -27,7 +27,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 7
-      }
+      },
+      "color": "yellow"
     },
     {
       "id": "nat-6a2146473182",
@@ -51,7 +52,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 7
-      }
+      },
+      "color": "beige"
     },
     {
       "id": "nat-a41841c3abef",
@@ -75,7 +77,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 7
-      }
+      },
+      "color": "black"
     },
     {
       "id": "nat-65cd9476b843",
@@ -99,7 +102,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 7
-      }
+      },
+      "color": "brown"
     },
     {
       "id": "nat-77c25f8d40a6",
@@ -123,7 +127,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 7
-      }
+      },
+      "color": "blue"
     },
     {
       "id": "nat-a99c8a6a7ac4",
@@ -147,7 +152,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 7
-      }
+      },
+      "color": "beige"
     },
     {
       "id": "nat-671acf94e1fb",
@@ -171,7 +177,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 8
-      }
+      },
+      "color": "grey"
     },
     {
       "id": "nat-ee7d4af8d1c6",
@@ -195,7 +202,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 8
-      }
+      },
+      "color": "grey"
     },
     {
       "id": "nat-af7f92429ae9",
@@ -219,7 +227,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 8
-      }
+      },
+      "color": null
     },
     {
       "id": "nat-d37837004a85",
@@ -243,7 +252,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 8
-      }
+      },
+      "color": "white"
     },
     {
       "id": "nat-f408304985f9",
@@ -267,7 +277,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 8
-      }
+      },
+      "color": "white"
     },
     {
       "id": "nat-e4b710f47013",
@@ -291,7 +302,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 8
-      }
+      },
+      "color": null
     },
     {
       "id": "nat-ff10683a318a",
@@ -315,7 +327,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 9
-      }
+      },
+      "color": "grey"
     },
     {
       "id": "nat-b2a4d9c0faff",
@@ -339,7 +352,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 9
-      }
+      },
+      "color": "grey"
     },
     {
       "id": "nat-cb7f860f7aef",
@@ -363,7 +377,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 9
-      }
+      },
+      "color": null
     },
     {
       "id": "nat-d8da96e86011",
@@ -387,7 +402,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 9
-      }
+      },
+      "color": null
     },
     {
       "id": "nat-e9c1fe782b60",
@@ -411,7 +427,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 3
-      }
+      },
+      "color": null
     },
     {
       "id": "nat-3a9919a5c964",
@@ -435,7 +452,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 3
-      }
+      },
+      "color": "grey"
     },
     {
       "id": "nat-d3042ab60764",
@@ -459,7 +477,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 3
-      }
+      },
+      "color": "grey"
     },
     {
       "id": "nat-120e46dfe4a5",
@@ -483,7 +502,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 3
-      }
+      },
+      "color": "grey"
     },
     {
       "id": "nat-28b3f7d4b9a0",
@@ -507,7 +527,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 3
-      }
+      },
+      "color": "grey"
     },
     {
       "id": "nat-6277b46566a3",
@@ -531,7 +552,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 3
-      }
+      },
+      "color": "white"
     },
     {
       "id": "nat-7daacee24474",
@@ -555,7 +577,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 4
-      }
+      },
+      "color": "white"
     },
     {
       "id": "nat-c5165b056f5b",
@@ -579,7 +602,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 4
-      }
+      },
+      "color": "grey"
     },
     {
       "id": "nat-662e977d1939",
@@ -603,7 +627,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 4
-      }
+      },
+      "color": "grey"
     },
     {
       "id": "nat-63ea66205fc9",
@@ -627,7 +652,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 4
-      }
+      },
+      "color": "black"
     },
     {
       "id": "nat-f24686840248",
@@ -651,7 +677,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 4
-      }
+      },
+      "color": null
     },
     {
       "id": "nat-c140bd26a211",
@@ -675,7 +702,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 4
-      }
+      },
+      "color": null
     },
     {
       "id": "nat-94e73a810c94",
@@ -699,7 +727,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 5
-      }
+      },
+      "color": "grey"
     },
     {
       "id": "nat-2e7d947a46a9",
@@ -723,7 +752,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 5
-      }
+      },
+      "color": null
     },
     {
       "id": "nat-33a99b6d83ac",
@@ -747,7 +777,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 5
-      }
+      },
+      "color": null
     },
     {
       "id": "nat-43fffeeacf56",
@@ -771,7 +802,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 5
-      }
+      },
+      "color": "grey"
     },
     {
       "id": "nat-7136f121dc96",
@@ -795,7 +827,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 5
-      }
+      },
+      "color": "grey"
     },
     {
       "id": "nat-c21160846258",
@@ -819,7 +852,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 5
-      }
+      },
+      "color": "grey"
     },
     {
       "id": "nat-51e554ee43b9",
@@ -840,7 +874,8 @@
       "priceSlabCents": 315000,
       "pricePending": false,
       "photo": "natural-vittoria-regia.webp",
-      "reference": null
+      "reference": null,
+      "color": null
     },
     {
       "id": "nat-44bdad45ecef",
@@ -864,7 +899,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 9
-      }
+      },
+      "color": null
     },
     {
       "id": "nat-251fbb99c7b2",
@@ -888,7 +924,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 9
-      }
+      },
+      "color": null
     },
     {
       "id": "nat-9b37c484d151",
@@ -912,7 +949,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 10
-      }
+      },
+      "color": null
     },
     {
       "id": "nat-030eea1548c7",
@@ -936,7 +974,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 10
-      }
+      },
+      "color": null
     },
     {
       "id": "nat-7f74a8e4d6c5",
@@ -960,7 +999,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 6
-      }
+      },
+      "color": null
     },
     {
       "id": "nat-6b1171601a70",
@@ -984,7 +1024,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 6
-      }
+      },
+      "color": null
     },
     {
       "id": "nat-e1c99dceee5a",
@@ -1008,7 +1049,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 10
-      }
+      },
+      "color": null
     },
     {
       "id": "nat-916f1e984222",
@@ -1032,7 +1074,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 10
-      }
+      },
+      "color": null
     },
     {
       "id": "nat-9d25810e5056",
@@ -1053,7 +1096,8 @@
       "priceSlabCents": 86468,
       "pricePending": false,
       "photo": "natural-travertino-tipo-classico.jpg",
-      "reference": null
+      "reference": null,
+      "color": null
     },
     {
       "id": "nat-346630f20f40",
@@ -1077,7 +1121,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 6
-      }
+      },
+      "color": "grey"
     },
     {
       "id": "nat-e4241d0ff876",
@@ -1101,7 +1146,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 6
-      }
+      },
+      "color": null
     },
     {
       "id": "nat-f60f5c377fd1",
@@ -1125,7 +1171,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 10
-      }
+      },
+      "color": null
     },
     {
       "id": "nat-bac1e05befe6",
@@ -1149,7 +1196,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 10
-      }
+      },
+      "color": null
     },
     {
       "id": "nat-a4278321ec2f",
@@ -1173,7 +1221,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 11
-      }
+      },
+      "color": null
     },
     {
       "id": "nat-1c42339ede1d",
@@ -1197,7 +1246,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 11
-      }
+      },
+      "color": null
     },
     {
       "id": "nat-a2050e0b17c7",
@@ -1221,7 +1271,8 @@
       "reference": {
         "file": "ALTACO_Natural_Stone_Kyiv_Stock_2026.pdf",
         "page": 11
-      }
+      },
+      "color": "beige"
     },
     {
       "id": "sm-1c4b7ac8220c",
@@ -1245,7 +1296,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 3
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-87a8b8fb77ae",
@@ -1269,7 +1321,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 3
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-71ab63240b2e",
@@ -1293,7 +1346,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 5
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-baf858aaf32b",
@@ -1314,7 +1368,8 @@
       "priceSlabCents": 122000,
       "pricePending": false,
       "photo": "sm-carnia.jpg",
-      "reference": null
+      "reference": null,
+      "color": null
     },
     {
       "id": "sm-9a2586c8ebd7",
@@ -1335,7 +1390,8 @@
       "priceSlabCents": 135000,
       "pricePending": false,
       "photo": "sm-istria.jpg",
-      "reference": null
+      "reference": null,
+      "color": null
     },
     {
       "id": "sm-633dd7b99a4d",
@@ -1359,7 +1415,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 3
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-8ba81fb43142",
@@ -1383,7 +1440,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 3
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-fa4b9d436faf",
@@ -1407,7 +1465,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 3
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-1bbc094b494e",
@@ -1431,7 +1490,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 5
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-a8fe82781c00",
@@ -1455,7 +1515,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 5
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-3c7d421b349e",
@@ -1479,7 +1540,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 7
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-a59910c9290f",
@@ -1503,7 +1565,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 3
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-fdb798e6b5c7",
@@ -1527,7 +1590,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 4
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-babde32e37d0",
@@ -1548,7 +1612,8 @@
       "priceSlabCents": 143000,
       "pricePending": false,
       "photo": "sm-liskamm.jpg",
-      "reference": null
+      "reference": null,
+      "color": null
     },
     {
       "id": "sm-f46c1943b7ea",
@@ -1572,7 +1637,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 5
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-a85046c2a75e",
@@ -1593,7 +1659,8 @@
       "priceSlabCents": 200000,
       "pricePending": false,
       "photo": "sm-metropolis-galaxy.jpg",
-      "reference": null
+      "reference": null,
+      "color": null
     },
     {
       "id": "sm-f15eadc0f288",
@@ -1617,7 +1684,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 4
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-d102dd75fc54",
@@ -1641,7 +1709,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 4
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-ed32578a171b",
@@ -1665,7 +1734,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 5
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-aba8bb629cab",
@@ -1689,7 +1759,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 4
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-2fa657668cc9",
@@ -1713,7 +1784,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 4
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-9817c44dde0c",
@@ -1737,7 +1809,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 4
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-faefabfbdf99",
@@ -1758,7 +1831,8 @@
       "priceSlabCents": 190000,
       "pricePending": false,
       "photo": "sm-vega.jpg",
-      "reference": null
+      "reference": null,
+      "color": null
     },
     {
       "id": "sm-b43c2a9ee7b6",
@@ -1779,7 +1853,8 @@
       "priceSlabCents": 175000,
       "pricePending": false,
       "photo": "sm-vega.jpg",
-      "reference": null
+      "reference": null,
+      "color": null
     },
     {
       "id": "sm-47d0613150d7",
@@ -1803,7 +1878,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 6
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-5dd440c78d9c",
@@ -1827,7 +1903,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 7
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-e50a6670b6b8",
@@ -1851,7 +1928,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 6
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-28cbd9fbdc2f",
@@ -1875,7 +1953,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 6
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-60bf646e4a37",
@@ -1899,7 +1978,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 7
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-ec2178c995da",
@@ -1923,7 +2003,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 7
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-cce0cb72f93e",
@@ -1947,7 +2028,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 7
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-afb4fb0d5021",
@@ -1971,7 +2053,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 5
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-4550c0d07833",
@@ -1995,7 +2078,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 6
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-2cebf6c35b51",
@@ -2019,7 +2103,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 6
-      }
+      },
+      "color": null
     },
     {
       "id": "sm-e96f3e5dd936",
@@ -2043,7 +2128,8 @@
       "reference": {
         "file": "ALTACO_SM_Quartz_Kyiv_Stock_2026.pdf",
         "page": 6
-      }
+      },
+      "color": null
     }
   ]
 }

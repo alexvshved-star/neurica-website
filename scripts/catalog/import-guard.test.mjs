@@ -18,7 +18,7 @@ test('CLI rejects a truncated export without touching existing snapshot or temp 
  const root=fs.mkdtempSync(path.join(os.tmpdir(),'altaco-import-'));
  try{
   fs.mkdirSync(path.join(root,'scripts/catalog'),{recursive:true});fs.mkdirSync(path.join(root,'src/catalog'),{recursive:true});
-  for(const file of ['scripts/catalog/import-stock.mjs','src/catalog/model.mjs','src/catalog/calendar-date.mjs','src/catalog/import-guard.mjs'])fs.copyFileSync(new URL('../../'+file,import.meta.url),path.join(root,file));
+  for(const file of ['scripts/catalog/import-stock.mjs','src/catalog/model.mjs','src/catalog/calendar-date.mjs','src/catalog/color.mjs','src/catalog/import-guard.mjs'])fs.copyFileSync(new URL('../../'+file,import.meta.url),path.join(root,file));
   const p=snapshot.products.find(p=>p.family==='sm-quartz');const id=p.id;
   fs.writeFileSync(path.join(root,'src/catalog/manifest.json'),JSON.stringify({['sm-quartz|Example|Silk|3200,1550,20']:{id}}));
   const target=path.join(root,'src/catalog/snapshot.json');const original=JSON.stringify(snapshot);fs.writeFileSync(target,original);

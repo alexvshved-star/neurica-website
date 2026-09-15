@@ -277,7 +277,8 @@
       "page": 4
     },
     "materialType": "granite",
-    "collection": "Bagnara / Kitchen Selection"
+    "collection": "Bagnara / Kitchen Selection",
+    "colorReview": "white"
   },
   "natural|Black Tempest Polished|Polished|3300,1970,30": {
     "id": "nat-94e73a810c94",
@@ -521,7 +522,8 @@
       "file": "Nero.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|Caledonia|Silk|3200,1550,20": {
     "id": "sm-87a8b8fb77ae",
@@ -537,7 +539,8 @@
       "file": "Caledonia.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|Oregon|Silk|3200,1550,20": {
     "id": "sm-71ab63240b2e",
@@ -553,7 +556,8 @@
       "file": "oregon-sm.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|Carnia|Silk|3200,1550,20": {
     "id": "sm-baf858aaf32b",
@@ -562,7 +566,8 @@
       "file": "Carnia.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|Istria|Silk|3300,1650,20": {
     "id": "sm-9a2586c8ebd7",
@@ -571,7 +576,8 @@
       "file": "Istria.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|City Dark|Silk|3200,1550,20": {
     "id": "sm-633dd7b99a4d",
@@ -587,7 +593,8 @@
       "file": "City_Dark.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|City Beige|Polished|3200,1550,20": {
     "id": "sm-8ba81fb43142",
@@ -603,7 +610,8 @@
       "file": "City_Beige.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|City Beige|Silk|3200,1550,20": {
     "id": "sm-fa4b9d436faf",
@@ -619,7 +627,8 @@
       "file": "City_Beige.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|City White|Polished|3300,1650,20": {
     "id": "sm-1bbc094b494e",
@@ -635,7 +644,8 @@
       "file": "City_White-1.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|City White|Silk|3300,1650,20": {
     "id": "sm-a8fe82781c00",
@@ -651,7 +661,8 @@
       "file": "City_White-1.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|Zenith|Polished|3300,1650,20": {
     "id": "sm-3c7d421b349e",
@@ -667,7 +678,8 @@
       "file": "Zenith.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|Ardenne|Silk|3200,1550,20": {
     "id": "sm-a59910c9290f",
@@ -683,7 +695,8 @@
       "file": "Ardenne.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|Sabia Beige|Polished|3200,1550,20": {
     "id": "sm-fdb798e6b5c7",
@@ -699,7 +712,8 @@
       "file": "Sabbia_Beige.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|Liskamm|Polished|3200,1550,20": {
     "id": "sm-babde32e37d0",
@@ -708,7 +722,8 @@
       "file": "Lyskamm.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|Grigio Nube|Polished|3200,1550,20": {
     "id": "sm-f46c1943b7ea",
@@ -724,7 +739,8 @@
       "file": "Grigio Nube.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|Metropolis Galaxy|Metropolis|3200,1550,20": {
     "id": "sm-a85046c2a75e",
@@ -733,7 +749,8 @@
       "file": "Metropolis-galaxy.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|Metropolis Oyster|Metropolis|3200,1550,20": {
     "id": "sm-f15eadc0f288",
@@ -749,7 +766,8 @@
       "file": "Metropolis-oyster.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|Vittoria White|Silk|3200,1550,20": {
     "id": "sm-d102dd75fc54",
@@ -765,7 +783,8 @@
       "file": "Vittoria White.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|Vittoria White|Silk|3300,1650,20": {
     "id": "sm-ed32578a171b",
@@ -781,7 +800,8 @@
       "file": "Vittoria White.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|Fusion Taupe|Silk|3200,1550,20": {
     "id": "sm-aba8bb629cab",
@@ -797,7 +817,8 @@
       "file": "FusionTaupe_02.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|Fusion Grey|Silk|3200,1550,20": {
     "id": "sm-2fa657668cc9",
@@ -813,7 +834,8 @@
       "file": "Fusion_Grey.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|Fusion Black|Silk|3200,1550,20": {
     "id": "sm-9817c44dde0c",
@@ -829,7 +851,8 @@
       "file": "Fusion_Black.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|Vega|Silk|3300,1650,20": {
     "id": "sm-faefabfbdf99",
@@ -838,7 +861,8 @@
       "file": "Vega.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|Vega|Polished|3300,1650,20": {
     "id": "sm-b43c2a9ee7b6",
@@ -847,7 +871,8 @@
       "file": "Vega.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|Vermont|Silk|3300,1650,20": {
     "id": "sm-47d0613150d7",
@@ -863,7 +888,8 @@
       "file": "Vermont.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|Levante|Polished|3300,1650,20": {
     "id": "sm-5dd440c78d9c",
@@ -879,7 +905,8 @@
       "file": "Levante-sm.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|Libeccio|Polished|3300,1650,20": {
     "id": "sm-e50a6670b6b8",
@@ -895,7 +922,8 @@
       "file": "Libecio_02.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|Etesia|Polished|3300,1650,20": {
     "id": "sm-28cbd9fbdc2f",
@@ -911,7 +939,8 @@
       "file": "Etesia.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|Monti|Polished|3300,1650,20": {
     "id": "sm-60bf646e4a37",
@@ -927,7 +956,8 @@
       "file": "Monti.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|Trevi|Polished|3300,1650,20": {
     "id": "sm-ec2178c995da",
@@ -943,7 +973,8 @@
       "file": "Trevi.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|Trevi|Silk|3300,1650,20": {
     "id": "sm-cce0cb72f93e",
@@ -959,7 +990,8 @@
       "file": "Trevi.jpg",
       "providedBy": "ALTACO",
       "receivedAt": "2026-09-07"
-    }
+    },
+    "colorReview": "grey"
   },
   "sm-quartz|Grey Feather|Polished|3300,1650,20": {
     "id": "sm-afb4fb0d5021",
@@ -970,7 +1002,8 @@
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "5W2"
+    "code": "5W2",
+    "colorReview": "grey"
   },
   "sm-quartz|Light Wafer|Polished|3300,1650,20": {
     "id": "sm-4550c0d07833",
@@ -981,7 +1014,8 @@
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "5W1"
+    "code": "5W1",
+    "colorReview": "grey"
   },
   "sm-quartz|Light Wafer|Silk|3300,1650,20": {
     "id": "sm-2cebf6c35b51",
@@ -992,7 +1026,8 @@
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "5W1"
+    "code": "5W1",
+    "colorReview": "grey"
   },
   "sm-quartz|Stormio|Polished|3300,1650,20": {
     "id": "sm-e96f3e5dd936",
@@ -1003,6 +1038,7 @@
     },
     "materialType": "quartz-agglomerate",
     "manufacturer": "Santa Margherita",
-    "code": "5W6"
+    "code": "5W6",
+    "colorReview": "grey"
   }
 }

@@ -11,7 +11,7 @@ test(`${name} preserves ID and name through reimport, offer and price list`,()=>
  const p=snapshot.products.find(p=>p.id===id);
  assert.equal(p.name,name);
  const row=Array(22).fill('');
- Object.assign(row,{0:p.name,1:'Kitchen Selection',5:p.finish,6:p.lengthMm,7:p.widthMm,8:p.thicknessMm,13:1,16:p.priceM2Cents/100,18:p.priceSlabCents/100});
+ Object.assign(row,{0:p.name,1:'Kitchen Selection',2:p.color,5:p.finish,6:p.lengthMm,7:p.widthMm,8:p.thicknessMm,13:1,16:p.priceM2Cents/100,18:p.priceSlabCents/100});
  const next=normalizeStock([['НАЯВНІСТЬ | Natural'],Array.from({length:22},(_,i)=>REQUIRED_HEADERS[i]??''),row],manifest,snapshot.importedAt);
  assert.deepEqual(next.products[0],p);
  assert.equal(offerItems(snapshot,[{id:p.id,quantity:1}])[0].product.name,p.name);

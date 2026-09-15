@@ -32,7 +32,7 @@ test('reimport of source sample-slab section preserves IDs and ordinary sale eli
 test('six controls use family behind manufacturer label, without collection, sort or samples controls',()=>{
  const source=fs.readFileSync(new URL('../../src/components/catalog/Catalog.astro',import.meta.url),'utf8');
  const form=source.split('<form')[1].split('</form>')[0];
- assert.deepEqual([...form.matchAll(/name="([^"]+)"/g)].map(m=>m[1]),['q','family','type','finish','thickness','stock']);
+ assert.deepEqual([...form.matchAll(/name="([^"]+)"/g)].map(m=>m[1]),['q','family','type','finish','color','stock']);
  assert.match(form,/l.collection/);assert.match(form,/Натуральні матеріали/);assert.match(form,/Santa Margherita/);
  assert.doesNotMatch(form,/НАТУРАЛЬНІ МАТЕРІАЛИ|NATURAL MATERIALS|SANTAMARGHERITA/);
  const result=selectProducts(snapshot.products);let unavailable=false;

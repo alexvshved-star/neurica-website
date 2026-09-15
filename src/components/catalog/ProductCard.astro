@@ -2,6 +2,7 @@
 import {Picture} from 'astro:assets';
 import {photoFor,productHref,money} from '@/catalog/data';
 import {labels,materialLabel} from '@/catalog/labels';
+import {colorLabel} from '@/catalog/color.mjs';
 import {cardTitle} from '@/catalog/card-title.mjs';
 import type {Product,Locale} from '@/catalog/types';
 interface Props {product:Product;locale:Locale;index:number}
@@ -16,6 +17,7 @@ const {product:p,locale,index}=Astro.props;const l=labels(locale);const photo=ph
   <h2 class="mono-label">{cardTitle(p)}</h2>
   <p class="catalog-card__variant mono">{p.finishPending?l.surfacePending:p.finish} · {p.thicknessMm} {l.mm}</p>
   <p class="catalog-card__format mono">{p.lengthMm} × {p.widthMm} {l.mm}</p>
+  <p class="catalog-card__color mono">{l.color}: {colorLabel(p.color,locale)}</p>
   <div class="catalog-card__price"><span>{money(p.priceM2Cents,locale)} {p.priceM2Cents!==null&&<small>{l.perM2}</small>}</span><span aria-hidden="true">↗</span></div>
   <p class:list={['catalog-card__stock','mono',{'is-available':p.inStock}]}>{p.inStock?l.inStock:l.outOfStock}</p>
  </a>
@@ -30,6 +32,7 @@ const {product:p,locale,index}=Astro.props;const l=labels(locale);const photo=ph
 .catalog-card__type{color:var(--color-muted);font-size:11px;margin-top:16px;line-height:1.5;min-height:3em}.catalog-card h2{color:var(--color-text);font-size:14px;line-height:1.5;letter-spacing:.04em;margin:4px 0;hyphens:none;overflow-wrap:anywhere;min-height:4.5em}
 .catalog-card__variant,.catalog-card__format,.catalog-card__stock{font-size:11px;color:var(--color-muted);line-height:1.5}
 .catalog-card__variant{min-height:3em}.catalog-card__format{min-height:1.5em}
+.catalog-card__color{font-size:10px;line-height:1.5;color:var(--color-muted);min-height:3em;margin-top:4px;overflow-wrap:anywhere}
 .catalog-card__price{border-top:1px solid var(--color-rule);margin-top:12px;padding-top:12px;display:flex;justify-content:space-between;gap:8px;font-size:16px;font-weight:600}.catalog-card__price small{font-weight:400;color:var(--color-muted);font-size:11px}
 .catalog-card__stock{margin-top:8px;min-height:1.5em}.is-available{color:var(--brand-cyan)}
 @media(max-width:480px){.catalog-card h2{font-size:12px}.catalog-card__price{font-size:14px}.catalog-card__type,.catalog-card__variant,.catalog-card__format,.catalog-card__stock{font-size:10px}}

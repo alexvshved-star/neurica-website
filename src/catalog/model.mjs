@@ -1,7 +1,8 @@
 import {isCalendarDate} from './calendar-date.mjs';
+import {COLORS,stockColor} from './color.mjs';
 /** Public catalogue contract. No raw stock rows may be served or committed. */
-export const REQUIRED_HEADERS = {0:'Артикул',1:'Тип матеріалу',5:'Обробка',6:'Висота, мм',7:'Ширина, мм',8:'Товщина, мм',13:'В наявності, слебів',16:'Роздріб, €/м²',18:'Роздріб, €/слеб'};
-export const PRODUCT_FIELDS = ['id','name','family','kind','materialType','manufacturer','collection','code','finish','finishPending','lengthMm','widthMm','thicknessMm','inStock','priceM2Cents','priceSlabCents','pricePending','photo','reference'];
+export const REQUIRED_HEADERS = {0:'Артикул',1:'Тип матеріалу',2:'Колір',5:'Обробка',6:'Висота, мм',7:'Ширина, мм',8:'Товщина, мм',13:'В наявності, слебів',16:'Роздріб, €/м²',18:'Роздріб, €/слеб'};
+export const PRODUCT_FIELDS = ['id','name','family','kind','materialType','manufacturer','collection','code','finish','finishPending','lengthMm','widthMm','thicknessMm','color','inStock','priceM2Cents','priceSlabCents','pricePending','photo','reference'];
 export function validateSnapshot(snapshot) {
   if (Object.keys(snapshot).some(k=>!['schemaVersion','importedAt','dataAsOf','sourceLabel','vat','products'].includes(k))) throw new Error('Non-public snapshot field');
   if (snapshot.schemaVersion !== 1 || !Array.isArray(snapshot.products) || !snapshot.products.length) throw new Error('Empty or unsupported catalogue');
@@ -12,6 +13,7 @@ export function validateSnapshot(snapshot) {
     if (Object.keys(p).some(k => !PRODUCT_FIELDS.includes(k))) throw new Error(`Non-public field in ${p.id}`);
     if (!/^(nat|sm)-[a-f0-9]{12}$/.test(p.id) || seen.has(p.id)) throw new Error('Invalid or duplicate variant ID');
     seen.add(p.id);
+    if (p.color !== null && (typeof p.color !== 'string' || !Object.hasOwn(COLORS,p.color))) throw new Error('Invalid public color');
     if (!p.name || !['natural','sm-quartz'].includes(p.family) || !['slab','fragment','sample-slab'].includes(p.kind)) throw new Error(`Invalid product ${p.id}`);
     if (typeof p.inStock !== 'boolean' || typeof p.pricePending !== 'boolean' || typeof p.finishPending !== 'boolean') throw new Error('Invalid flags');
     for (const k of ['lengthMm','widthMm','thicknessMm']) if (!Number.isInteger(p[k]) || p[k] <= 0) throw new Error(`Invalid dimension ${p.id}`);
@@ -44,7 +46,7 @@ export function normalizeStock(rows, manifest, importedAt, dataAsOf = null) {
     const pending = m.pricePending === true || cents(row[16]) === null || cents(row[18]) === null;
     products.push({id:m.id,name:group==='sm-quartz' && finish.toLowerCase()==='silk' && !/\bsilk$/i.test(name.trim()) ? `${name.trim()} Silk` : name.trim(),family:group==='sm-quartz'?'sm-quartz':'natural',kind:name.includes('кусок')?'fragment':'slab',
       materialType:m.materialType ?? ({Granite:'granite',Marble:'marble',Quarcite:'quartzite',Travertine:'travertine','SM Quartz':'quartz-agglomerate'}[rawType] ?? 'natural-stone'),
-      manufacturer:m.manufacturer ?? null,collection:m.collection ?? null,code:m.code ?? null,
+      manufacturer:m.manufacturer ?? null,collection:m.collection ?? null,code:m.code ?? null,color:stockColor(row[2],m.colorReview),
       finish,finishPending:m.finishPending===true,lengthMm:dimensions[0],widthMm:dimensions[1],thicknessMm:dimensions[2],inStock:row[13]>0,
       priceM2Cents:pending?null:cents(row[16]),priceSlabCents:pending?null:cents(row[18]),pricePending:pending,photo:m.photo??null,reference:m.reference??null});
   }
@@ -56,7 +58,7 @@ export function selectProducts(products, filters = {}) {
     const haystack = [p.name,p.code,p.manufacturer,p.collection,p.finish].filter(Boolean).join(' ').normalize('NFKC').toLocaleLowerCase();
     return (!query || query.split(/\s+/).every(word=>haystack.includes(word))) &&
       (!filters.family || p.family===filters.family) && (!filters.type || p.materialType===filters.type) &&
-      (!filters.finish || p.finish===filters.finish) && (!filters.thickness || String(p.thicknessMm)===filters.thickness) &&
+      (!filters.finish || p.finish===filters.finish) && (!filters.color || (filters.color==='pending'?p.color===null:p.color===filters.color)) &&
       (!filters.collection || (p.collection??p.manufacturer??'')===filters.collection) &&
       (!filters.stock || (filters.stock==='yes'?p.inStock:!p.inStock)) &&
       (filters.samples==='yes' || p.kind!=='sample-slab');
