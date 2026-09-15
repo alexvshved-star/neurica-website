@@ -5,7 +5,7 @@ import {normalizeStock,REQUIRED_HEADERS} from '../../src/catalog/model.mjs';
 import {offerItems} from '../../src/catalog/offer.mjs';
 import {priceListProducts} from '../../src/catalog/pricelist.mjs';
 const read=name=>JSON.parse(fs.readFileSync(new URL('../../src/catalog/'+name,import.meta.url)));
-for (const [id,name] of [['nat-43fffeeacf56','Azul Aran Satin'],['nat-d3042ab60764','Azul Aran Polished']]) {
+for (const [id,name] of [['nat-43fffeeacf56','Azul Aran Satin'],['nat-d3042ab60764','Azul Aran Polished'],['nat-120e46dfe4a5','Azul Aran NEW']]) {
 test(`${name} preserves ID and name through reimport, offer and price list`,()=>{
  const snapshot=read('snapshot.json'),manifest=read('manifest.json');
  const p=snapshot.products.find(p=>p.id===id);
