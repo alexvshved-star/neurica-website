@@ -269,7 +269,7 @@
     "materialType": "quartzite",
     "collection": "Bagnara / Kitchen Selection"
   },
-  "natural|Nero Zimbabwe NA \\ 2022|Honed|3230,1950,20": {
+  "natural|Nero Zimbabwe NA Honed|Honed|3230,1950,20": {
     "id": "nat-c140bd26a211",
     "photo": "natural-18.jpeg",
     "reference": {
@@ -299,7 +299,7 @@
     "materialType": "quartzite",
     "collection": "Bagnara / Kitchen Selection"
   },
-  "natural|Moon Rock \\ 2022|P.E.C.|3260,1880,20": {
+  "natural|Moon Rock P.E.C.|P.E.C.|3260,1880,20": {
     "id": "nat-33a99b6d83ac",
     "photo": "natural-21.jpeg",
     "reference": {
@@ -319,7 +319,7 @@
     "materialType": "granite",
     "collection": "Bagnara / Kitchen Selection"
   },
-  "natural|Mystic Grey 2025/1|Satinato|3460,1990,20": {
+  "natural|Mystic Grey Satin|Satinato|3460,1990,20": {
     "id": "nat-7136f121dc96",
     "photo": "natural-22.jpeg",
     "reference": {
@@ -329,7 +329,7 @@
     "materialType": "granite",
     "collection": "Bagnara / Kitchen Selection"
   },
-  "natural|Mystic Grey 2025/2|Satinato|3540,1970,20": {
+  "natural|Mystic Grey Satin|Satinato|3540,1970,20": {
     "id": "nat-c21160846258",
     "photo": "natural-22.jpeg",
     "reference": {
@@ -339,7 +339,7 @@
     "materialType": "granite",
     "collection": "Bagnara / Kitchen Selection"
   },
-  "natural|Vittoria Regia 2025|Polished|3150,2000,20": {
+  "natural|Vittoria Regia Polished|Polished|3150,2000,20": {
     "id": "nat-51e554ee43b9",
     "photo": "natural-vittoria-regia.webp",
     "photoSource": {
@@ -447,7 +447,7 @@
     "materialType": "quartzite",
     "collection": "Bagnara / Kitchen Selection"
   },
-  "natural|Nero Zimbabwe / 2026|Flame&Brushed|3300,1950,20": {
+  "natural|Nero Zimbabwe Flame & Brushed|Flame&Brushed|3300,1950,20": {
     "id": "nat-e4241d0ff876",
     "photo": "natural-27.jpeg",
     "reference": {
