@@ -1,0 +1,18 @@
+---
+import type {Locale} from '@/catalog/types';
+interface Props {locale:Locale;name:string}
+const {locale,name}=Astro.props;const uk=locale==='uk';
+---
+<section class="pdf-actions" data-pdf-actions={name} hidden aria-label={name}>
+ <p class="pdf-filename" data-pdf-filename></p>
+ <div>
+  <a data-pdf-preview target="_blank" rel="noopener">{uk?'Переглянути':'Preview'}</a>
+  <a data-pdf-download download>{uk?'Завантажити PDF':'Download PDF'}</a>
+  <button data-pdf-share type="button" hidden>{uk?'Поділитися PDF':'Share PDF'}</button>
+ </div>
+ <p data-pdf-help></p>
+ <p data-pdf-status role="status" aria-live="polite"></p>
+</section>
+<style>
+.pdf-actions[hidden],.pdf-actions [hidden]{display:none!important}.pdf-actions{margin:16px 0;padding:16px;border:1px solid var(--color-rule);text-align:left}.pdf-actions>div{display:flex;gap:10px;flex-wrap:wrap}.pdf-actions a,.pdf-actions button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 14px;border:1px solid var(--brand-cyan);color:var(--color-text);background:transparent;font:inherit;font-size:13px;text-decoration:none;cursor:pointer}.pdf-actions button:disabled{opacity:.5;cursor:wait}.pdf-actions p{font-size:12px;color:var(--color-muted);margin:8px 0}.pdf-actions .pdf-filename{overflow-wrap:anywhere;color:var(--color-text)}.pdf-actions :focus-visible{outline:2px solid var(--brand-cyan);outline-offset:3px}@media(max-width:480px){.pdf-actions a,.pdf-actions button{width:100%}}
+</style>

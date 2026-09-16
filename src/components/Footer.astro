@@ -1,0 +1,68 @@
+---
+import { t, byLabel, eonyxLabel, eonyxUrl, type Locale } from '@/i18n';
+import BrandMark from './BrandMark.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const home = locale === 'uk' ? '/' : '/en/';
+const archiveHref = locale === 'uk' ? '/archive' : '/en/archive';
+---
+
+<footer class="site-footer">
+  <a class="site-footer__brand" href={home}>NEURICA</a>
+  <a class="site-footer__by" href={eonyxUrl}
+    >{byLabel} <BrandMark name="wordmark" class="site-footer__by-mark" /><span class="sr-only">{eonyxLabel}</span></a
+  >
+  <a class="mono" href={archiveHref}>{t(locale, 'nav.archive')}</a>
+  <span class="mono">© {new Date().getFullYear()} {t(locale, 'footer.rights')}</span>
+</footer>
+
+<style>
+  .site-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-6);
+    padding: var(--space-8) var(--grid-margin);
+    border-top: var(--rule-hairline) solid var(--color-rule);
+    font-size: var(--type-metadata);
+    color: var(--color-muted);
+  }
+
+  .site-footer a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* Знак і підпис бренду — голос, не стан (типографічний прохід
+     v0.2): Montserrat, не форсовано в uppercase. Archive-посилання
+     й copyright лишаються mono/все-капс — метадані сторінки. */
+  .site-footer__brand {
+    font-weight: var(--weight-strong);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .site-footer__by {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.1em;
+    font-weight: var(--weight-regular);
+  }
+
+  /* :global — BrandMark інлайнить <svg> через set:html в іншому
+     компоненті, скоуп-атрибут Astro на нього не потрапляє. Висота
+     1em, відступ від "by" (gap) = 0.1 висоти знака (X1), правило
+     MINIMUM INDENT FOR TEXT з брендбука. */
+  .site-footer__by :global(.site-footer__by-mark) {
+    height: 1em;
+    width: auto;
+  }
+
+  .site-footer .mono {
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+  }
+</style>

@@ -1,0 +1,69 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {labels} from '../../src/catalog/labels.ts';
+import {REQUIRED_HEADERS,normalizeStock,validateSnapshot,selectProducts,variantKey} from '../../src/catalog/model.mjs';
+const snapshot=JSON.parse(fs.readFileSync(new URL('../../src/catalog/snapshot.json',import.meta.url)));
+test('availability categories use Kyiv stock and on-order labels in both languages',()=>{
+ assert.equal(labels('uk').inStock,'В наявності • Київ');
+ assert.equal(labels('uk').outOfStock,'Під замовлення');
+ assert.equal(labels('en').inStock,'In stock • Kyiv');
+ assert.equal(labels('en').outOfStock,'On order');
+ for(const samples of ['', 'yes']){
+  const all=selectProducts(snapshot.products,{samples});
+  const stocked=selectProducts(snapshot.products,{samples,stock:'yes'});
+  const ordered=selectProducts(snapshot.products,{samples,stock:'no'});
+  assert.ok(stocked.length>0);assert.ok(ordered.length>0);
+  assert.ok(stocked.every(p=>p.inStock));assert.ok(ordered.every(p=>!p.inStock));
+  assert.equal(stocked.length+ordered.length,all.length);
+ }
+});
+const makeRow=(name,finish='Silk',width=1550,stock=1)=>[name,'SM Quartz','internal color','internal claim','',''+finish,3200,width,20,91,92,93,94,stock,96,98765,100,98766,496,99];
+const headers=Array.from({length:22},(_,i)=>REQUIRED_HEADERS[i]??'');
+const record={id:'sm-123456789abc'};
+const manifestFor=(r,m=record)=>({[variantKey('sm-quartz',r[0],r[5],r.slice(6,9))]:m});
+test('import publishes only retail projection, never raw stock fields',()=>{
+ const r=makeRow('Example');const result=normalizeStock([['НАЯВНІСТЬ | SM Quartz'],headers,r],manifestFor(r),'2026-09-06T12:00:00Z');
+ assert.equal(result.products[0].priceM2Cents,10000);assert.equal(result.products[0].priceSlabCents,49600);assert.equal(result.products[0].inStock,true);
+ assert.doesNotMatch(JSON.stringify(result),/98765|98766|internal claim|internal color/);
+ assert.throws(()=>validateSnapshot({...result,wholesale:1}),/Non-public/);
+ assert.throws(()=>validateSnapshot({...result,products:[{...result.products[0],reserve:1}]}),/Non-public/);
+});
+test('hand samples are excluded and zero stock is unavailable',()=>{
+ const r=makeRow('Example','Silk',1550,0);
+ const result=normalizeStock([['НАЯВНІСТЬ | SM Quartz'],headers,r,['ЗРАЗКИ | SM Quartz'],makeRow('Small sample')],manifestFor(r),'2026-09-06T12:00:00Z');
+ assert.equal(result.products.length,1);assert.equal(result.products[0].inStock,false);
+ assert.equal(selectProducts(snapshot.products).filter(p=>p.kind==='sample-slab').length,0);
+ assert.equal(selectProducts(snapshot.products).length,snapshot.products.length);
+});
+test('unconfirmed price excluded; dimensions and finish distinguish variants',()=>{
+ const r=makeRow('Fusion Black');const result=normalizeStock([['НАЯВНІСТЬ | SM Quartz'],headers,r],manifestFor(r,{...record,pricePending:true}),'2026-09-06T12:00:00Z');
+ assert.equal(result.products[0].priceM2Cents,null);assert.equal(result.products[0].priceSlabCents,null);
+ assert.notEqual(variantKey('sm-quartz','City Beige','Silk',[3200,1550,20]),variantKey('sm-quartz','City Beige','Polished',[3200,1550,20]));
+ const fusion=snapshot.products.find(p=>p.id==='sm-9817c44dde0c');assert.equal(fusion.priceSlabCents,180000);assert.equal(fusion.priceM2Cents,36290);assert.equal(fusion.pricePending,false);
+ assert.equal(snapshot.products.filter(p=>p.name==='Vittoria White Silk').length,2);
+});
+test('invalid import fails instead of silently overwriting a good snapshot',()=>{
+ const r=makeRow('Example');assert.throws(()=>normalizeStock([['НАЯВНІСТЬ | SM Quartz'],headers,r],{},'2026-09-06T12:00:00Z'),/Unmapped/);
+ r[13]='';assert.throws(()=>normalizeStock([['НАЯВНІСТЬ | SM Quartz'],headers,r],manifestFor(r),'2026-09-06T12:00:00Z'),/Incomplete/);
+});
+test('filters compose; unknown prices sort last both ways; no results is valid',()=>{
+ const r=selectProducts(snapshot.products,{family:'sm-quartz',q:'  CITY beige ',finish:'Silk',stock:'yes'});assert.equal(r.length,1);
+ assert.equal(selectProducts(snapshot.products,{q:'no-such-product-xx'}).length,0);
+ const withPending=snapshot.products.map((p,i)=>i===0?{...p,priceM2Cents:null,priceSlabCents:null,pricePending:true}:p);
+ for(const sort of ['price-asc','price-desc'])assert.equal(selectProducts(withPending,{sort}).at(-1).priceM2Cents,null);
+});
+test('snapshot valid; photos exist and IDs unique',()=>{
+ validateSnapshot(snapshot);
+ for(const p of snapshot.products)if(p.photo)assert.ok(fs.existsSync(new URL('../../src/assets/catalog/'+p.photo,import.meta.url)));
+});
+
+test('column reorder cannot turn wholesale into public retail',()=>{const r=makeRow('Example');const swapped=[...headers];swapped[16]='Опт, €/м²';assert.throws(()=>normalizeStock([['НАЯВНІСТЬ | SM Quartz'],swapped,r],manifestFor(r),'2026-09-06T12:00:00Z'),/columns changed/);});
+
+test('Silk naming survives stock import without changing source keys or IDs',()=>{
+ for(const [name,finish,expected] of [['City Beige','Silk','City Beige Silk'],['City Beige Silk','Silk','City Beige Silk'],['City Beige','Polished','City Beige'],['Metropolis Oyster','Metropolis','Metropolis Oyster']]){
+  const r=makeRow(name,finish);
+  const [p]=normalizeStock([['НАЯВНІСТЬ | SM Quartz'],headers,r],manifestFor(r),'2026-09-07T12:00:00Z').products;
+  assert.equal(p.name,expected);assert.equal(p.id,record.id);
+ }
+});
