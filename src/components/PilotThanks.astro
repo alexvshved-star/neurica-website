@@ -1,0 +1,22 @@
+---
+import Base from '@/layouts/Base.astro';
+import Nav from '@/components/Nav.astro';
+import Footer from '@/components/Footer.astro';
+import type { Locale } from '@/i18n';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const uk = locale === 'uk';
+---
+<Base locale={locale} title={uk ? 'Дякуємо за заявку — NEURICA' : 'Thank you — NEURICA'}>
+  <Nav locale={locale} />
+  <main>
+    <h1>{uk ? 'Дякуємо за заявку' : 'Thank you for applying'}</h1>
+    <p>{uk ? 'Зв’яжемося з вами за вказаним email, щоб обговорити участь у тестуванні.' : 'We’ll contact you at the email you provided to discuss participation.'}</p>
+    <a href={uk ? '/about/' : '/en/about/'}>{uk ? 'Повернутися до контактів' : 'Back to contacts'} →</a>
+  </main>
+  <Footer locale={locale} />
+</Base>
+<style>
+  main { max-width: 620px; margin-inline: auto; padding: var(--section-gap) var(--grid-margin); text-align: center; }
+  p { margin: var(--space-6) 0; color: var(--color-muted); }
+</style>
