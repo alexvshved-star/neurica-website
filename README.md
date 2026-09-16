@@ -47,6 +47,9 @@ npm run preview   # переглянути dist/ локально
 
 - [`docs/08-altaco-pilot.md`](./docs/08-altaco-pilot.md) — робочий пілот ALTACO та план реалізації
 
+- [`docs/09-altaco-catalog.md`](./docs/09-altaco-catalog.md) — актуальний стан каталогу
+- [`docs/10-release-checklist.md`](./docs/10-release-checklist.md) — підтверджений запуск і відкриті production-перевірки
+
 ## Ліцензія
 
 Всі права захищені © 2026 EONYX
