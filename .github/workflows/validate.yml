@@ -2,9 +2,9 @@ name: Validate build
 
 on:
   push:
-    branches: [claude/neurica-eonyx-relaunch-5e3glx]
+    branches: [main, claude/neurica-eonyx-relaunch-5e3glx]
   pull_request:
-    branches: [claude/neurica-eonyx-relaunch-5e3glx]
+    branches: [main, claude/neurica-eonyx-relaunch-5e3glx]
 
 jobs:
   build:
