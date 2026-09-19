@@ -46,7 +46,9 @@
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 
-# JavaScript — long-term cache (filename-based cache busting via git)
+# JavaScript — long-term cache (Astro/Vite emits content-hashed filenames
+# on every build, e.g. /_astro/cart.C7f3a2b1.js — a content change always
+# gets a new URL, so caching the old one forever is safe)
 [[headers]]
   for = "/*.js"
   [headers.values]

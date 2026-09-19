@@ -88,7 +88,7 @@ const slugHref = (slug: string) => (locale === 'uk' ? `/work/${slug}` : `/en/wor
       </p>
       {translation.tags && translation.tags.length > 0 && (
         <ul class="work-detail__tags mono">
-          {translation.tags.map((tag) => <li>{tag}</li>)}
+          {translation.tags.map((tag: string) => <li>{tag}</li>)}
         </ul>
       )}
     </header>

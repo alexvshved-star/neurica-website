@@ -1,4 +1,5 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
 import type { Loader, LoaderContext } from 'astro/loaders';
 import type { SchemaContext } from 'astro:content';
 import fs from 'node:fs';

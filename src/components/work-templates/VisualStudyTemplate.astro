@@ -21,7 +21,7 @@ const localizedMedia = entry.translations[locale]?.media ?? {};
 <div class="visual-study-template">
   {media.length > 0 && (
     <div class="visual-study-template__sequence">
-      {media.map((item, i) => {
+      {media.map((item: NonNullable<WorkEntry['media']>[number], i: number) => {
         const meta = localizedMedia[item.id];
         return (
           <figure>
