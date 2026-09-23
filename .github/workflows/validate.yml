@@ -23,6 +23,9 @@ jobs:
       - name: Validate catalogue import and public projection
         run: node --test scripts/catalog/*.test.mjs
 
+      - name: Type check
+        run: npm run check
+
       - name: Build
         run: npm run build
 

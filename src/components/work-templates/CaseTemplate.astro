@@ -26,7 +26,7 @@ const { entry, locale, body } = Astro.props;
   <RuntimeNotice entry={entry} locale={locale} />
   {entry.media && entry.media.length > 0 && (
     <div class="case-template__gallery">
-      {entry.media.map((media) => {
+      {entry.media.map((media: NonNullable<WorkEntry['media']>[number]) => {
         const label = entry.translations[locale]?.media?.[media.id];
         return (
           <figure>
